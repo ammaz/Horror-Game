@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class TextInteractable : Interactable
 {
+	//Apply this script to every object you want to interact with
 	public override void OnFocus()
 	{
-		Debug.Log("Looking At: " + gameObject.name);
+		//Debug.Log("Looking At: " + gameObject.name);
 	}
 
 	public override void OnInteract()
 	{
-		Debug.Log("Looking At: " + gameObject.name);
+		//Debug.Log("Interacting With: " + gameObject.name);
 	}
 
 	public override void OnLoseFocus()
 	{
-		Debug.Log("Looking At: " + gameObject.name);
+		//Debug.Log("Lost Focus From: " + gameObject.name);
 	}
 	#region Variables
 	#endregion

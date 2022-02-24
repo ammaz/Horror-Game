@@ -14,10 +14,9 @@ public abstract class Interactable : MonoBehaviour
     
     void Start()
     {
-        
+
     }
 
-    
     void Update()
     {
         

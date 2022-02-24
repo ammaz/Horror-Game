@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class FirstPersonController : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private bool canUseHeadbob = true;
     [SerializeField] private bool WillSlideOnSlopes = true;
     [SerializeField] private bool canInteract = true;
+    [SerializeField] private bool useFootsteps = true;
 
     [Header("Movement Parameters")]
     [SerializeField] private float walkSpeed = 3.0f;
@@ -83,6 +85,18 @@ public class FirstPersonController : MonoBehaviour
     //For Camera Verticle Movement
     private float timer;
 
+    [Header("FootStep Parameters")]
+    [SerializeField] private float baseStepSpeed = 0.5f;
+    [SerializeField] private float crouchStepMultipler = 1.5f;
+    [SerializeField] private float sprintStepMultipler = 0.6f;
+    [SerializeField] private AudioSource footstepAudioSource = default;
+    [SerializeField] private AudioClip[] floorClips = default;
+    [SerializeField] private AudioClip[] tileClips = default;
+    [SerializeField] private AudioClip[] stairClips = default;
+    [SerializeField] private AudioClip[] carpetClips = default;
+    private float footstepTimer = 0;
+    private float GetCurrentOffset => isCrouching ? baseStepSpeed * crouchStepMultipler : IsSprinting ? baseStepSpeed * sprintStepMultipler : baseStepSpeed;
+
     [Header("Interaction Parameters")]
     [SerializeField] private Vector3 interactionRayPoint = default;
     [SerializeField] private float interactionDistance = default;
@@ -108,11 +122,9 @@ public class FirstPersonController : MonoBehaviour
 		}
 	}
 
-
     /// <summary>
     /// Player Objects
     /// </summary>
-    ///
 
     //Player Camera Object
     private Camera playerCamera;
@@ -127,6 +139,10 @@ public class FirstPersonController : MonoBehaviour
       or restrict player from rotating camera above
       or below its neck level, So he cant break his neck xD*/
     private float rotationX = 0;
+
+    //InteractUI Object
+    //private InteractUI InteractText;
+    public TMP_Text InteractText;
 
 	#endregion
 
@@ -151,9 +167,9 @@ public class FirstPersonController : MonoBehaviour
 
 	void Start()
     {
-        
+        //InteractText = gameObject.GetComponent<InteractUI>();
     }
-    
+
     void Update()
     {
 		//Handling Inputs
@@ -171,8 +187,14 @@ public class FirstPersonController : MonoBehaviour
             if (canUseHeadbob)
                 HandleHeadbob();
 
-            if(canInteract)
+			if (canInteract)
+			{
+                HandleInteractionCheck();
+                HandleInteractionInput();         
+            }
 
+            if (useFootsteps)
+                Handle_Footsteps();
 
             ApplyFinalMovements();
         }	
@@ -238,34 +260,86 @@ public class FirstPersonController : MonoBehaviour
 		}
 	}
 
+    /// <summary>
+    /// Interaction
+    /// </summary>
+
     //Constantly raycast and look for interactable objects
     private void HandleInteractionCheck()
 	{
         if(Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance))
 		{
             //Change number 8 to Interactable Layer (Subject to change)
-            if(hit.collider.gameObject.layer == 8 && currentInteractable == null || hit.collider.gameObject.GetInstanceID() != currentInteractable.GetInstanceID())
+            if(hit.collider.gameObject.layer == 8 && (currentInteractable == null || hit.collider.gameObject.GetInstanceID() != currentInteractable.GetInstanceID()))
 			{
                 hit.collider.TryGetComponent(out currentInteractable);
 
                 if (currentInteractable)
+				{
                     currentInteractable.OnFocus();
+                    //Changing name of InteractionText
+                    //InteractText.SetInteractText("" + currentInteractable.name);
+                    InteractText.SetText("" + currentInteractable.name);
+                }
+                    
 			}
 		}
         else if (currentInteractable)
 		{
             currentInteractable.OnLoseFocus();
             currentInteractable = null;
-		}
+            //Removing name of InteractionText
+            //InteractText.RemoveInteractText();
+            InteractText.SetText("");
+        }
 	}
 
-    //When we hit interact key and perform any action
+    //When we hit interact key the action will be performed
     private void HandleInteractionInput()
 	{
         if(Input.GetKeyDown(interactKey) && currentInteractable != null && Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance, interactionLayer))
 		{
             currentInteractable.OnInteract();
+        }
+	}
+
+    private void Handle_Footsteps()
+	{
+        //Checking if character is grounded or not
+        if (!characterController.isGrounded) return;
+        //Checking for movement
+        if (currentInput == Vector2.zero) return;
+
+        footstepTimer -= Time.deltaTime;
+
+		if (footstepTimer <= 0)
+		{
+            //In here 3 is the distance of raycast hit (Tweak it to decrease object/ground distace check)
+            if(Physics.Raycast(playerCamera.transform.position, Vector3.down,out RaycastHit hit, 3))
+			{
+				switch (hit.collider.tag)
+				{
+                    case "Footsteps/Floor":
+                        footstepAudioSource.PlayOneShot(floorClips[Random.Range(0,floorClips.Length-1)]);
+                        break;
+                    /*case "Footsteps/Tile":
+                        footstepAudioSource.PlayOneShot(tileClips[Random.Range(0, tileClips.Length - 1)]);
+                        break;
+                    case "Footsteps/Stair":
+                        footstepAudioSource.PlayOneShot(stairClips[Random.Range(0, stairClips.Length - 1)]);
+                        break;
+                    case "Footsteps/Carpet":
+                        footstepAudioSource.PlayOneShot(carpetClips[Random.Range(0, carpetClips.Length - 1)]);
+                        break;*/
+                    default:
+                        footstepAudioSource.PlayOneShot(floorClips[Random.Range(0, floorClips.Length - 1)]);
+                        break;
+
+                }
+			}
+            footstepTimer = GetCurrentOffset;
 		}
+
 	}
 
     //For applying finalmovements on our player

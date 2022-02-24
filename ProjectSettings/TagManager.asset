@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - InteractText
+  - Footsteps/Floor
+  - Footsteps/Tile
+  - Footsteps/Carpet
+  - Footsteps/Stair
   layers:
   - Default
   - TransparentFX
