@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class FirstPersonController : MonoBehaviour
 {
@@ -12,14 +13,22 @@ public class FirstPersonController : MonoBehaviour
 
     //Can player sprint or not (=> | Lamda Operator) (Subject to change)
     //It will become true if canSprint is true and(&&) if user will press sprint key
-    private bool IsSprinting => canSprint && Input.GetKey(sprintKey);
+    //For PC Sprint
+    //private bool IsSprinting => canSprint && Input.GetKey(sprintKey);
+    //For Mobile
+    private bool IsSprinting => canSprint && ((new Vector2(joystick.Horizontal, joystick.Vertical).magnitude)>0.9f);
 
     //Jump functionality (Its checking if the player is on ground then only he can jump)
-    private bool ShouldJump => Input.GetKeyDown(JumpKey) && characterController.isGrounded;
+    //For PC Jump
+    //private bool ShouldJump => Input.GetKeyDown(JumpKey) && characterController.isGrounded;
+    //For Mobile
+    private bool ShouldJump => characterController.isGrounded && !isCrouching;
 
-    //Crouch check (Its checking if user has pressed crouch key && animation is not player && our player is on ground) then it will become true
-    private bool ShouldCrouch => Input.GetKeyDown(crouchKey) && !duringCrouchAnimation && characterController.isGrounded;
-
+	//Crouch check (Its checking if user has pressed crouch key && animation is not player && our player is on ground) then it will become true
+    //For PC Crouch
+	//private bool ShouldCrouch => Input.GetKeyDown(crouchKey) && !duringCrouchAnimation && characterController.isGrounded;
+    //For Mobile
+    private bool ShouldCrouch => !duringCrouchAnimation && characterController.isGrounded;
 
     //Options that you can turn off and on based on gameplay
     [Header("Functional Options")]
@@ -134,6 +143,7 @@ public class FirstPersonController : MonoBehaviour
     //Variables for current input values(W,A,S,D) and MoveDirection(X,Y) 
     private Vector3 moveDirection;
     private Vector2 currentInput;
+    public FloatingJoystick joystick;
 
     /*To keep check of current rotation, it will be used to clamp
       or restrict player from rotating camera above
@@ -143,6 +153,10 @@ public class FirstPersonController : MonoBehaviour
     //InteractUI Object
     //private InteractUI InteractText;
     public TMP_Text InteractText;
+
+    //Rotation Variables
+    float mouseX = 0;
+    float mouseY = 0;
 
 	#endregion
 
@@ -160,9 +174,10 @@ public class FirstPersonController : MonoBehaviour
         //Setting default position of headbob to starting position of camera
         defaultYPos = playerCamera.transform.localPosition.y;
 
+        //For PC Cursor
         //To Hide Cursor
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
 	}
 
 	void Start()
@@ -172,17 +187,25 @@ public class FirstPersonController : MonoBehaviour
 
     void Update()
     {
-		//Handling Inputs
-		if (CamMove)
+        if (Input.touchCount>0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+            mouseX = Input.GetTouch(0).deltaPosition.x;
+            mouseY = Input.GetTouch(0).deltaPosition.y;
+        }
+
+        //Handling Inputs
+        if (CamMove)
 		{
             HandleMovementInput();
             HandleLook();
 
-            if (canJump)
-                HandleJump();
+            //For PC Jump
+            /*if (canJump)
+                HandleJump();*/
 
-            if (canCrouch)
-                HandleCrouch();
+            //For PC Crouch
+            /*if (canCrouch)
+                HandleCrouch();*/
 
             if (canUseHeadbob)
                 HandleHeadbob();
@@ -208,7 +231,10 @@ public class FirstPersonController : MonoBehaviour
     private void HandleMovementInput()
 	{
         //Getting current Input values Horizontal and Verticle (Left and Right Movements) (Using Ternary Operator(?:) for ifelse condition in sprinting and walking) (Subject to change)
-        currentInput = new Vector2((isCrouching ? crouchSpeed : IsSprinting ? sprintSpeed : walkSpeed) * Input.GetAxis("Vertical"), (isCrouching ? crouchSpeed : IsSprinting ? sprintSpeed : walkSpeed) * Input.GetAxis("Horizontal"));
+        //For PC Movement
+        //currentInput = new Vector2((isCrouching ? crouchSpeed : IsSprinting ? sprintSpeed : walkSpeed) * Input.GetAxis("Vertical"), (isCrouching ? crouchSpeed : IsSprinting ? sprintSpeed : walkSpeed) * Input.GetAxis("Horizontal"));
+        //For Mobile
+        currentInput = new Vector2((isCrouching ? crouchSpeed : IsSprinting ? sprintSpeed : walkSpeed) * joystick.Vertical, (isCrouching ? crouchSpeed : IsSprinting ? sprintSpeed : walkSpeed) * joystick.Horizontal);
 
         //Getting move Direction Y value
         float moveDirectionY = moveDirection.y;
@@ -223,6 +249,7 @@ public class FirstPersonController : MonoBehaviour
     //For Camera rotation Inputs
     private void HandleLook()
 	{
+        //For PC Look
         //For moving camera Up and Down(Subject to change)
         rotationX -= Input.GetAxis("Mouse Y")*lookSpeedY;
         //Restricting player to break his neck xD (Clamping values)
@@ -231,16 +258,28 @@ public class FirstPersonController : MonoBehaviour
         playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
         //For moving player left and right (Subject to change)
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeedX, 0);
-	}
+
+        /*
+        //For Mobile
+        //For moving camera Up and Down(Subject to change)
+        rotationX -= mouseY * lookSpeedY;
+        //Restricting player to break his neck xD (Clamping values)
+        rotationX = Mathf.Clamp(rotationX, -upperLookLimit, lowerLookLimit);
+        //For moving camera Up and Down
+        playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+        //For moving player left and right (Subject to change)
+        transform.rotation *= Quaternion.Euler(0, mouseX * lookSpeedX, 0);
+        */
+    }
 
     //For Jumping
-    private void HandleJump()
+    public void HandleJump()
 	{
         if (ShouldJump)
             moveDirection.y = jumpForce;
 	}
 
-    private void HandleCrouch()
+    public void HandleCrouch()
 	{
         if (ShouldCrouch)
             StartCoroutine(CrouchStand());
