@@ -43,17 +43,19 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private bool useFootsteps = true;
 
     [Header("Movement Parameters")]
-    [SerializeField] private float walkSpeed = 3.0f;
-    [SerializeField] private float sprintSpeed = 6.0f;
-    [SerializeField] private float crouchSpeed = 1.5f;
+    [SerializeField] private float walkSpeed = 1.5f;
+    [SerializeField] private float sprintSpeed = 2.0f;
+    [SerializeField] private float crouchSpeed = 0.5f;
     [SerializeField] private float sloopSpeed = 8f;
 
     [Header("Look Parameters")]
+    
     //For PC
     /*[SerializeField, Range(1, 10)] private float lookSpeedX = 2.0f;
     [SerializeField, Range(1, 10)] private float lookSpeedY = 2.0f;
     [SerializeField, Range(1, 180)] private float upperLookLimit = 80.0f;
     [SerializeField, Range(1, 180)] private float lowerLookLimit = 80.0f;*/
+    
     //For Mobile
     [SerializeField, Range(1, 180)] private float upperLookLimit = 80.0f;
     [SerializeField, Range(1, 180)] private float lowerLookLimit = 80.0f;
@@ -89,22 +91,22 @@ public class FirstPersonController : MonoBehaviour
     [Header("Headbob Parameters")]
     //Headbob effect while walking
     [SerializeField] private float walkBobSpeed = 14f;
-    [SerializeField] private float walkBobAmount = 0.05f;
+    [SerializeField] private float walkBobAmount = 0.02f;
     //Headbob effect sprinting
     [SerializeField] private float sprintBobSpeed = 18f;
-    [SerializeField] private float sprintBobAmount = 0.1f;
+    [SerializeField] private float sprintBobAmount = 0.04f;
     //Headbob effect while crouching
     [SerializeField] private float crouchBobSpeed = 8f;
-    [SerializeField] private float crouchBobAmount = 0.025f;
+    [SerializeField] private float crouchBobAmount = 0.01f;
     //For Camera Position
     private float defaultYPos = 0;
     //For Camera Verticle Movement
     private float timer;
 
     [Header("FootStep Parameters")]
-    [SerializeField] private float baseStepSpeed = 0.5f;
+    [SerializeField] private float baseStepSpeed = 0.6f;
     [SerializeField] private float crouchStepMultipler = 1.5f;
-    [SerializeField] private float sprintStepMultipler = 0.6f;
+    [SerializeField] private float sprintStepMultipler = 0.5f;
     [SerializeField] private AudioSource footstepAudioSource = default;
     [SerializeField] private AudioClip[] floorClips = default;
     [SerializeField] private AudioClip[] tileClips = default;
@@ -273,10 +275,6 @@ public class FirstPersonController : MonoBehaviour
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeedX, 0);
         */
 
-        //For Mobile
-        float mouseX = 0;
-        float mouseY = 0;
-
         /*if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             //Restricting camera to move which player will touch UI elements
@@ -291,6 +289,11 @@ public class FirstPersonController : MonoBehaviour
         //Touchscreen.current.touches[0].touchId.ReadValue() = Input.GetTouch(0).fingerId
         //Touchscreen.current.touches[1].isInProgress =  Input.GetTouch(1).phase == TouchPhase.Moved
         //Touchscreen.current.touches[1].delta.ReadValue(); = Input.GetTouch(1).deltaPosition;
+
+        
+        //For Mobile
+        float mouseX = 0;
+        float mouseY = 0;
 
         if (Input.touchCount == 0)
             return;
@@ -333,6 +336,7 @@ public class FirstPersonController : MonoBehaviour
         playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
         //For moving player
         transform.Rotate(Vector3.up * mouseX * Time.deltaTime);
+        
     }
 
     //For Jumping
