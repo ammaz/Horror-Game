@@ -59,7 +59,7 @@ public class FirstPersonController : MonoBehaviour
     //For Mobile
     [SerializeField, Range(1, 180)] private float upperLookLimit = 80.0f;
     [SerializeField, Range(1, 180)] private float lowerLookLimit = 80.0f;
-    [SerializeField, Range(1, 180)] private float mouseSensitivity = 20f;
+    [SerializeField, Range(1, 20)] public float mouseSensitivity = 5f;
 
     [Header("Controls")]
     //Keys for input (Subject to change)!!
@@ -90,10 +90,10 @@ public class FirstPersonController : MonoBehaviour
 
     [Header("Headbob Parameters")]
     //Headbob effect while walking
-    [SerializeField] private float walkBobSpeed = 14f;
+    [SerializeField] private float walkBobSpeed = 10f;
     [SerializeField] private float walkBobAmount = 0.02f;
     //Headbob effect sprinting
-    [SerializeField] private float sprintBobSpeed = 18f;
+    [SerializeField] private float sprintBobSpeed = 16f;
     [SerializeField] private float sprintBobAmount = 0.04f;
     //Headbob effect while crouching
     [SerializeField] private float crouchBobSpeed = 8f;
@@ -440,7 +440,6 @@ public class FirstPersonController : MonoBehaviour
                     default:
                         footstepAudioSource.PlayOneShot(floorClips[Random.Range(0, floorClips.Length - 1)]);
                         break;
-
                 }
 			}
             footstepTimer = GetCurrentOffset;
