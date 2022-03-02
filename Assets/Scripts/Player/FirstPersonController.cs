@@ -51,16 +51,17 @@ public class FirstPersonController : MonoBehaviour
     [Header("Look Parameters")]
     
     //For PC
-    /*[SerializeField, Range(1, 10)] private float lookSpeedX = 2.0f;
+    [SerializeField, Range(1, 10)] private float lookSpeedX = 2.0f;
     [SerializeField, Range(1, 10)] private float lookSpeedY = 2.0f;
     [SerializeField, Range(1, 180)] private float upperLookLimit = 80.0f;
-    [SerializeField, Range(1, 180)] private float lowerLookLimit = 80.0f;*/
-    
+    [SerializeField, Range(1, 180)] private float lowerLookLimit = 80.0f;
+
+    /*
     //For Mobile
     [SerializeField, Range(1, 180)] private float upperLookLimit = 80.0f;
-    [SerializeField, Range(1, 180)] private float lowerLookLimit = 80.0f;
+    [SerializeField, Range(1, 180)] private float lowerLookLimit = 80.0f;*/
     [SerializeField, Range(1, 20)] public float mouseSensitivity = 5f;
-
+    
     [Header("Controls")]
     //Keys for input (Subject to change)!!
     [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
@@ -263,7 +264,7 @@ public class FirstPersonController : MonoBehaviour
     //For Camera rotation Inputs
     private void HandleLook()
 	{
-        /*
+        
         //For PC Look
         //For moving camera Up and Down(Subject to change)
         rotationX -= Input.GetAxis("Mouse Y")*lookSpeedY;
@@ -273,7 +274,7 @@ public class FirstPersonController : MonoBehaviour
         playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
         //For moving player left and right (Subject to change)
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeedX, 0);
-        */
+        
 
         /*if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
@@ -290,7 +291,7 @@ public class FirstPersonController : MonoBehaviour
         //Touchscreen.current.touches[1].isInProgress =  Input.GetTouch(1).phase == TouchPhase.Moved
         //Touchscreen.current.touches[1].delta.ReadValue(); = Input.GetTouch(1).deltaPosition;
 
-        
+        /*
         //For Mobile
         float mouseX = 0;
         float mouseY = 0;
@@ -336,7 +337,7 @@ public class FirstPersonController : MonoBehaviour
         playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
         //For moving player
         transform.Rotate(Vector3.up * mouseX * Time.deltaTime);
-        
+        */
     }
 
     //For Jumping

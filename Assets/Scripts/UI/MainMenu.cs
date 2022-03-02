@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
-
     public AudioSource Volume;
     public Slider volumeSlider;
     public AudioSource Music;
@@ -15,12 +14,10 @@ public class GameManager : MonoBehaviour
     public FirstPersonController Sensitivity;
     public Slider sensitivitySlider;
 
-    private bool isPaused = false;
-
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -28,15 +25,22 @@ public class GameManager : MonoBehaviour
     {
         
     }
-    public void QuitGame()
+
+    public void muteAudio()
+    { 
+        Music.volume = 0;
+    }
+
+    public void playGame()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void quitGame()
     {
         Application.Quit();
     }
 
-    public void Replay()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
     public void SetVolume()
     {
         Volume.volume = volumeSlider.value;
@@ -53,17 +57,9 @@ public class GameManager : MonoBehaviour
         Sensitivity.mouseSensitivity = sensitivitySlider.value;
     }
 
-    public void pauseGame()
+    public void unmuteMusic()
     {
-        if (isPaused)
-        {
-            Time.timeScale = 1;
-            isPaused = false;
-        }
-        else
-        {
-            Time.timeScale = 0;
-            isPaused=true;
-        }
+        //Subject to change
+        Music.volume = 1;
     }
 }
