@@ -49,19 +49,18 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float sloopSpeed = 8f;
 
     [Header("Look Parameters")]
-    /*
     //For PC
     [SerializeField, Range(1, 10)] private float lookSpeedX = 2.0f;
     [SerializeField, Range(1, 10)] private float lookSpeedY = 2.0f;
-    [SerializeField, Range(1, 180)] private float upperLookLimit = 80.0f;
-    [SerializeField, Range(1, 180)] private float lowerLookLimit = 80.0f;
-    */
-    
+    /*[SerializeField, Range(1, 180)] private float upperLookLimit = 80.0f;
+    [SerializeField, Range(1, 180)] private float lowerLookLimit = 80.0f;*/
+
     //For Mobile
     [SerializeField, Range(1, 180)] private float upperLookLimit = 80.0f;
     [SerializeField, Range(1, 180)] private float lowerLookLimit = 80.0f;
     [SerializeField, Range(1, 20)] public float mouseSensitivity = 5f;
-    
+    [SerializeField] private bool isTouchAllowed = false;
+
     [Header("Controls")]
     //Keys for input (Subject to change)!!
     [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
@@ -103,6 +102,13 @@ public class FirstPersonController : MonoBehaviour
     private float defaultYPos = 0;
     //For Camera Verticle Movement
     private float timer;
+
+    [Header("Object Movable Parameters")]
+    [SerializeField] public float moveForce = 250;
+    [SerializeField] public float pickUpDistance = 4;
+    [SerializeField] private Transform holdParent;
+    [SerializeField] private LayerMask toyLayer = default;
+    private GameObject heldObj;
 
     [Header("FootStep Parameters")]
     [SerializeField] private float baseStepSpeed = 0.6f;
@@ -228,7 +234,7 @@ public class FirstPersonController : MonoBehaviour
 			if (canInteract)
 			{
                 HandleInteractionCheck();
-                HandleInteractionInput();         
+                HandleInteractionInput();
             }
 
             if (useFootsteps)
@@ -264,18 +270,6 @@ public class FirstPersonController : MonoBehaviour
     //For Camera rotation Inputs
     private void HandleLook()
 	{
-        /*
-        //For PC Look
-        //For moving camera Up and Down(Subject to change)
-        rotationX -= Input.GetAxis("Mouse Y")*lookSpeedY;
-        //Restricting player to break his neck xD (Clamping values)
-        rotationX = Mathf.Clamp(rotationX, -upperLookLimit, lowerLookLimit);
-        //For moving camera Up and Down
-        playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-        //For moving player left and right (Subject to change)
-        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeedX, 0);
-        */
-
         /*if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             //Restricting camera to move which player will touch UI elements
@@ -291,52 +285,66 @@ public class FirstPersonController : MonoBehaviour
         //Touchscreen.current.touches[1].isInProgress =  Input.GetTouch(1).phase == TouchPhase.Moved
         //Touchscreen.current.touches[1].delta.ReadValue(); = Input.GetTouch(1).deltaPosition;
 
-        
-        //For Mobile
-        float mouseX = 0;
-        float mouseY = 0;
-
-        if (Input.touchCount == 0)
-            return;
-
-        if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+        if (isTouchAllowed)
         {
-            if (Input.touchCount > 1 && Input.GetTouch(1).phase == TouchPhase.Moved)
-            {
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(1).fingerId))
-                    return;
+            //For Mobile
+            float mouseX = 0;
+            float mouseY = 0;
 
-                Vector2 touchDeltaPosition = Input.GetTouch(1).deltaPosition;
-                mouseX = touchDeltaPosition.x;
-                mouseY = touchDeltaPosition.y;
+            if (Input.touchCount == 0)
+                return;
+
+            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+            {
+                if (Input.touchCount > 1 && Input.GetTouch(1).phase == TouchPhase.Moved)
+                {
+                    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(1).fingerId))
+                        return;
+
+                    Vector2 touchDeltaPosition = Input.GetTouch(1).deltaPosition;
+                    mouseX = touchDeltaPosition.x;
+                    mouseY = touchDeltaPosition.y;
+                }
             }
+            else
+            {
+                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+                {
+                    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                        return;
+
+                    Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
+                    mouseX = touchDeltaPosition.x;
+                    mouseY = touchDeltaPosition.y;
+                }
+
+            }
+
+            mouseX *= mouseSensitivity;
+            mouseY *= mouseSensitivity;
+
+            //For moving camera Up and Down(Subject to change)
+            rotationX -= mouseY * Time.deltaTime;
+            //Restricting player to break his neck xD (Clamping values)
+            rotationX = Mathf.Clamp(rotationX, -upperLookLimit, lowerLookLimit);
+
+            //For moving camera
+            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+            //For moving player
+            transform.Rotate(Vector3.up * mouseX * Time.deltaTime);
         }
         else
         {
-            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
-            {
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                    return;
-
-                Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-                mouseX = touchDeltaPosition.x;
-                mouseY = touchDeltaPosition.y;
-            }
-
+            //For PC Look
+            //For moving camera Up and Down(Subject to change)
+            rotationX -= Input.GetAxis("Mouse Y")*lookSpeedY;
+            //Restricting player to break his neck xD (Clamping values)
+            rotationX = Mathf.Clamp(rotationX, -upperLookLimit, lowerLookLimit);
+            //For moving camera Up and Down
+            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+            //For moving player left and right (Subject to change)
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeedX, 0);
         }
-
-        mouseX *= mouseSensitivity;
-        mouseY *= mouseSensitivity;
-
-        //For moving camera Up and Down(Subject to change)
-        rotationX -= mouseY * Time.deltaTime;
-        //Restricting player to break his neck xD (Clamping values)
-        rotationX = Mathf.Clamp(rotationX, -upperLookLimit, lowerLookLimit);
-
-        //For moving camera
-        playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-        //For moving player
-        transform.Rotate(Vector3.up * mouseX * Time.deltaTime);   
     }
 
     //For Jumping
@@ -403,11 +411,81 @@ public class FirstPersonController : MonoBehaviour
     //When we hit interact key the action will be performed
     private void HandleInteractionInput()
 	{
+        //Interaction key, I will add button and touch controls in this (Subject to change)
         if(Input.GetKeyDown(interactKey) && currentInteractable != null && Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance, interactionLayer))
 		{
             currentInteractable.OnInteract();
         }
-	}
+
+        //Pick/Drop Mechanics
+        /*if (Input.GetKeyDown(interactKey))
+        {
+            if (heldObj == null)
+            {
+                if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, pickUpDistance, toyLayer))
+                {
+                    PickUpObject(hit.transform.gameObject);   
+                }
+            }
+            *//*else
+            {
+                DropObject();
+            }*//*
+        }*/
+
+        if (heldObj != null)
+        {
+            MoveObject();
+        }
+    }
+
+    //Pick/Drop Mechanics
+    public void PickObject()
+    {
+        if (heldObj == null)
+        {
+            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, pickUpDistance, toyLayer))
+            {
+                PickUpObject(hit.transform.gameObject);
+            }
+        }
+    }
+
+    //Pick/Drop Mechanics
+    void MoveObject()
+    {
+        if (Vector3.Distance(heldObj.transform.position, holdParent.position) > 0.1f)
+        {
+            Vector3 moveDirection = (holdParent.position - heldObj.transform.position);
+            heldObj.GetComponent<Rigidbody>().AddForce(moveDirection * moveForce);
+        }
+    }
+
+    //Pick/Drop Mechanics
+    void PickUpObject(GameObject pickObj)
+    {
+        if (pickObj.GetComponent<Rigidbody>())
+        {
+            Rigidbody objRig = pickObj.GetComponent<Rigidbody>();
+            objRig.useGravity = false;
+            //Object will float in air(Change to get good effect)
+            objRig.drag = 10;
+
+            objRig.transform.parent = holdParent;
+            heldObj = pickObj;
+        }
+    }
+
+    //Pick/Drop Mechanics
+    public void DropObject()
+    {
+        Rigidbody heldRig = heldObj.GetComponent<Rigidbody>();
+        heldRig.useGravity = true;
+        heldRig.drag = 1;
+
+        heldObj.transform.parent = null;
+        heldObj = null;
+    }
 
     private void Handle_Footsteps()
 	{

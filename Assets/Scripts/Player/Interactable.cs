@@ -24,7 +24,7 @@ public abstract class Interactable : MonoBehaviour
 
     public virtual void Awake()
 	{
-        //Change number 9 to Interactable layer number (Subject to change)
+        //Change number 8 to Interactable layer number (Subject to change)
         gameObject.layer = 8;
 	}
 
