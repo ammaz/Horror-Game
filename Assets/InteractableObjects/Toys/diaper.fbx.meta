@@ -3,7 +3,17 @@ guid: af72d1e0bbb3ca142a84e0daf70a516f
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: diaper
+    second: {fileID: 2100000, guid: 262e53a19977c644aaf415086698e1ba, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: diaper waist
+    second: {fileID: 2100000, guid: 8aae8f9f81151e84b830db06098e211c, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

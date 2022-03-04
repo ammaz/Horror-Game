@@ -8,6 +8,8 @@ public class MainMenu : MonoBehaviour
 {
     public AudioSource Volume;
     public Slider volumeSlider;
+    public AudioClip[] Sounds;
+
     public AudioSource Music;
     public Slider musicSlider;
 
@@ -29,6 +31,24 @@ public class MainMenu : MonoBehaviour
     public void muteAudio()
     { 
         Music.volume = 0;
+    }
+
+    public void unmuteMusic()
+    {
+        //Subject to change
+        Music.volume = 1;
+    }
+
+    public void muteVolume()
+    {
+        Music.volume = 0;
+        Volume.volume = 0;
+    }
+
+    public void unmuteVolume()
+    {
+        Music.volume = 1;
+        Volume.volume = 1;
     }
 
     public void playGame()
@@ -57,9 +77,13 @@ public class MainMenu : MonoBehaviour
         Sensitivity.mouseSensitivity = sensitivitySlider.value;
     }
 
-    public void unmuteMusic()
+    public void ButtonPressed() 
     {
-        //Subject to change
-        Music.volume = 1;
+        Volume.PlayOneShot(Sounds[1]);
+    }
+
+    public void PlayButtonPressed()
+    {
+        Volume.PlayOneShot(Sounds[2]);
     }
 }

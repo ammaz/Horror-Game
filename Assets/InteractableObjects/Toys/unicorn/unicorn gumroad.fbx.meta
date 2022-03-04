@@ -3,7 +3,52 @@ guid: 6fdb2530ad13101438dd4d65a70ec000
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: b270a0a04c8659a419969111c54f4afc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 09afd3ea4234a4443b5d8686a7fa6b31, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: body
+    second: {fileID: 2100000, guid: df5542d0875251c47966821877d385f9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hair unicorn
+    second: {fileID: 2100000, guid: 5d931a14ed1cc9b44bd44d87ecf76a5d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hair unicorn.001
+    second: {fileID: 2100000, guid: 752f10fc5943af04f99d3f13a08e2a6b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hair unicorn.002
+    second: {fileID: 2100000, guid: 8285c5b752e57a6488e1132b1e25b6d2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hoof
+    second: {fileID: 2100000, guid: a37767a7e3e7a9a4d9e760418afed7b3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: horn
+    second: {fileID: 2100000, guid: 679dc7cd6f8a22849b7f44be0fce0124, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mouth
+    second: {fileID: 2100000, guid: 14d28b41c0b6fc9408bc06c65d5f5054, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

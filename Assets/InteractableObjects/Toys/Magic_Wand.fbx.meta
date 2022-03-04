@@ -3,7 +3,42 @@ guid: 43ac3b5177dd84d4b859a228bfebbc5a
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body_co
+    second: {fileID: 2100000, guid: 16f4f021d95c74d498f64bd5010a3013, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Jewelry_co_01
+    second: {fileID: 2100000, guid: d6c76b966f520cf49bc189da7b2156b9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ring_co
+    second: {fileID: 2100000, guid: d4dd4bfce23cdc44c9f4ed46880c1e59, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Body_Body_co_BaseColor
+    second: {fileID: 2800000, guid: e86306b9ce653f9449056e035352d4c4, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Body_Body_co_Normal
+    second: {fileID: 2800000, guid: c6266ec163fcb7840814175d387f9952, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Ring_Ring_co_BaseColor
+    second: {fileID: 2800000, guid: beaddfc9745203042b4d205adb82a905, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Ring_Ring_co_Normal
+    second: {fileID: 2800000, guid: 05ce114c89bf9f348938b0297df1db94, type: 3}
   materials:
     materialImportMode: 1
     materialName: 0

@@ -9,6 +9,7 @@ TagManager:
   - Footsteps/Tile
   - Footsteps/Carpet
   - Footsteps/Stair
+  - Toy
   layers:
   - Default
   - TransparentFX

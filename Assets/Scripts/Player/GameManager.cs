@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public AudioSource Music;
     public Slider musicSlider;
 
+    public AudioClip[] Sounds;
+
     public FirstPersonController Sensitivity;
     public Slider sensitivitySlider;
 
@@ -65,5 +67,43 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             isPaused=true;
         }
+    }
+
+    public void Home()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void ButtonPressed()
+    {
+        Volume.PlayOneShot(Sounds[1]);
+    }
+
+    public void ResumeButtonPressed()
+    {
+        Volume.PlayOneShot(Sounds[2]);
+    }
+
+    public void muteAudio()
+    {
+        Music.volume = 0;
+    }
+
+    public void unmuteMusic()
+    {
+        //Subject to change
+        Music.volume = 1;
+    }
+
+    public void muteVolume()
+    {
+        Music.volume = 0;
+        Volume.volume = 0;
+    }
+
+    public void unmuteVolume()
+    {
+        Music.volume = 1;
+        Volume.volume = 1;
     }
 }

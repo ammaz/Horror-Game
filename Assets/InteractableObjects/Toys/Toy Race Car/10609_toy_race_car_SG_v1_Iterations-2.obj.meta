@@ -3,7 +3,17 @@ guid: f85116fc41f7b6d4b9fef8e03a3e9d95
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 10609_Toy__Race_Car
+    second: {fileID: 2100000, guid: 79acc2463414e0348b53cb1f53794a22, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 10609_Toy__Race_Car_glass
+    second: {fileID: 2100000, guid: 57e0ee388e82ba948b1abffadc8a3196, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

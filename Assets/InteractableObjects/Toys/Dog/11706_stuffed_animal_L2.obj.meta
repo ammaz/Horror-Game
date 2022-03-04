@@ -3,7 +3,17 @@ guid: d28472ac6763fda4b8eb156dd896ab21
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: toy_dog_bodyMat
+    second: {fileID: 2100000, guid: dc4aee03b9dcbc54b941d13e79ba8388, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: toy_dog_partsMat
+    second: {fileID: 2100000, guid: 9e02927d5dfaf05459ca1aa5a588b339, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

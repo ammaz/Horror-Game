@@ -234,11 +234,18 @@ public class FirstPersonController : MonoBehaviour
 			if (canInteract)
 			{
                 HandleInteractionCheck();
-                HandleInteractionInput();
+                //HandleInteractionInput();
+                InteractionCheckText();
             }
 
             if (useFootsteps)
                 Handle_Footsteps();
+
+            //For moving Object while they are picked
+            if (heldObj != null)
+            {
+                MoveObject();
+            }
 
             ApplyFinalMovements();
         }	
@@ -378,6 +385,7 @@ public class FirstPersonController : MonoBehaviour
     /// Interaction
     /// </summary>
 
+    //I have kept this for doors only
     //Constantly raycast and look for interactable objects
     private void HandleInteractionCheck()
 	{
@@ -393,10 +401,9 @@ public class FirstPersonController : MonoBehaviour
                     currentInteractable.OnFocus();
                     //Changing name of InteractionText
                     //InteractText.SetInteractText("" + currentInteractable.name);
-                    SimpleInteractText.text = "" + currentInteractable.name;
+                    //SimpleInteractText.text = "" + currentInteractable.name;
                 }
-                    
-			}
+            }
 		}
         else if (currentInteractable)
 		{
@@ -404,38 +411,31 @@ public class FirstPersonController : MonoBehaviour
             currentInteractable = null;
             //Removing name of InteractionText
             //InteractText.RemoveInteractText();
+            //SimpleInteractText.text = "";
+        }
+    }
+
+    //For changing the text
+    private void InteractionCheckText()
+    {
+        if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance, interactionLayer))
+        {
+            SimpleInteractText.text = "" + hit.transform.gameObject.name;
+        }
+        else
+        {
             SimpleInteractText.text = "";
         }
-	}
+    }
 
     //When we hit interact key the action will be performed
-    private void HandleInteractionInput()
+    //For Door Opening
+    public void HandleInteractionInput()
 	{
         //Interaction key, I will add button and touch controls in this (Subject to change)
-        if(Input.GetKeyDown(interactKey) && currentInteractable != null && Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance, interactionLayer))
+        if(currentInteractable != null && Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance, interactionLayer))
 		{
             currentInteractable.OnInteract();
-        }
-
-        //Pick/Drop Mechanics
-        /*if (Input.GetKeyDown(interactKey))
-        {
-            if (heldObj == null)
-            {
-                if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, pickUpDistance, toyLayer))
-                {
-                    PickUpObject(hit.transform.gameObject);   
-                }
-            }
-            *//*else
-            {
-                DropObject();
-            }*//*
-        }*/
-
-        if (heldObj != null)
-        {
-            MoveObject();
         }
     }
 
@@ -444,7 +444,7 @@ public class FirstPersonController : MonoBehaviour
     {
         if (heldObj == null)
         {
-            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, pickUpDistance, toyLayer))
+            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, pickUpDistance) && (hit.collider.gameObject.tag == "Toy"))
             {
                 PickUpObject(hit.transform.gameObject);
             }
