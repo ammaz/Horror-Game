@@ -17,12 +17,12 @@ public class GameManager : MonoBehaviour
     public FirstPersonController Sensitivity;
     public Slider sensitivitySlider;
 
-    private bool isPaused = false;
+    //private bool isPaused = false;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         Sensitivity.mouseSensitivity = sensitivitySlider.value;
     }
 
-    public void pauseGame()
+    /*public void pauseGame()
     {
         if (isPaused)
         {
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             isPaused=true;
         }
-    }
+    }*/
 
     public void Home()
     {
@@ -82,6 +82,12 @@ public class GameManager : MonoBehaviour
     public void ResumeButtonPressed()
     {
         Volume.PlayOneShot(Sounds[2]);
+        Time.timeScale = 1;
+    }
+
+    public void PauseButton()
+    {
+        Time.timeScale = 0;
     }
 
     public void muteAudio()

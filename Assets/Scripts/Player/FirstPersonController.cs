@@ -128,6 +128,11 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private LayerMask interactionLayer = default;
     private Interactable currentInteractable;
 
+    [Header("Interaction Buttons")]
+    [SerializeField] private Button pick;
+    [SerializeField] private Button drop;
+    [SerializeField] private Button interact;
+
     //Sliding Parameters
     private Vector3 hitPointNormal;
     private bool IsSliding
@@ -204,6 +209,7 @@ public class FirstPersonController : MonoBehaviour
 	void Start()
     {
         //InteractText = gameObject.GetComponent<InteractUI>();
+        //Audio = FindObjectOfType<Sound>();
     }
 
     void Update()
@@ -246,6 +252,9 @@ public class FirstPersonController : MonoBehaviour
             {
                 MoveObject();
             }
+
+            //For Buttons
+            HandleButtons();
 
             ApplyFinalMovements();
         }	
@@ -485,6 +494,44 @@ public class FirstPersonController : MonoBehaviour
 
         heldObj.transform.parent = null;
         heldObj = null;
+    }
+
+    //Handling Interact Buttons
+    private void HandleButtons()
+    {
+        //For Interact Button
+        if (currentInteractable != null && Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance, interactionLayer))
+        {
+            interact.gameObject.SetActive(true);
+        }
+        else
+        {
+            interact.gameObject.SetActive(false);
+        }
+
+        //For Pick Button
+        if (heldObj == null)
+        {
+            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, pickUpDistance) && (hit.collider.gameObject.tag == "Toy"))
+            {
+                pick.gameObject.SetActive(true);
+            }
+            else
+            {
+                pick.gameObject.SetActive(false);
+            }
+        }
+
+        //For Drop Button
+        if (heldObj != null)
+        {
+            drop.gameObject.SetActive(true);
+            pick.gameObject.SetActive(false);
+        }
+        else 
+        {
+            drop.gameObject.SetActive(false);
+        }
     }
 
     private void Handle_Footsteps()

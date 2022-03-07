@@ -8,9 +8,23 @@ public class Door : Interactable
     private bool canBeInteractactedWith = true;
     private Animator anim;
 
+    //For AudioSource
+    private AudioSource Audio;
+
+    //For AudioClips
+    private AudioClip doorOpen;
+    private AudioClip doorClose;
+    private AudioClip horrorDoorClose;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
+        Audio = GetComponent<AudioSource>();
+
+        //Passing AudioClips
+        doorOpen = Resources.Load<AudioClip>("DoorOpen");
+        doorClose = Resources.Load<AudioClip>("DoorClose");
+        horrorDoorClose = Resources.Load<AudioClip>("DoorCloseHorror");
     }
 
     public override void OnFocus()
@@ -30,6 +44,14 @@ public class Door : Interactable
             float dot = Vector3.Dot(doorTransformDirection, playerTransformDirection);
             anim.SetFloat("dot",dot);
             anim.SetBool("isOpen",isOpen);
+            if (isOpen)
+            {
+                PlaySound("DoorOpen");
+            }
+            else if(!isOpen)
+            {
+                PlaySound("DoorClose");
+            }
 
             StartCoroutine(AutoClose());
         }
@@ -46,6 +68,10 @@ public class Door : Interactable
 
         if (Vector3.Distance(transform.position, FirstPersonController.instance.transform.position) > 3)
         {
+            if (isOpen)
+            {
+                PlaySound("HorrorDoorClose");
+            }
             isOpen = false;
             anim.SetFloat("dot", 0);
             anim.SetBool("isOpen", isOpen);
@@ -60,5 +86,27 @@ public class Door : Interactable
     private void Animator_UnlockInteraction()
     {
         canBeInteractactedWith = true;
+    }
+
+    private void PlaySound(string clipName)
+    {
+        switch (clipName)
+        {
+            case "DoorOpen":
+                Audio.PlayOneShot(doorOpen);
+                break;
+        }
+        switch (clipName)
+        {
+            case "DoorClose":
+                Audio.PlayOneShot(doorClose);
+                break;
+        }
+        switch (clipName)
+        {
+            case "HorrorDoorClose":
+                Audio.PlayOneShot(horrorDoorClose);
+                break;
+        }
     }
 }
