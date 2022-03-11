@@ -1,37 +1,34 @@
 fileFormatVersion: 2
-guid: 0b2a46f980eac004ca7638b0df29ff08
+guid: de25908f74b37a34e9c5572d6aebbbb6
 ModelImporter:
   serializedVersion: 19301
-  internalIDToNameTable:
-  - first:
-      74: -203655887218126122
-    second: mixamo.com
+  internalIDToNameTable: []
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.005
-    second: {fileID: 2100000, guid: 4c8b4bdb8d1642947a072f3f606f7c14, type: 2}
+      name: Material.001
+    second: {fileID: 2100000, guid: 6e92311661693ec4fa886d84293ad0a5, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: eye base.004
-    second: {fileID: 2100000, guid: f734451b36a78a348970b651910bc239, type: 2}
+      name: eye base.001
+    second: {fileID: 2100000, guid: d2c7fbc84e56baa44bf36f9d2af80f48, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: face.004
-    second: {fileID: 2100000, guid: 223da539a4cf2c44d9ade95ffe150c89, type: 2}
+      name: face.001
+    second: {fileID: 2100000, guid: d7732da831a22d54096a0e3c5a602c5b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: pant.004
-    second: {fileID: 2100000, guid: df82aca4c0cc296479cf0ef39c436050, type: 2}
+      name: pant.001
+    second: {fileID: 2100000, guid: b1542abc720078643b63235737ba2590, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: tshirt.004
-    second: {fileID: 2100000, guid: 8fba953210de0c849b471fefc3e375e1, type: 2}
+      name: tshirt.001
+    second: {fileID: 2100000, guid: f1de256c73c3734449ebda498d207172, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -96,8 +93,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips:
-  - f21a1bd5a9b0c294a962a9ee1b5ae4ee
+  referencedClips: []
   importAnimation: 1
   humanDescription:
     serializedVersion: 3

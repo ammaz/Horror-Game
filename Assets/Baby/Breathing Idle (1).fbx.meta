@@ -1,37 +1,12 @@
 fileFormatVersion: 2
-guid: 0b2a46f980eac004ca7638b0df29ff08
+guid: 976d9e89bbe237743bca1ae157109bb7
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
       74: -203655887218126122
     second: mixamo.com
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.005
-    second: {fileID: 2100000, guid: 4c8b4bdb8d1642947a072f3f606f7c14, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: eye base.004
-    second: {fileID: 2100000, guid: f734451b36a78a348970b651910bc239, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: face.004
-    second: {fileID: 2100000, guid: 223da539a4cf2c44d9ade95ffe150c89, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: pant.004
-    second: {fileID: 2100000, guid: df82aca4c0cc296479cf0ef39c436050, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: tshirt.004
-    second: {fileID: 2100000, guid: 8fba953210de0c849b471fefc3e375e1, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -96,8 +71,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips:
-  - f21a1bd5a9b0c294a962a9ee1b5ae4ee
+  referencedClips: []
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
