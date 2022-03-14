@@ -10,6 +10,7 @@ TagManager:
   - Footsteps/Carpet
   - Footsteps/Stair
   - Toy
+  - FridgeDoor
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Interactable
   - 
   - Ground
-  - 
+  - Player
   - 
   - 
   - 

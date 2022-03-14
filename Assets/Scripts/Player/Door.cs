@@ -55,6 +55,28 @@ public class Door : Interactable
 
             StartCoroutine(AutoClose());
         }
+
+        if(canBeInteractactedWith && gameObject.tag == "FridgeDoor")
+        {
+            //isOpen = !isOpen;
+
+            Vector3 doorTransformDirection = transform.TransformDirection(Vector3.forward);
+            Vector3 playerTransformDirection = FirstPersonController.instance.transform.position - transform.position;
+            //Will have to change dot value to -90 if things doesnt work
+            float dot = Vector3.Dot(doorTransformDirection, playerTransformDirection);
+
+            anim.SetFloat("dot", dot);
+            anim.SetBool("isOpen", isOpen);
+
+            if (isOpen)
+            {
+                PlaySound("DoorOpen");
+            }
+            else if (!isOpen)
+            {
+                PlaySound("DoorClose");
+            }
+        }
     }
 
     public override void OnLoseFocus()
