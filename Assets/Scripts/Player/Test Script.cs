@@ -1,0 +1,34 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TestScript : MonoBehaviour
+{
+
+    public FixedJoint Baby;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void PickDrop()
+    {
+        if (Baby.connectedMassScale == 0)
+        {
+            Baby.connectedMassScale = 2;
+        }
+        if (Baby.connectedMassScale == 2)
+        {
+            Baby.connectedMassScale = 0;
+        }  
+    }
+
+}
