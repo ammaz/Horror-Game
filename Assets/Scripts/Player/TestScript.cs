@@ -25,10 +25,10 @@ public class TestScript : MonoBehaviour
         {
             Baby.connectedMassScale = 2;
         }
-        if (Baby.connectedMassScale == 2)
+        else
         {
             Baby.connectedMassScale = 0;
-        }  
+        }
     }
 
 }
