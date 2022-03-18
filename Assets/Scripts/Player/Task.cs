@@ -1,7 +1,8 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
 
 public class Task : ScriptableObject
 {
@@ -85,7 +86,7 @@ public class Task : ScriptableObject
 
     private void CheckGoals()
     {
-        //Completed = Goals.All(g=>g.Completed);
+        Completed = Goals.All(g=>g.Completed);
         if (Completed)
         {
             //give reward
@@ -96,4 +97,4 @@ public class Task : ScriptableObject
     }
 }
 
-public class TaskCompletedEvent : UnityEvent<Task> { }
+public class TaskCompletedEvent : UnityEvent<Task> { }*/

@@ -1337,7 +1337,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &39911267
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1568,6 +1568,7 @@ Transform:
   - {fileID: 2132046470}
   - {fileID: 1585923718}
   - {fileID: 641266433}
+  - {fileID: 996365123}
   m_Father: {fileID: 1101443123}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1642,7 +1643,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 3383
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2410,7 +2411,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &72939482
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4667,7 +4668,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Level 1
+  m_Text: 
 --- !u!222 &142728887
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11411,6 +11412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 362409250}
   - component: {fileID: 362409251}
+  - component: {fileID: 362409252}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -11454,6 +11456,107 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e259693d712b450981e9b671414da306, type: 3}
   Sensitivity: {fileID: 1101443120}
   sensitivitySlider: {fileID: 1659500732}
+--- !u!114 &362409252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362409249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9848c5e031f9f5f40aa250e6fbf9f730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quest:
+  - isActive: 1
+    taskNumber: 1
+    description: Take the feeder from fridge
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 1
+    taskNumber: 2
+    description: Feed the baby
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 1
+    taskNumber: 3
+    description: Take baby to washroom
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 1
+    taskNumber: 4
+    description: Change baby diaper
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 5
+    description: Take baby to the bedroom
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 6
+    description: Clean the TV lounge
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 7
+    description: Pickup plates from the table
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 8
+    description: Wash all the plates
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 9
+    description: Sit on couch
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 10
+    description: Turn on TV to watch it
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  player: {fileID: 1101443120}
+  questWindow: {fileID: 251009478}
+  LevelName: {fileID: 142728886}
+  TaskList:
+  - descriptionText: {fileID: 1501024737}
+    Tick: {fileID: 250134264}
+    Cross: {fileID: 1670221091}
+    Statusborder: {fileID: 696287062}
+    isActive: 0
+    TaskNumber: 0
+  - descriptionText: {fileID: 1590689790}
+    Tick: {fileID: 1579826783}
+    Cross: {fileID: 1971241487}
+    Statusborder: {fileID: 671227434}
+    isActive: 0
+    TaskNumber: 0
+  - descriptionText: {fileID: 1630614553}
+    Tick: {fileID: 938840519}
+    Cross: {fileID: 1565239771}
+    Statusborder: {fileID: 72939483}
+    isActive: 0
+    TaskNumber: 0
+  - descriptionText: {fileID: 723434015}
+    Tick: {fileID: 1561312695}
+    Cross: {fileID: 122450096}
+    Statusborder: {fileID: 39911268}
+    isActive: 0
+    TaskNumber: 0
 --- !u!1001 &364546986
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19602,6 +19705,25 @@ Transform:
   m_Father: {fileID: 2014549954}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &630307810 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5959471176684970838, guid: 88cd4cff51135c846b838a9836aaf0f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 8277770496315084904}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &630307814
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630307810}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 35.682365, y: 48.021168, z: 80.13584}
+  m_Center: {x: -1.667701, y: 23.48154, z: -0.012487012}
 --- !u!1 &634740126
 GameObject:
   m_ObjectHideFlags: 0
@@ -20665,7 +20787,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &671227433
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20889,6 +21011,25 @@ Transform:
   m_Father: {fileID: 648491227}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &682258938 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3869718578062425747, guid: faf5ad493b3e5c246b68a3dbd981be09,
+    type: 3}
+  m_PrefabInstance: {fileID: 273519447056972106}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &682258942
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682258938}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.018482106, y: 0.013559297, z: 0.010772341}
+  m_Center: {x: 0.0030947323, y: -0.000000015028292, z: 0.0003861698}
 --- !u!1 &685379348
 GameObject:
   m_ObjectHideFlags: 0
@@ -21183,7 +21324,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &696287061
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22058,7 +22199,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Change baby diaper
+  m_Text: 
 --- !u!222 &723434016
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30578,6 +30719,68 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5000006, y: 0.9105153, z: 0.67591685}
   m_Center: {x: 0.75000024, y: 0.44973564, z: 0.33795843}
+--- !u!1 &996365122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 996365123}
+  - component: {fileID: 996365125}
+  - component: {fileID: 996365124}
+  m_Layer: 0
+  m_Name: BabyPickup Point (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &996365123
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996365122}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.229, y: -0.12600002, z: 0.26500022}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 43794699}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!138 &996365124
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996365122}
+  m_ConnectedBody: {fileID: 8079830700545170196}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 2
+--- !u!54 &996365125
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996365122}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &998617681
 GameObject:
   m_ObjectHideFlags: 0
@@ -35217,7 +35420,7 @@ MonoBehaviour:
   upperLookLimit: 80
   lowerLookLimit: 80
   mouseSensitivity: 5
-  isTouchAllowed: 1
+  isTouchAllowed: 0
   sprintKey: 304
   JumpKey: 32
   crouchKey: 306
@@ -35261,6 +35464,67 @@ MonoBehaviour:
   interact: {fileID: 1436317603}
   joystick: {fileID: 1733129016}
   SimpleInteractText: {fileID: 412139581}
+  task:
+  - isActive: 0
+    taskNumber: 0
+    description: 
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 0
+    description: 
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 0
+    description: 
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 0
+    description: 
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 0
+    description: 
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 0
+    description: 
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 0
+    description: 
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 0
+    description: 
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 0
+    description: 
+    Win: 0
+    Lose: 0
+    inProgress: 0
+  - isActive: 0
+    taskNumber: 0
+    description: 
+    Win: 0
+    Lose: 0
+    inProgress: 0
 --- !u!82 &1101443121
 AudioSource:
   m_ObjectHideFlags: 0
@@ -39274,6 +39538,25 @@ Transform:
   m_Father: {fileID: 776502574}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1234263486 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 43dde419b9a04734a8ff27a1b25311cf,
+    type: 3}
+  m_PrefabInstance: {fileID: 23537935}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1234263487
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234263486}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.84772444, y: 0.45545298, z: 2.300269}
+  m_Center: {x: -0.5189154, y: 0.22772656, z: 1.1498659}
 --- !u!1 &1235299168
 GameObject:
   m_ObjectHideFlags: 0
@@ -43137,6 +43420,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 362409251}
         m_MethodName: PauseButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 362409252}
+        m_MethodName: OpenQuestWindow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -48911,7 +49205,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Take the feeder from fridge
+  m_Text: 
 --- !u!222 &1501024738
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -51918,7 +52212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1585923718
 Transform:
   m_ObjectHideFlags: 0
@@ -52573,7 +52867,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Feed the baby
+  m_Text: 
 --- !u!222 &1590689791
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -53836,7 +54130,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Take baby to washroom
+  m_Text: 
 --- !u!222 &1630614554
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -66748,7 +67042,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2132046466}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.229, y: -0.12600002, z: 0.26500022}
+  m_LocalPosition: {x: 0.229, y: -0.12600002, z: 0.755}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 43794699}
@@ -67762,7 +68056,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0039430386, y: 0.77406406, z: 0.011280157}
+  m_ConnectedAnchor: {x: -0.003943031, y: 0.774064, z: 0.011280168}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -77610,7 +77904,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000011213124, y: 0.3260193, z: 0.00000020861626}
+  m_ConnectedAnchor: {x: 0.0000010319054, y: 0.32601923, z: 0.00000035762787}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: -1, z: 0}
   m_TwistLimitSpring:
@@ -77966,7 +78260,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.37459245, y: 0.5362736, z: 0.002023235}
+  m_ConnectedAnchor: {x: -0.3745923, y: 0.5362736, z: 0.0020232499}
   serializedVersion: 2
   m_SwingAxis: {x: 1, y: 0, z: 0}
   m_TwistLimitSpring:
@@ -80469,7 +80763,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000035762787, y: 0.39239419, z: -0.0000010579824}
+  m_ConnectedAnchor: {x: 0.0000004246831, y: 0.39239416, z: -0.0000010915101}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -83544,7 +83838,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.15293992, y: -0.088445164, z: -0.025732487}
+  m_ConnectedAnchor: {x: 0.15293984, y: -0.088445164, z: -0.025732487}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -92979,7 +93273,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.15294091, y: -0.08844518, z: -0.025421388}
+  m_ConnectedAnchor: {x: -0.15294085, y: -0.08844518, z: -0.025421388}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -93286,7 +93580,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000010002404, y: 0.3923938, z: -0.0000008046627}
+  m_ConnectedAnchor: {x: -0.0000010579824, y: 0.3923938, z: -0.00000082701445}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -93921,7 +94215,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000003632158, y: 0.32595402, z: 0.0000005662441}
+  m_ConnectedAnchor: {x: -0.00000031106174, y: 0.32595402, z: 0.00000074505806}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: -1, z: 0}
   m_TwistLimitSpring:
@@ -99760,8 +100054,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7591192146625399544}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -4.5317388, y: 1.2483001, z: 5.3561397}
-  m_LocalScale: {x: 0.2000008, y: 0.2, z: 0.2000008}
+  m_LocalPosition: {x: -4.090739, y: 1.2483001, z: 5.3561397}
+  m_LocalScale: {x: 0.20000087, y: 0.2, z: 0.20000087}
   m_Children:
   - {fileID: 795744715747363913}
   - {fileID: 1320405646392500559}
@@ -101444,7 +101738,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.37718, y: 0.55232865, z: -0.021164034}
+  m_ConnectedAnchor: {x: 0.37718225, y: 0.55232865, z: -0.021163996}
   serializedVersion: 2
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_TwistLimitSpring:
@@ -105188,7 +105482,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000047124922, y: 0.15919055, z: -0.012394859}
+  m_ConnectedAnchor: {x: 0.00000047078356, y: 0.15919055, z: -0.012394863}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:

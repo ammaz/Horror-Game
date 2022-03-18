@@ -180,6 +180,9 @@ public class FirstPersonController : MonoBehaviour
     float mouseX = 0;
     float mouseY = 0;
 
+    //Player Tasks
+    public Quest[] task;
+
     #endregion
 
     #region Singleton
@@ -257,6 +260,9 @@ public class FirstPersonController : MonoBehaviour
             HandleButtons();
 
             ApplyFinalMovements();
+
+            //Check player progress
+            //CheckPlayerProgress();
         }	
     }
 
@@ -585,6 +591,28 @@ public class FirstPersonController : MonoBehaviour
         //For moving player (W,S,A,D) movements
         characterController.Move(moveDirection * Time.deltaTime);
 	}
+
+    /*private void CheckPlayerProgress()
+    {
+        for (int a = 0; a < task.Length; a++)
+        {
+            if (task[a].WinOrLose == true)
+            {
+                task[a].Tick.gameObject.SetActive(true);
+                task[a].Cross.gameObject.SetActive(false);
+            }
+            else
+            {
+                task[a].Tick.gameObject.SetActive(false);
+                task[a].Cross.gameObject.SetActive(true);
+            }
+        }
+
+        for (int a = 0; a < task.Length; a++)
+        {
+            task[a].activate();
+        }
+    }*/
     #endregion
 
     #region Coroutine Functions
