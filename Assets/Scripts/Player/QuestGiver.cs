@@ -25,13 +25,12 @@ public class QuestGiver : MonoBehaviour
     void Start()
     {
         LevelName.text = "" + SceneManager.GetActiveScene().name;
+        OpenQuestWindow();
     }
 
     //Assign to TaskBook Button
     public void OpenQuestWindow()
     {
-        //questWindow.SetActive(true);
-
         for (int a = 0; a < quest.Length; a++)
         {
             if (quest[a].isActive == true && quest[a].inProgress==false)
@@ -40,6 +39,7 @@ public class QuestGiver : MonoBehaviour
                 //For Deactivating
                 for(int b = 0; b < TaskList.Length; b++)
                 {
+                    //Checking if task is completed or not (By tick or cross)
                     if (TaskList[b].Tick.gameObject.activeSelf == true || TaskList[b].Cross.gameObject.activeSelf == true)
                     {
                         check++;
@@ -91,8 +91,10 @@ public class QuestGiver : MonoBehaviour
                     }
                 }
             }
-
+            player.task[a] = quest[a];
         }
+
+       
 
         /*else
         {

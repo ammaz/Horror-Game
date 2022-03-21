@@ -43,8 +43,8 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private bool useFootsteps = true;
 
     [Header("Movement Parameters")]
-    [SerializeField] private float walkSpeed = 1.5f;
-    [SerializeField] private float sprintSpeed = 2.0f;
+    [SerializeField] private float walkSpeed = 1f;
+    [SerializeField] private float sprintSpeed = 1.5f;
     [SerializeField] private float crouchSpeed = 0.5f;
     [SerializeField] private float sloopSpeed = 8f;
 
@@ -90,11 +90,11 @@ public class FirstPersonController : MonoBehaviour
 
     [Header("Headbob Parameters")]
     //Headbob effect while walking
-    [SerializeField] private float walkBobSpeed = 10f;
+    [SerializeField] private float walkBobSpeed = 8f;
     [SerializeField] private float walkBobAmount = 0.02f;
     //Headbob effect sprinting
-    [SerializeField] private float sprintBobSpeed = 16f;
-    [SerializeField] private float sprintBobAmount = 0.04f;
+    [SerializeField] private float sprintBobSpeed = 10f;
+    [SerializeField] private float sprintBobAmount = 0.02f;
     //Headbob effect while crouching
     [SerializeField] private float crouchBobSpeed = 8f;
     [SerializeField] private float crouchBobAmount = 0.01f;
@@ -107,7 +107,6 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] public float moveForce = 250;
     [SerializeField] public float pickUpDistance = 4;
     [SerializeField] private Transform holdParent;
-    [SerializeField] private LayerMask toyLayer = default;
     private GameObject heldObj;
 
     [Header("FootStep Parameters")]
@@ -126,6 +125,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private Vector3 interactionRayPoint = default;
     [SerializeField] private float interactionDistance = default;
     [SerializeField] private LayerMask interactionLayer = default;
+    [SerializeField] private LayerMask babyLayer = default;
     private Interactable currentInteractable;
 
     [Header("Interaction Buttons")]
@@ -182,6 +182,10 @@ public class FirstPersonController : MonoBehaviour
 
     //Player Tasks
     public Quest[] task;
+    private bool feederCheck;
+
+    //Baby Pickup point
+    public FixedJoint Baby;
 
     #endregion
 
@@ -213,6 +217,9 @@ public class FirstPersonController : MonoBehaviour
     {
         //InteractText = gameObject.GetComponent<InteractUI>();
         //Audio = FindObjectOfType<Sound>();
+
+        //Throwing Baby on ground
+        Baby.connectedMassScale = 0;
     }
 
     void Update()
@@ -262,7 +269,12 @@ public class FirstPersonController : MonoBehaviour
             ApplyFinalMovements();
 
             //Check player progress
-            //CheckPlayerProgress();
+            CheckPlayerProgress();
+
+/*            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, pickUpDistance))
+            {
+                Debug.Log(hit.collider.gameObject.layer==12);
+            }*/
         }	
     }
 
@@ -437,6 +449,10 @@ public class FirstPersonController : MonoBehaviour
         {
             SimpleInteractText.text = "" + hit.transform.gameObject.name;
         }
+        else if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, babyLayer))
+        {
+            SimpleInteractText.text = "Baby";
+        }
         else
         {
             SimpleInteractText.text = "";
@@ -452,16 +468,34 @@ public class FirstPersonController : MonoBehaviour
 		{
             currentInteractable.OnInteract();
         }
+
+        if (heldObj != null)
+        {
+            if (heldObj.name == "Feeder" && SimpleInteractText.text == "Baby")
+            {
+                feederCheck = true;
+                //Destroying Feeder
+                Destroy(heldObj,0.5f);
+            }
+            else
+            {
+                feederCheck = false;
+            }
+        } 
     }
 
     //Pick/Drop Mechanics
     public void PickObject()
     {
-        if (heldObj == null)
+        if (heldObj == null && Baby.connectedMassScale==0)
         {
-            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, pickUpDistance) && (hit.collider.gameObject.tag == "Toy"))
+            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, pickUpDistance) && hit.collider.gameObject.tag == "Toy")
             {
                 PickUpObject(hit.transform.gameObject);
+            }
+            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, babyLayer))
+            {
+                Baby.connectedMassScale = 2;
             }
         }
     }
@@ -494,12 +528,21 @@ public class FirstPersonController : MonoBehaviour
     //Pick/Drop Mechanics
     public void DropObject()
     {
-        Rigidbody heldRig = heldObj.GetComponent<Rigidbody>();
-        heldRig.useGravity = true;
-        heldRig.drag = 1;
+        //Here I will disable Baby's Rigidbody and enable Animations
+        if (Baby.connectedMassScale == 2)
+        {
+            Baby.connectedMassScale = 0;
+        }
+        else
+        {
+            Rigidbody heldRig = heldObj.GetComponent<Rigidbody>();
+            heldRig.useGravity = true;
+            heldRig.drag = 1;
 
-        heldObj.transform.parent = null;
-        heldObj = null;
+            heldObj.transform.parent = null;
+            heldObj = null;
+        }
+
     }
 
     //Handling Interact Buttons
@@ -510,15 +553,27 @@ public class FirstPersonController : MonoBehaviour
         {
             interact.gameObject.SetActive(true);
         }
+        else if (heldObj != null)
+        {
+            if (heldObj.name == "Feeder" && SimpleInteractText.text == "Baby")
+            {
+                interact.gameObject.SetActive(true);
+            }
+            else
+            {
+                interact.gameObject.SetActive(false);
+            }
+        }
         else
         {
             interact.gameObject.SetActive(false);
         }
 
+
         //For Pick Button
-        if (heldObj == null)
+        if (heldObj == null && Baby.connectedMassScale == 0)
         {
-            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, pickUpDistance) && (hit.collider.gameObject.tag == "Toy"))
+            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, pickUpDistance) && hit.collider.gameObject.tag == "Toy" || (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, babyLayer)))
             {
                 pick.gameObject.SetActive(true);
             }
@@ -529,7 +584,7 @@ public class FirstPersonController : MonoBehaviour
         }
 
         //For Drop Button
-        if (heldObj != null)
+        if (heldObj != null || Baby.connectedMassScale==2)
         {
             drop.gameObject.SetActive(true);
             pick.gameObject.SetActive(false);
@@ -592,27 +647,24 @@ public class FirstPersonController : MonoBehaviour
         characterController.Move(moveDirection * Time.deltaTime);
 	}
 
-    /*private void CheckPlayerProgress()
+    private void CheckPlayerProgress()
     {
-        for (int a = 0; a < task.Length; a++)
+        for(int q = 0; q < task.Length; q++)
         {
-            if (task[a].WinOrLose == true)
+            if(task[q].isActive && task[q].inProgress)
             {
-                task[a].Tick.gameObject.SetActive(true);
-                task[a].Cross.gameObject.SetActive(false);
-            }
-            else
-            {
-                task[a].Tick.gameObject.SetActive(false);
-                task[a].Cross.gameObject.SetActive(true);
+                task[q].goal.Pick(heldObj);
+                task[q].goal.Give(heldObj, SimpleInteractText.text,feederCheck);
+                if (task[q].goal.IsReached())
+                {
+                    if(task[q].goal.Success==true)
+                        task[q].Win = true;
+                    if (task[q].goal.Failed == true)
+                        task[q].Lose = true;
+                }
             }
         }
-
-        for (int a = 0; a < task.Length; a++)
-        {
-            task[a].activate();
-        }
-    }*/
+    }
     #endregion
 
     #region Coroutine Functions

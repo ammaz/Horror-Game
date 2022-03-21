@@ -15,4 +15,6 @@ public class Quest
     public bool Lose;
 
     public bool inProgress;
+
+    public QuestGoal goal;
 }
