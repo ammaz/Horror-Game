@@ -7,14 +7,11 @@ public class QuestGoal
 {
     public GoalType goalType;
 
-    public bool Failed;
+   /* public bool Failed;
     public bool Success;
     public bool Completed;
 
-    public bool IsReached()
-    {
-        return Completed;
-    }
+    private Quest[] task = new Quest[10];
 
     public void Pick(GameObject objectName)
     {
@@ -22,9 +19,14 @@ public class QuestGoal
         {
             if (objectName.name == "Feeder")
             {
-                Success = true;
-                Failed = false;
-                Completed = true;  
+                task[0].goal.Success = true;
+                task[0].goal.Failed = false;
+            }
+
+            if (objectName.name == "Plates")
+            {
+                task[6].goal.Success = true;
+                task[6].goal.Failed = false;
             }
         }  
     }
@@ -36,12 +38,11 @@ public class QuestGoal
             //Baby layer 12 (Change the number if will change baby layer)
             if(pickedObject.name == "Feeder" && text=="Baby" && feederCheck==true)
             {
-                Success = true;
-                Failed = false;
-                Completed = true;
+                task[2].goal.Success = true;
+                task[2].goal.Failed = false;
             }
         }
-    }
+    }*/
 }
 
 public enum GoalType
@@ -51,5 +52,6 @@ public enum GoalType
     drop,
     wash,
     sit,
-    watch
+    watch,
+    GoTo
 }

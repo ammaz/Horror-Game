@@ -17,4 +17,6 @@ public class Quest
     public bool inProgress;
 
     public QuestGoal goal;
+
+    public bool Completed;
 }

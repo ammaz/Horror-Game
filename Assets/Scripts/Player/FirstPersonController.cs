@@ -5,6 +5,7 @@ using TMPro;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class FirstPersonController : MonoBehaviour
 {
@@ -182,7 +183,7 @@ public class FirstPersonController : MonoBehaviour
 
     //Player Tasks
     public Quest[] task;
-    private bool feederCheck;
+    private bool GiveButtonPressed;
 
     //Baby Pickup point
     public FixedJoint Baby;
@@ -270,11 +271,6 @@ public class FirstPersonController : MonoBehaviour
 
             //Check player progress
             CheckPlayerProgress();
-
-/*            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, pickUpDistance))
-            {
-                Debug.Log(hit.collider.gameObject.layer==12);
-            }*/
         }	
     }
 
@@ -471,15 +467,15 @@ public class FirstPersonController : MonoBehaviour
 
         if (heldObj != null)
         {
-            if (heldObj.name == "Feeder" && SimpleInteractText.text == "Baby")
+            if (((heldObj.name == "Feeder") || (heldObj.name == "Diaper")) && SimpleInteractText.text == "Baby")
             {
-                feederCheck = true;
+                GiveButtonPressed = true;
                 //Destroying Feeder
                 Destroy(heldObj,0.5f);
             }
             else
             {
-                feederCheck = false;
+                GiveButtonPressed = false;
             }
         } 
     }
@@ -555,7 +551,7 @@ public class FirstPersonController : MonoBehaviour
         }
         else if (heldObj != null)
         {
-            if (heldObj.name == "Feeder" && SimpleInteractText.text == "Baby")
+            if (((heldObj.name == "Feeder") || (heldObj.name == "Diaper")) && SimpleInteractText.text == "Baby")
             {
                 interact.gameObject.SetActive(true);
             }
@@ -647,24 +643,105 @@ public class FirstPersonController : MonoBehaviour
         characterController.Move(moveDirection * Time.deltaTime);
 	}
 
-    private void CheckPlayerProgress()
+    /*private void CheckPlayerProgress()
     {
         for(int q = 0; q < task.Length; q++)
         {
-            if(task[q].isActive && task[q].inProgress)
+            if(task[q].isActive && task[q].inProgress && task[q].goal.Completed==false)
             {
                 task[q].goal.Pick(heldObj);
-                task[q].goal.Give(heldObj, SimpleInteractText.text,feederCheck);
-                if (task[q].goal.IsReached())
+                task[q].goal.Give(heldObj, SimpleInteractText.text,GiveButtonPressed);
+
+                if (task[q].goal.Success == true)
                 {
-                    if(task[q].goal.Success==true)
-                        task[q].Win = true;
-                    if (task[q].goal.Failed == true)
-                        task[q].Lose = true;
+                    task[q].Win = true;
+                    task[q].goal.Completed = true;
+                }
+                if (task[q].goal.Failed == true)
+                {
+                    task[q].Lose = true;
+                    task[q].goal.Completed = true;
+                }
+                break;
+            }
+        }
+    }*/
+
+    //Player Progress Level System
+    private void CheckPlayerProgress()
+    {
+        //Checking for Level
+        if (SceneManager.GetActiveScene().name == "Level 1")
+        {
+            //Total Tasks
+            for (int q = 0; q < task.Length; q++)
+            {
+                //Checking if task is active and in progress(given to player in task book) and is it completed or nor
+                if (task[q].isActive && task[q].inProgress && task[q].Completed == false)
+                {
+                    //Pickup Tasks
+                    if (task[q].goal.goalType == GoalType.pick && heldObj != null)
+                    {
+                        //Take the feeder from fridge
+                        if (heldObj.name == "Feeder")
+                        {
+                            task[0].Win = true;
+                            task[0].Completed = true;
+                        }
+
+                        //Pickup plates from the table
+                        if (heldObj.name == "Plate")
+                        {
+                            task[6].Win = true;
+                            task[6].Completed = true;
+                        }
+                    }
+
+                    //Give Tasks
+                    if (task[q].goal.goalType == GoalType.give && SimpleInteractText.text != null && GiveButtonPressed == true && heldObj != null)
+                    {
+                        //Feed the baby
+                        if (heldObj.name == "Feeder" && SimpleInteractText.text == "Baby")
+                        {
+                            task[1].Win = true;
+                            task[1].Completed = true;
+                            GiveButtonPressed = false;
+                        }
+
+                        //Change baby diaper
+                        if (heldObj.name == "Diaper" && SimpleInteractText.text == "Baby")
+                        {
+                            task[3].Win = true;
+                            task[3].Completed = true;
+                            GiveButtonPressed = false;
+                        }
+                    }
+                    
+                    //Goto Tasks
+                    if (task[q].goal.goalType == GoalType.GoTo)
+                    {
+                        //Take baby to washroom
+                        if (Baby.connectedMassScale==2 && gotoPoints.pointName=="washroom")
+                        {
+                            task[2].Win = true;
+                            task[2].Completed = true;
+                            gotoPoints.pointName = null;
+                        }
+
+                        //Take baby to bedroom
+                        if (Baby.connectedMassScale == 2 && gotoPoints.pointName == "bedroom")
+                        {
+                            task[4].Win = true;
+                            task[4].Completed = true;
+                            gotoPoints.pointName = null;
+                        }
+                    }
                 }
             }
         }
+        
     }
+
     #endregion
 
     #region Coroutine Functions
