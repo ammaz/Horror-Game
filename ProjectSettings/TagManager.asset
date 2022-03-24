@@ -11,6 +11,10 @@ TagManager:
   - Footsteps/Stair
   - Toy
   - FridgeDoor
+  - Garbage
+  - DustBin
+  - Couch
+  - Couch1
   layers:
   - Default
   - TransparentFX
