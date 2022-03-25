@@ -138,6 +138,10 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private Button uncrouch;
     [SerializeField] private Button jump;
 
+    [Header("Video Parameters")]
+    [SerializeField] private GameObject SimpleTV;
+    [SerializeField] private GameObject NoSignalTV;
+
     //Sliding Parameters
     private Vector3 hitPointNormal;
     private bool IsSliding
@@ -192,6 +196,10 @@ public class FirstPersonController : MonoBehaviour
 
     //Baby Pickup point
     public FixedJoint Baby;
+
+    //Garbage Spawn
+    public GameObject Garbage;
+    private bool GarbageSpawned;
 
     #endregion
 
@@ -511,6 +519,17 @@ public class FirstPersonController : MonoBehaviour
                 GiveButtonPressed = false;
             }
         }
+
+        //Turning on/off TV
+        if (SimpleInteractText.text=="TV")
+        {
+            if(SimpleTV.activeSelf==true)
+                SimpleTV.SetActive(false);
+            else
+                SimpleTV.SetActive(true);
+        }
+
+        //Sitting on couch
         if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, interactionLayer))
         {
             if (SimpleInteractText.text == "Couch")
@@ -518,6 +537,7 @@ public class FirstPersonController : MonoBehaviour
                 if (canMove == true)
                 {
                     StartCoroutine(SitonCouch(hit.transform.gameObject));
+                    NoSignalTV.SetActive(true);
                 }
                 else if (canMove == false)
                 {
@@ -526,6 +546,7 @@ public class FirstPersonController : MonoBehaviour
                     uncrouch.gameObject.SetActive(false);
                     jump.gameObject.SetActive(true);
                     StartCoroutine(CrouchStand());
+                    NoSignalTV.SetActive(false);
                 }
             }
         }
@@ -615,7 +636,7 @@ public class FirstPersonController : MonoBehaviour
                 interact.gameObject.SetActive(false);
             }
         }
-        else if (SimpleInteractText.text=="Couch")
+        else if (SimpleInteractText.text=="Couch" || SimpleInteractText.text=="TV")
         {
             interact.gameObject.SetActive(true);
         }
@@ -762,7 +783,7 @@ public class FirstPersonController : MonoBehaviour
                         else
                         {
                             //Clean the TV Lounge -> Task[6]
-                            if (GameObject.FindGameObjectsWithTag("Garbage").Length == 0)
+                            if (GameObject.FindGameObjectsWithTag("Garbage").Length == 0 && task[4].Completed)
                             {
                                 task[5].Win = true;
                                 task[5].Completed = true;
@@ -824,7 +845,7 @@ public class FirstPersonController : MonoBehaviour
                         }
                     }
 
-                    //Sit
+                    //Sit Task
                     if (task[q].goal.goalType == GoalType.sit)
                     {
                         if (canMove == false)
@@ -833,6 +854,23 @@ public class FirstPersonController : MonoBehaviour
                             task[8].Completed = true;
                             Alert.gameObject.SetActive(true);
                         }
+                    }
+
+                    //Watch Task
+                    if (task[q].goal.goalType == GoalType.watch)
+                    {
+                        if (NoSignalTV.activeSelf)
+                        {
+                            task[9].Win = true;
+                            task[9].Completed = true;
+                            Alert.gameObject.SetActive(true);
+                        }
+                    }
+
+                    //Spawning Garbage objects
+                    if(task[4].Completed==true && Garbage.activeSelf==false)
+                    {
+                        Garbage.SetActive(true);
                     }
                 }
             }
