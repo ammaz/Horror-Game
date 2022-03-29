@@ -563,7 +563,7 @@ public class FirstPersonController : MonoBehaviour
             }
             if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, babyLayer))
             {
-                Baby.connectedMassScale = 2;
+                Baby.connectedMassScale = 5;
             }
         }
     }
@@ -597,7 +597,7 @@ public class FirstPersonController : MonoBehaviour
     public void DropObject()
     {
         //Here I will disable Baby's Rigidbody and enable Animations
-        if (Baby.connectedMassScale == 2)
+        if (Baby.connectedMassScale == 5)
         {
             Baby.connectedMassScale = 0;
         }
@@ -660,7 +660,7 @@ public class FirstPersonController : MonoBehaviour
         }
 
         //For Drop Button
-        if (heldObj != null || Baby.connectedMassScale==2)
+        if (heldObj != null || Baby.connectedMassScale==5)
         {
             drop.gameObject.SetActive(true);
             pick.gameObject.SetActive(false);
@@ -827,7 +827,7 @@ public class FirstPersonController : MonoBehaviour
                     if (task[q].goal.goalType == GoalType.GoTo)
                     {
                         //Take baby to washroom -> Task[3]
-                        if (Baby.connectedMassScale==2 && gotoPoints.pointName=="washroom")
+                        if (Baby.connectedMassScale==5 && gotoPoints.pointName=="washroom")
                         {
                             task[2].Win = true;
                             task[2].Completed = true;
@@ -836,7 +836,7 @@ public class FirstPersonController : MonoBehaviour
                         }
 
                         //Take baby to bedroom -> Task[5] 6,8,9,10
-                        if (Baby.connectedMassScale == 2 && gotoPoints.pointName == "bedroom")
+                        if (Baby.connectedMassScale == 5 && gotoPoints.pointName == "bedroom")
                         {
                             task[4].Win = true;
                             task[4].Completed = true;
