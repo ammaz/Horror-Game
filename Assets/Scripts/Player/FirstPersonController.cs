@@ -109,7 +109,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] public float moveForce = 250;
     [SerializeField] public float pickUpDistance = 4;
     [SerializeField] private Transform holdParent;
-    private GameObject heldObj;
+    public GameObject heldObj;
 
     [Header("FootStep Parameters")]
     [SerializeField] private float baseStepSpeed = 0.6f;
@@ -139,8 +139,8 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private Button jump;
 
     [Header("Video Parameters")]
-    [SerializeField] private GameObject SimpleTV;
-    [SerializeField] private GameObject NoSignalTV;
+    public GameObject SimpleTV;
+    public GameObject NoSignalTV;
 
     //Sliding Parameters
     private Vector3 hitPointNormal;
@@ -191,7 +191,7 @@ public class FirstPersonController : MonoBehaviour
 
     //Player Tasks
     public Quest[] task;
-    private bool GiveButtonPressed;
+    public bool GiveButtonPressed;
     public Image Alert;
 
     //Baby Pickup point
@@ -514,6 +514,12 @@ public class FirstPersonController : MonoBehaviour
                 //Destroying Plate
                 Destroy(heldObj, 0.3f);
             }
+            else if (heldObj.name == "Shirt" && SimpleInteractText.text == "Washing Machine")
+            {
+                GiveButtonPressed = true;
+                //Destroying Plate
+                Destroy(heldObj, 0.3f);
+            }
             else
             {
                 GiveButtonPressed = false;
@@ -628,6 +634,10 @@ public class FirstPersonController : MonoBehaviour
                 interact.gameObject.SetActive(true);
             }
             else if (heldObj.name == "Plate" && SimpleInteractText.text == "Wash Plate")
+            {
+                interact.gameObject.SetActive(true);
+            }
+            else if (heldObj.name == "Shirt" && SimpleInteractText.text == "Washing Machine")
             {
                 interact.gameObject.SetActive(true);
             }

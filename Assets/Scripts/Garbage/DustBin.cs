@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Garbage : MonoBehaviour
+public class DustBin : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
