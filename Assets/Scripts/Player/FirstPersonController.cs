@@ -517,7 +517,13 @@ public class FirstPersonController : MonoBehaviour
             else if (heldObj.name == "Shirt" && SimpleInteractText.text == "Washing Machine")
             {
                 GiveButtonPressed = true;
-                //Destroying Plate
+                //Destroying Shirt
+                Destroy(heldObj, 0.3f);
+            }
+            else if (heldObj.name == "Key" && SimpleInteractText.text == "Locked")
+            {
+                GiveButtonPressed = true;
+                //Destroying Key
                 Destroy(heldObj, 0.3f);
             }
             else
@@ -563,7 +569,7 @@ public class FirstPersonController : MonoBehaviour
     {
         if (heldObj == null && Baby.connectedMassScale==0)
         {
-            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, pickUpDistance) && ((hit.collider.gameObject.tag == "Toy") || (hit.collider.gameObject.tag == "Garbage")))
+            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, pickUpDistance) && ((hit.collider.gameObject.tag == "Toy") || (hit.collider.gameObject.tag == "Garbage") || (hit.collider.gameObject.tag == "Toys")))
             {
                 PickUpObject(hit.transform.gameObject);
             }
@@ -641,6 +647,10 @@ public class FirstPersonController : MonoBehaviour
             {
                 interact.gameObject.SetActive(true);
             }
+            else if (heldObj.name == "Key" && SimpleInteractText.text == "Locked")
+            {
+                interact.gameObject.SetActive(true);
+            }
             else
             {
                 interact.gameObject.SetActive(false);
@@ -659,7 +669,7 @@ public class FirstPersonController : MonoBehaviour
         //For Pick Button
         if (heldObj == null && Baby.connectedMassScale == 0)
         {
-            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, pickUpDistance) && ((hit.collider.gameObject.tag == "Toy") || (hit.collider.gameObject.tag == "Garbage")) || (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, babyLayer)))
+            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, pickUpDistance) && ((hit.collider.gameObject.tag == "Toy") || (hit.collider.gameObject.tag == "Garbage") || (hit.collider.gameObject.tag == "Toys")) || (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, babyLayer)))
             {
                 pick.gameObject.SetActive(true);
             }
