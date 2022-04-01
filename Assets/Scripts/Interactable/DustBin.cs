@@ -26,4 +26,15 @@ public class DustBin : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Garbage"))
+        {
+            if (other.GetComponent<Rigidbody>().useGravity == true)
+            {
+                Destroy(other.gameObject, 0.1f);
+            }
+        }
+    }
 }

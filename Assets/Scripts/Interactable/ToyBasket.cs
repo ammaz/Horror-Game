@@ -26,4 +26,15 @@ public class ToyBasket : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Toys"))
+        {
+            if (other.GetComponent<Rigidbody>().useGravity == true)
+            {
+                Destroy(other.gameObject, 0.1f);
+            }
+        }
+    }
 }

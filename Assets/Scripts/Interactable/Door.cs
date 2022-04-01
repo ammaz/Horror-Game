@@ -84,7 +84,7 @@ public class Door : Interactable
         
     }
 
-    private IEnumerator AutoClose()
+    public IEnumerator AutoClose()
     {
         yield return new WaitForSeconds(5);
 
