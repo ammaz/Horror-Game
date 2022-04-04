@@ -53,5 +53,6 @@ public enum GoalType
     wash,
     sit,
     watch,
+    Light,
     GoTo
 }

@@ -1361,7 +1361,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 26118969}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff2f447286270544b9fc51058213aef7, type: 3}
   m_Name: 
@@ -6445,7 +6445,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &154276579
 Transform:
@@ -6454,7 +6454,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154276578}
-  m_LocalRotation: {x: -0.03355192, y: -0.7269396, z: -0.04211569, w: 0.684587}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.221, y: 4.11, z: 1.213}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -6473,7 +6473,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -16130,7 +16130,7 @@ MonoBehaviour:
     Lose: 0
     inProgress: 0
     goal:
-      goalType: 6
+      goalType: 7
     Completed: 0
   - isActive: 1
     taskNumber: 4
@@ -16148,7 +16148,7 @@ MonoBehaviour:
     Lose: 0
     inProgress: 0
     goal:
-      goalType: 6
+      goalType: 7
     Completed: 0
   - isActive: 1
     taskNumber: 6
@@ -41824,7 +41824,7 @@ MonoBehaviour:
       group: 0
       mappingWeight: 1
       pinWeight: 1
-      muscleWeight: 0.5
+      muscleWeight: 1
       muscleDamper: 1
       internalCollisionIgnores:
         ignoreAll: 0
@@ -46540,6 +46540,8 @@ MonoBehaviour:
   jump: {fileID: 71437723}
   SimpleTV: {fileID: 1258675657}
   NoSignalTV: {fileID: 1298034101}
+  Switch: {fileID: 0}
+  BabyRoomLight: {fileID: 0}
   joystick: {fileID: 1733129016}
   SimpleInteractText: {fileID: 412139581}
   task:
@@ -81428,7 +81430,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1924832612
 Transform:
@@ -81437,7 +81439,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1924832611}
-  m_LocalRotation: {x: -0.03355192, y: -0.7269396, z: -0.04211569, w: 0.684587}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.659, y: 2.547, z: -1.197}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -81456,7 +81458,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

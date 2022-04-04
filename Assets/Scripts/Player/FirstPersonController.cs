@@ -142,6 +142,10 @@ public class FirstPersonController : MonoBehaviour
     public GameObject SimpleTV;
     public GameObject NoSignalTV;
 
+    [Header("Switch Parameters")]
+    public Animator Switch;
+    public GameObject BabyRoomLight;
+
     //Sliding Parameters
     private Vector3 hitPointNormal;
     private bool IsSliding
@@ -541,6 +545,25 @@ public class FirstPersonController : MonoBehaviour
                 SimpleTV.SetActive(true);
         }
 
+        //Turning on/off Switch
+        if (SimpleInteractText.text == "Switch")
+        {
+            //On
+            if (Switch.GetBool("Off"))
+            {
+                Switch.SetBool("On",true);
+                Switch.SetBool("Off", false);
+                BabyRoomLight.SetActive(true);
+            }
+            //Off
+            else
+            {
+                Switch.SetBool("Off",true);
+                Switch.SetBool("On", false);
+                BabyRoomLight.SetActive(false);
+            }
+        }
+
         //Sitting on couch
         if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, interactionLayer))
         {
@@ -656,7 +679,7 @@ public class FirstPersonController : MonoBehaviour
                 interact.gameObject.SetActive(false);
             }
         }
-        else if (SimpleInteractText.text=="Couch" || SimpleInteractText.text=="TV")
+        else if (SimpleInteractText.text=="Couch" || SimpleInteractText.text=="TV" || SimpleInteractText.text == "Switch")
         {
             interact.gameObject.SetActive(true);
         }
@@ -803,7 +826,7 @@ public class FirstPersonController : MonoBehaviour
                         else
                         {
                             //Clean the TV Lounge -> Task[6]
-                            if (GameObject.FindGameObjectsWithTag("Garbage").Length == 0 && task[4].Completed)
+                            if (GameObject.FindGameObjectsWithTag("Garbage").Length == 0 && task[4].Completed && !task[5].Completed)
                             {
                                 task[5].Win = true;
                                 task[5].Completed = true;

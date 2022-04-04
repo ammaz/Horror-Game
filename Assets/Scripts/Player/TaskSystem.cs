@@ -101,7 +101,6 @@ public class TaskSystem : MonoBehaviour
                                 player.GiveButtonPressed = false;
 
                                 StartCoroutine(GameObject.Find("Baby Room").GetComponent<Door>().AutoClose());
-
                             }
                         }
                     }
@@ -152,11 +151,11 @@ public class TaskSystem : MonoBehaviour
                             GameObject.Find("Locked").name = "Baby Room";
 
                             //Audio Play (Baby cry sound)
-                            /*
+                            //Animation Play (Baby Cry)
                             //Teleporting Baby 
                             player.Baby.connectedMassScale = 0;
-                            Baby.transform.position= new Vector3(6.789f, 1f, 2.339f);
-                            */
+                            Baby.transform.position= new Vector3(6.789f, 2f, 2.339f);
+                            
                         }
                     }
 
@@ -225,10 +224,35 @@ public class TaskSystem : MonoBehaviour
                     //Watch player.task
                     if (player.task[q].goal.goalType == GoalType.watch)
                     {
-                        if (player.NoSignalTV.activeSelf && player.task[12].Completed && q==15)
+                        if (player.SimpleTV.activeSelf && !player.task[15].Completed && q==15)
                         {
                             player.task[15].Win = true;
                             player.task[15].Completed = true;
+                            player.Alert.gameObject.SetActive(true);
+                        }
+                    }
+
+                    //Drop player.task
+                    if (player.task[q].goal.goalType == GoalType.drop)
+                    {
+                        //Take baby to the baby room and drop him in cradle -> player.task[13]
+                        //Animation Play (Baby Happy)
+                        if (Craddle.BabyinCraddle==true && !player.task[13].Completed && q==13)
+                        {
+                            player.task[13].Win = true;
+                            player.task[13].Completed = true;
+                            player.Alert.gameObject.SetActive(true);
+                        }
+                    }
+
+                    //Light player.task
+                    if (player.task[q].goal.goalType == GoalType.Light)
+                    {
+                        //Turn off the lights -> player.task[14]
+                        if (player.Switch.GetBool("Off") && !player.task[14].Completed && q == 14)
+                        {
+                            player.task[14].Win = true;
+                            player.task[14].Completed = true;
                             player.Alert.gameObject.SetActive(true);
                         }
                     }
