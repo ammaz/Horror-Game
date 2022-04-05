@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public Slider volumeSlider;
     public AudioSource Music;
     public Slider musicSlider;
+    public AudioSource Volume2;
 
     public AudioClip[] Sounds;
 
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
     public void SetVolume()
     {
         Volume.volume = volumeSlider.value;
+        Volume2.volume = volumeSlider.value;
         Music.volume = volumeSlider.value;
     }
 

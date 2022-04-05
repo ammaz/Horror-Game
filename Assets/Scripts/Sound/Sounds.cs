@@ -4,14 +4,103 @@ using UnityEngine;
 
 public class Sounds : MonoBehaviour
 {
-    public AudioClip Switch;
+    //Switch on/off Sound
+    public static AudioClip Switch;
+
+    //Task Sound
+    public static AudioClip TaskCompleted;
+    public static AudioClip TaskFailed;
+
+    //Object Pick/Drop Sound
+    public static AudioClip ObjectPick;
+    public static AudioClip ObjectDrop;
+
+    //Object Spawn Sound
+    public static AudioClip ObjectSpawn;
+
+    //Object Drop Sounds
+    public static AudioClip FeederDrop;
+    public static AudioClip PlateDrop;
+    public static AudioClip ToyDrop;
+    public static AudioClip DiaperDrop;
+    public static AudioClip GarbageDrop;
+
+    //Wash Sounds
+    public static AudioClip PlateWash;
+    public static AudioClip WashingMachine;
+    //public static AudioClip ChangeBabyDiaper;
+
+    //Player Sounds
+    public static AudioClip Crouch;
+    public static AudioClip Jump;
+    public static AudioClip SitOnCouch;
+    public static AudioClip GettingUpFromCouch;
+    /*
+    //Baby
+    public static AudioClip BabyCry;
+    public static AudioClip BabyHappy;
+    public static AudioClip BabyFeeder;
+    public static AudioClip BabyAngry;
+    public static AudioClip BabyPickUp;
+    */
+    //AudioSoruce
     public static AudioSource src;
 
     // Start is called before the first frame update
     void Start()
     {
+        /*src = GetComponent<AudioSource>();
+        Switch = GetComponent<AudioClip>();*/
+        //Audio = FindObjectOfType<Sound>();
+        //Sounds.PlaySound("Fire");
+
+        //Switch on/off Sound
+        Switch = Resources.Load<AudioClip>("Sounds/Switch");
+
+        /*
+        //Task Sound
+        TaskCompleted;
+        TaskFailed;
+        */
+
+        //Object Pick Sound
+        ObjectPick = Resources.Load<AudioClip>("Sounds/ObjectPick");
+
+        //Object Drop Sounds
+        ObjectDrop = Resources.Load<AudioClip>("Sounds/ObjectDrop");
+        /*
+        FeederDrop;
+        PlateDrop;
+        ToyDrop;
+        DiaperDrop;
+        GarbageDrop;
+        */
+
+        //Object Spawn Sound
+        ObjectSpawn = Resources.Load<AudioClip>("Sounds/ObjectSpawn");
+
+
+        //Wash Sounds
+        //ChangeBabyDiaper = Resources.Load<AudioClip>("Sounds/ChangeBabyDiaper");
+        /*PlateWash;
+        WashingMachine;*/
+
+        /*
+        //Player Sounds
+        Crouch;
+        Jump;
+        SitOnCouch;
+        GettingUpFromCouch;
+        */
+        /*
+        //Baby
+        BabyCry = Resources.Load<AudioClip>("Sounds/BabyCry");
+        BabyHappy = Resources.Load<AudioClip>("Sounds/BabyHappy");
+        BabyFeeder = Resources.Load<AudioClip>("Sounds/BabyFeeder");*/
+        /*BabyAngry;*/
+        //BabyPickUp = Resources.Load<AudioClip>("Sounds/BabyPickUp");
+        //AudioSource
         src = GetComponent<AudioSource>();
-        Switch = GetComponent<AudioClip>();
     }
 
     public static void PlaySound(string clipName)
@@ -19,8 +108,72 @@ public class Sounds : MonoBehaviour
         switch (clipName)
         {
             case "Switch":
-                //src.PlayOneShot(Switch);
+                src.PlayOneShot(Switch);
                 break;
         }
+
+        switch (clipName)
+        {
+            case "ObjectPick":
+                src.PlayOneShot(ObjectPick);
+                break;
+        }
+
+        switch (clipName)
+        {
+            case "ObjectDrop":
+                src.PlayOneShot(ObjectDrop);
+                break;
+        }
+
+        switch (clipName)
+        {
+            case "ObjectSpawn":
+                src.Stop();
+                src.PlayOneShot(ObjectSpawn);
+                break;
+        }
+        /*
+        switch (clipName)
+        {
+            case "ChangeBabyDiaper":
+                src.Stop();
+                src.PlayOneShot(ChangeBabyDiaper);
+                break;
+        }
+        */
+        /*
+        switch (clipName)
+        {
+            case "BabyCry":
+                src.Stop();
+                src.PlayOneShot(BabyCry);
+                break;
+        }
+
+        switch (clipName)
+        {
+            case "BabyHappy":
+                src.Stop();
+                src.PlayOneShot(BabyHappy);
+                break;
+        }
+
+        switch (clipName)
+        {
+            case "BabyFeeder":
+                src.Stop();
+                src.PlayOneShot(BabyFeeder);
+                break;
+        }
+
+        switch (clipName)
+        {
+            case "BabyPickUp":
+                src.Stop();
+                src.PlayOneShot(BabyPickUp);
+                break;
+        }
+        */
     }
 }

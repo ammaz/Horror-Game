@@ -509,8 +509,20 @@ public class FirstPersonController : MonoBehaviour
             if (((heldObj.name == "Feeder") || (heldObj.name == "Diaper")) && ((SimpleInteractText.text == "Feed the baby") || (SimpleInteractText.text == "Change baby diaper")))
             {
                 GiveButtonPressed = true;
+
+                if (heldObj.name == "Diaper")
+                {
+                    //ChangeBabyDiaper Sound
+                    BabySound.PlaySound("ChangeBabyDiaper");
+                }
+                else
+                {
+                    //BabyFeeder Sound
+                    BabySound.PlaySound("BabyFeeder");
+                }
+
                 //Destroying Feeder or Diaper
-                Destroy(heldObj,0.3f);
+                Destroy(heldObj,0.3f);    
             }
             else if (heldObj.name == "Plate" && SimpleInteractText.text == "Wash Plate")
             {
@@ -554,6 +566,7 @@ public class FirstPersonController : MonoBehaviour
                 Switch.SetBool("On",true);
                 Switch.SetBool("Off", false);
                 BabyRoomLight.SetActive(true);
+                Sounds.PlaySound("Switch");
             }
             //Off
             else
@@ -561,6 +574,7 @@ public class FirstPersonController : MonoBehaviour
                 Switch.SetBool("Off",true);
                 Switch.SetBool("On", false);
                 BabyRoomLight.SetActive(false);
+                Sounds.PlaySound("Switch");
             }
         }
 
@@ -595,10 +609,14 @@ public class FirstPersonController : MonoBehaviour
             if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, pickUpDistance) && ((hit.collider.gameObject.tag == "Toy") || (hit.collider.gameObject.tag == "Garbage") || (hit.collider.gameObject.tag == "Toys")))
             {
                 PickUpObject(hit.transform.gameObject);
+                //ObjectPick Sound
+                Sounds.PlaySound("ObjectPick");
             }
             if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, babyLayer))
             {
                 Baby.connectedMassScale = 5;
+                //BabyPickUp Sound
+                BabySound.PlaySound("BabyPickUp");
             }
         }
     }
@@ -635,6 +653,8 @@ public class FirstPersonController : MonoBehaviour
         if (Baby.connectedMassScale == 5)
         {
             Baby.connectedMassScale = 0;
+            //BabyCry Sound
+            BabySound.PlaySound("BabyCry");
         }
         else
         {
@@ -644,6 +664,9 @@ public class FirstPersonController : MonoBehaviour
 
             heldObj.transform.parent = null;
             heldObj = null;
+
+            //ObjectDrop Sound
+            Sounds.PlaySound("ObjectDrop");
         }
 
     }
@@ -914,6 +937,8 @@ public class FirstPersonController : MonoBehaviour
                     if(task[4].Completed==true && Garbage.activeSelf==false)
                     {
                         Garbage.SetActive(true);
+                        //ObjectSpawn Sound
+                        Sounds.PlaySound("ObjectSpawn");
                     }
                 }
             }

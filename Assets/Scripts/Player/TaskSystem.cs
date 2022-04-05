@@ -90,6 +90,8 @@ public class TaskSystem : MonoBehaviour
 
                                 //Spawing Plates
                                 Plates.SetActive(true);
+                                //ObjectSpawn Sound
+                                Sounds.PlaySound("ObjectSpawn");
                             }
                             //Wash Dish -> player.task[4]
                             if (FindLengthOfObject("Plate", 0) == 0 && q == 4 && !player.task[4].Completed)
@@ -127,7 +129,7 @@ public class TaskSystem : MonoBehaviour
                         }
                         
                         //Wash baby shirt in washing machine -> player.task[2]
-                        if (player.heldObj.name == "Shirt" && player.SimpleInteractText.text == "Washing Machine")
+                        if (player.heldObj.name == "Shirt" && player.SimpleInteractText.text == "Washing Machine" && !player.task[2].Completed)
                         {
                             player.task[2].Win = true;
                             player.task[2].Completed = true;
@@ -136,6 +138,8 @@ public class TaskSystem : MonoBehaviour
 
                             //Spawing Toys
                             Toys.SetActive(true);
+                            //ObjectSpawn Sound
+                            Sounds.PlaySound("ObjectSpawn");
                         }
 
                         //Unlock baby room with key -> player.task[7]
@@ -195,6 +199,8 @@ public class TaskSystem : MonoBehaviour
 
                             //Spawning Key
                             Key.SetActive(true);
+                            //ObjectSpawn Sound
+                            Sounds.PlaySound("ObjectSpawn");
                         }
 
                         //Run downstairs to find the baby -> player.task[5]
@@ -207,6 +213,8 @@ public class TaskSystem : MonoBehaviour
 
                             //Spawing Feeder
                             Feeder.SetActive(true);
+                            //ObjectSpawn Sound
+                            Sounds.PlaySound("ObjectSpawn");
                         }
                     }
                     
@@ -242,6 +250,8 @@ public class TaskSystem : MonoBehaviour
                             player.task[13].Win = true;
                             player.task[13].Completed = true;
                             player.Alert.gameObject.SetActive(true);
+                            //BabyHappy Sound
+                            BabySound.PlaySound("BabyHappy");
                         }
                     }
 
