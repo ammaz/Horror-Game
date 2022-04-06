@@ -146,6 +146,11 @@ public class FirstPersonController : MonoBehaviour
     public Animator Switch;
     public GameObject BabyRoomLight;
 
+    [Header("Baby Parameters")]
+    //Baby Animator
+    public BabyAnim BabyAnimate;
+    public Baby BabyTP;
+
     //Sliding Parameters
     private Vector3 hitPointNormal;
     private bool IsSliding
@@ -168,6 +173,13 @@ public class FirstPersonController : MonoBehaviour
     /// <summary>
     /// Player Objects
     /// </summary>
+
+    [Header("Other Parameters")]
+    //Garbage Spawn
+    public GameObject Garbage;
+
+    //Baby Pickup point
+    public FixedJoint Baby;
 
     //Player Camera Object
     private Camera playerCamera;
@@ -198,13 +210,6 @@ public class FirstPersonController : MonoBehaviour
     public bool GiveButtonPressed;
     public Image Alert;
 
-    //Baby Pickup point
-    public FixedJoint Baby;
-
-    //Garbage Spawn
-    public GameObject Garbage;
-    private bool GarbageSpawned;
-
     #endregion
 
     #region Singleton
@@ -229,7 +234,7 @@ public class FirstPersonController : MonoBehaviour
         //To Hide Cursor
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
-	}
+    }
 
 	void Start()
     {
@@ -557,6 +562,19 @@ public class FirstPersonController : MonoBehaviour
                 SimpleTV.SetActive(true);
         }
 
+        //Baby Sit
+        if(Baby.connectedMassScale == 5 && SimpleInteractText.text == "Baby Chair")
+        {
+            //Baby Unpick
+            Baby.connectedMassScale = 0;
+            //Baby Sit Animation
+            BabyAnimate.BabySit();
+            //BabyTPSit
+            BabyTP.BabyTPSit();
+            //BabyHappy Sound
+            BabySound.PlaySound("BabyHappy");
+        }
+
         //Turning on/off Switch
         if (SimpleInteractText.text == "Switch")
         {
@@ -617,6 +635,8 @@ public class FirstPersonController : MonoBehaviour
                 Baby.connectedMassScale = 5;
                 //BabyPickUp Sound
                 BabySound.PlaySound("BabyPickUp");
+                //BabyPickUp Animation
+                BabyAnimate.BabyPickUp();
             }
         }
     }
@@ -655,6 +675,8 @@ public class FirstPersonController : MonoBehaviour
             Baby.connectedMassScale = 0;
             //BabyCry Sound
             BabySound.PlaySound("BabyCry");
+            //BabyCry Animation
+            BabyAnimate.BabyCry();
         }
         else
         {
@@ -703,6 +725,11 @@ public class FirstPersonController : MonoBehaviour
             }
         }
         else if (SimpleInteractText.text=="Couch" || SimpleInteractText.text=="TV" || SimpleInteractText.text == "Switch")
+        {
+            interact.gameObject.SetActive(true);
+        }
+        //Baby Sit
+        else if(Baby.connectedMassScale==5 && SimpleInteractText.text == "Baby Chair")
         {
             interact.gameObject.SetActive(true);
         }

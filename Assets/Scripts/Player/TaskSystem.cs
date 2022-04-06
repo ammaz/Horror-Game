@@ -82,7 +82,7 @@ public class TaskSystem : MonoBehaviour
                                 player.Alert.gameObject.SetActive(true);
                             }
                             //Gather all baby toys in basket -> player.task[3]
-                            if (GameObject.FindGameObjectsWithTag("Toys").Length == 0 && player.task[2].Completed && !player.task[3].Completed)
+                            if (ToyBasket.countToys>=3 && player.task[2].Completed && !player.task[3].Completed)
                             {
                                 player.task[3].Win = true;
                                 player.task[3].Completed = true;

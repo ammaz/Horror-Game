@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public AudioSource Music;
     public Slider musicSlider;
     public AudioSource Volume2;
+    public AudioSource BabyVolume;
 
     public AudioClip[] Sounds;
 
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
     {
         Volume.volume = volumeSlider.value;
         Volume2.volume = volumeSlider.value;
+        BabyVolume.volume = volumeSlider.value;
         Music.volume = volumeSlider.value;
     }
 

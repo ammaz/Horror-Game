@@ -6,35 +6,38 @@ public class Sounds : MonoBehaviour
 {
     //Switch on/off Sound
     public static AudioClip Switch;
-
+    /*
     //Task Sound
     public static AudioClip TaskCompleted;
     public static AudioClip TaskFailed;
-
+    */
     //Object Pick/Drop Sound
     public static AudioClip ObjectPick;
     public static AudioClip ObjectDrop;
 
     //Object Spawn Sound
     public static AudioClip ObjectSpawn;
-
+    /*
     //Object Drop Sounds
     public static AudioClip FeederDrop;
     public static AudioClip PlateDrop;
     public static AudioClip ToyDrop;
     public static AudioClip DiaperDrop;
     public static AudioClip GarbageDrop;
-
+    */
+    /*
     //Wash Sounds
     public static AudioClip PlateWash;
     public static AudioClip WashingMachine;
     //public static AudioClip ChangeBabyDiaper;
-
+    */
+    /*
     //Player Sounds
     public static AudioClip Crouch;
     public static AudioClip Jump;
     public static AudioClip SitOnCouch;
     public static AudioClip GettingUpFromCouch;
+    */
     /*
     //Baby
     public static AudioClip BabyCry;
@@ -92,13 +95,6 @@ public class Sounds : MonoBehaviour
         SitOnCouch;
         GettingUpFromCouch;
         */
-        /*
-        //Baby
-        BabyCry = Resources.Load<AudioClip>("Sounds/BabyCry");
-        BabyHappy = Resources.Load<AudioClip>("Sounds/BabyHappy");
-        BabyFeeder = Resources.Load<AudioClip>("Sounds/BabyFeeder");*/
-        /*BabyAngry;*/
-        //BabyPickUp = Resources.Load<AudioClip>("Sounds/BabyPickUp");
         //AudioSource
         src = GetComponent<AudioSource>();
     }
@@ -133,47 +129,5 @@ public class Sounds : MonoBehaviour
                 src.PlayOneShot(ObjectSpawn);
                 break;
         }
-        /*
-        switch (clipName)
-        {
-            case "ChangeBabyDiaper":
-                src.Stop();
-                src.PlayOneShot(ChangeBabyDiaper);
-                break;
-        }
-        */
-        /*
-        switch (clipName)
-        {
-            case "BabyCry":
-                src.Stop();
-                src.PlayOneShot(BabyCry);
-                break;
-        }
-
-        switch (clipName)
-        {
-            case "BabyHappy":
-                src.Stop();
-                src.PlayOneShot(BabyHappy);
-                break;
-        }
-
-        switch (clipName)
-        {
-            case "BabyFeeder":
-                src.Stop();
-                src.PlayOneShot(BabyFeeder);
-                break;
-        }
-
-        switch (clipName)
-        {
-            case "BabyPickUp":
-                src.Stop();
-                src.PlayOneShot(BabyPickUp);
-                break;
-        }
-        */
     }
 }
