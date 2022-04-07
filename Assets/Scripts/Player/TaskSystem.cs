@@ -11,12 +11,18 @@ public class TaskSystem : MonoBehaviour
     public GameObject Baby;
 
     //Spawn Objects
-    public GameObject Toys,Plates,Key,Feeder;
+    public GameObject Toys,Plates,Key,Feeder,Sink,MagicWand,Book;
+
+    //Baby Animator
+    public BabyAnim BabyAnimate;
+
+    //Baby Teleported
+    private bool BabyTPCheck;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        BabyTPCheck = false;
     }
 
     // Update is called once per frame
@@ -47,14 +53,6 @@ public class TaskSystem : MonoBehaviour
                                 player.task[9].Completed = true;
                                 player.Alert.gameObject.SetActive(true);
                             }
-                            /*
-                            //Pickup plates from the table -> player.task[4]
-                            if (player.heldObj.name == "Plate")
-                            {
-                                player.task[4].Win = true;
-                                player.task[4].Completed = true;
-                                player.Alert.gameObject.SetActive(true);
-                            }*/
 
                             //Pickup Baby shirt -> Task[1]
                             if (player.heldObj.name == "Shirt" && !player.task[1].Completed)
@@ -174,15 +172,7 @@ public class TaskSystem : MonoBehaviour
                             gotoPoints.pointName = null;
                             player.Alert.gameObject.SetActive(true);
                         }
-                        /*
-                        //Take baby to bedroom -> player.task[5] 6,8,9,10
-                        if (Baby.connectedMassScale == 5 && gotoPoints.pointName == "bedroom")
-                        {
-                            player.task[4].Win = true;
-                            player.task[4].Completed = true;
-                            gotoPoints.pointName = null;
-                            player.Alert.gameObject.SetActive(true);
-                        }*/
+
                         //Goto baby room and check the baby -> player.task[5]
                         if (gotoPoints.pointName == "Baby Room" && !player.task[5].Completed && player.task[4].Completed)
                         {
@@ -217,18 +207,7 @@ public class TaskSystem : MonoBehaviour
                             Sounds.PlaySound("ObjectSpawn");
                         }
                     }
-                    
-                    //Sit player.task
-                    if (player.task[q].goal.goalType == GoalType.sit)
-                    {
-                        /*if (canMove == false)
-                        {
-                            player.task[8].Win = true;
-                            player.task[8].Completed = true;
-                            player.Alert.gameObject.SetActive(true);
-                        }*/
-                    }
-                    
+
                     //Watch player.task
                     if (player.task[q].goal.goalType == GoalType.watch)
                     {
@@ -244,7 +223,6 @@ public class TaskSystem : MonoBehaviour
                     if (player.task[q].goal.goalType == GoalType.drop)
                     {
                         //Take baby to the baby room and drop him in cradle -> player.task[13]
-                        //Animation Play (Baby Happy)
                         if (Craddle.BabyinCraddle==true && !player.task[13].Completed && q==13)
                         {
                             player.task[13].Win = true;
@@ -252,6 +230,8 @@ public class TaskSystem : MonoBehaviour
                             player.Alert.gameObject.SetActive(true);
                             //BabyHappy Sound
                             BabySound.PlaySound("BabyHappy");
+                            //Animation Play (Baby Happy)
+                            BabyAnimate.BabyHappy();
                         }
                     }
 
@@ -264,6 +244,190 @@ public class TaskSystem : MonoBehaviour
                             player.task[14].Win = true;
                             player.task[14].Completed = true;
                             player.Alert.gameObject.SetActive(true);
+                        }
+                    }
+                }
+            }
+        }
+
+        else if (SceneManager.GetActiveScene().name == "Level 3")
+        {
+            //Total player.tasks
+            for (int q = 0; q < player.task.Length; q++)
+            {
+                //Checking if task is active and in progress(given to player in task book) and is it completed or nor
+                if (player.task[q].isActive && player.task[q].inProgress && player.task[q].Completed == false)
+                {
+                    //Pickup player.tasks
+                    if (player.task[q].goal.goalType == GoalType.pick)
+                    {
+                        if (player.heldObj != null)
+                        {
+                            //Take the feeder from fridge -> player.task[0]
+                            if (player.heldObj.name == "Feeder" && !player.task[0].Completed)
+                            {
+                                player.task[0].Win = true;
+                                player.task[0].Completed = true;
+                                player.Alert.gameObject.SetActive(true);
+                            }
+
+                            //Find the magic wand -> Task[8]
+                            if (player.heldObj.name == "Magic Wand" && !player.task[8].Completed)
+                            {
+                                player.task[8].Win = true;
+                                player.task[8].Completed = true;
+                                player.Alert.gameObject.SetActive(true);
+                            }
+
+                            //Pick up the book -> Task[10]
+                            if (player.heldObj.name == "Read Book" && !player.task[10].Completed)
+                            {
+                                player.task[10].Win = true;
+                                player.task[10].Completed = true;
+                                player.Alert.gameObject.SetActive(true);
+
+                                //Destroying the book
+                                Destroy(player.heldObj,0.3f);
+                            }
+                        }
+                        /*
+                        else
+                        {
+                            //Find and collect 7 souls in the house -> player.task[11]
+                            if (GameObject.FindGameObjectsWithTag("Soul").Length == 7 && !player.task[11].Completed && q==11)
+                            {
+                                player.task[11].Win = true;
+                                player.task[11].Completed = true;
+                                player.Alert.gameObject.SetActive(true);
+                            }
+                        }
+                        */
+                    }
+
+                    //Give player.tasks
+                    if (player.task[q].goal.goalType == GoalType.give && player.SimpleInteractText.text != null && player.GiveButtonPressed == true && player.heldObj != null)
+                    {
+                        //Feed the baby -> player.task[1]
+                        if (player.heldObj.name == "Feeder" && player.SimpleInteractText.text == "Feed the baby")
+                        {
+                            player.task[1].Win = true;
+                            player.task[1].Completed = true;
+                            player.GiveButtonPressed = false;
+                            player.Alert.gameObject.SetActive(true);
+                        }
+                        
+                        //Change baby diaper -> player.task[3]
+                        if (player.heldObj.name == "Diaper" && player.SimpleInteractText.text == "Change baby diaper")
+                        {
+                            player.task[3].Win = true;
+                            player.task[3].Completed = true;
+                            player.GiveButtonPressed = false;
+                            player.Alert.gameObject.SetActive(true);
+                        }
+
+                        //Use magic wand on baby to make him normal -> player.task[9]
+                        if (player.heldObj.name == "Magic Wand" && player.SimpleInteractText.text == "Use magic wand")
+                        {
+                            player.task[9].Win = true;
+                            player.task[9].Completed = true;
+                            player.GiveButtonPressed = false;
+                            player.Alert.gameObject.SetActive(true);
+                        }
+
+                    }
+
+                    //Goto player.tasks
+                    if (player.task[q].goal.goalType == GoalType.GoTo)
+                    {
+                        //Take baby to washroom -> player.task[2]
+                        if (player.Baby.connectedMassScale == 5 && gotoPoints.pointName == "washroom")
+                        {
+                            player.task[2].Win = true;
+                            player.task[2].Completed = true;
+                            gotoPoints.pointName = null;
+                            player.Alert.gameObject.SetActive(true);
+                        }
+                    }
+
+                    //Drop player.task
+                    if (player.task[q].goal.goalType == GoalType.drop)
+                    {
+                        //Take baby to the baby room and drop him in cradle -> player.task[4]
+                        if (Craddle.BabyinCraddle == true && !player.task[4].Completed && q == 4)
+                        {
+                            player.task[4].Win = true;
+                            player.task[4].Completed = true;
+                            player.Alert.gameObject.SetActive(true);
+                            //BabyHappy Sound
+                            BabySound.PlaySound("BabyHappy");
+                            //Animation Play (Baby Happy)
+                            BabyAnimate.BabyHappy();
+                        }
+                    }
+
+                    //Light player.task
+                    if (player.task[q].goal.goalType == GoalType.Light)
+                    {
+                        //Turn off the lights -> player.task[14]
+                        if (player.Switch.GetBool("Off") && !player.task[5].Completed && q == 5)
+                        {
+                            player.task[5].Win = true;
+                            player.task[5].Completed = true;
+                            player.Alert.gameObject.SetActive(true);
+                        }
+                    }
+
+                    //Door player.task
+                    if (player.task[q].goal.goalType == GoalType.Door)
+                    {
+                        //Close the door -> player.task[6]
+                        if (GameObject.Find("Baby Room").GetComponent<Door>().isOpen==false && !player.task[6].Completed && q == 6 && player.task[5].Completed)
+                        {
+                            player.task[6].Win = true;
+                            player.task[6].Completed = true;
+                            player.Alert.gameObject.SetActive(true);
+
+                            //Changing Washroom sink name
+                            Sink.name = "Wash face";
+                        }
+                    }
+
+                    //Wash Face player.task
+                    if(player.task[q].goal.goalType == GoalType.Wash)
+                    {
+                        //Go downstairs to washroom and wash your face -> player.task[7]
+                        if (player.SimpleInteractText.text == "Wash face" && !player.task[7].Completed)
+                        {
+                            player.task[7].Win = true;
+                            player.task[7].Completed = true;
+                            player.GiveButtonPressed = false;
+                            player.Alert.gameObject.SetActive(true);
+
+                            //Changing Washroom sink name
+                            Sink.name = "Sink";
+
+                            //Spawing Magic Wand
+                            MagicWand.SetActive(true);
+                            //ObjectSpawn Sound
+                            Sounds.PlaySound("ObjectSpawn");
+                        }
+                    }
+
+                    //Teleporting Baby to Dinning Room
+                    if(player.task[2].Completed && player.heldObj !=null && BabyTPCheck == false)
+                    {
+                        if(player.heldObj.name == "Diaper")
+                        {
+                            //Baby Unpick
+                            player.Baby.connectedMassScale = 0;
+                            //Baby Sit Animation
+                            BabyAnimate.BabySit();
+                            //BabyTPSit
+                            player.BabyTP.BabyTPSit();
+                            //BabyHappy Sound
+                            BabySound.PlaySound("BabyHappy");
+                            //BabyTPCheck turning to true
+                            BabyTPCheck = true;
                         }
                     }
                 }

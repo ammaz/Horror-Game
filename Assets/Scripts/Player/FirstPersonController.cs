@@ -487,6 +487,10 @@ public class FirstPersonController : MonoBehaviour
                 {
                     SimpleInteractText.text = "Change baby diaper";
                 }
+                else if(heldObj.name == "Magic Wand")
+                {
+                    SimpleInteractText.text = "Use magic wand";
+                }
             }
             else
             {
@@ -547,10 +551,22 @@ public class FirstPersonController : MonoBehaviour
                 //Destroying Key
                 Destroy(heldObj, 0.3f);
             }
+            else if (heldObj.name == "Magic Wand" && SimpleInteractText.text == "Use magic wand")
+            {
+                GiveButtonPressed = true;
+                //Destroying Magic Wand
+                Destroy(heldObj, 0.3f);
+            }
             else
             {
                 GiveButtonPressed = false;
             }
+        }
+
+        //Washing face
+        if (SimpleInteractText.text == "Wash face")
+        {
+            GiveButtonPressed = true;
         }
 
         //Turning on/off TV
@@ -719,12 +735,16 @@ public class FirstPersonController : MonoBehaviour
             {
                 interact.gameObject.SetActive(true);
             }
+            else if(heldObj.name == "Magic Wand" && SimpleInteractText.text == "Use magic wand")
+            {
+                interact.gameObject.SetActive(true);
+            }
             else
             {
                 interact.gameObject.SetActive(false);
             }
         }
-        else if (SimpleInteractText.text=="Couch" || SimpleInteractText.text=="TV" || SimpleInteractText.text == "Switch")
+        else if (SimpleInteractText.text=="Couch" || SimpleInteractText.text=="TV" || SimpleInteractText.text == "Switch" || SimpleInteractText.text == "Wash face")
         {
             interact.gameObject.SetActive(true);
         }
@@ -858,7 +878,7 @@ public class FirstPersonController : MonoBehaviour
                         if (heldObj != null)
                         {
                             //Take the feeder from fridge -> Task[1]
-                            if (heldObj.name == "Feeder")
+                            if (heldObj.name == "Feeder" && !task[0].Completed)
                             {
                                 task[0].Win = true;
                                 task[0].Completed = true;
@@ -866,7 +886,7 @@ public class FirstPersonController : MonoBehaviour
                             }
 
                             //Pickup plates from the table -> Task[7]
-                            if (heldObj.name == "Plate")
+                            if (heldObj.name == "Plate" && q==6 && !task[6].Completed)
                             {
                                 task[6].Win = true;
                                 task[6].Completed = true;
@@ -907,7 +927,7 @@ public class FirstPersonController : MonoBehaviour
                         }
 
                         //Wash Dish -> Task[8]
-                        if (heldObj.name == "Plate" && SimpleInteractText.text == "Wash Plate")
+                        if (heldObj.name == "Plate" && SimpleInteractText.text == "Wash Plate" && q==7 && !task[7].Completed)
                         {
                             task[7].Win = true;
                             task[7].Completed = true;
@@ -920,7 +940,7 @@ public class FirstPersonController : MonoBehaviour
                     if (task[q].goal.goalType == GoalType.GoTo)
                     {
                         //Take baby to washroom -> Task[3]
-                        if (Baby.connectedMassScale==5 && gotoPoints.pointName=="washroom")
+                        if (Baby.connectedMassScale==5 && gotoPoints.pointName=="washroom" && !task[2].Completed)
                         {
                             task[2].Win = true;
                             task[2].Completed = true;
@@ -929,7 +949,7 @@ public class FirstPersonController : MonoBehaviour
                         }
 
                         //Take baby to bedroom -> Task[5] 6,8,9,10
-                        if (Baby.connectedMassScale == 5 && gotoPoints.pointName == "bedroom")
+                        if (Baby.connectedMassScale == 5 && gotoPoints.pointName == "bedroom" && q==4 && !task[4].Completed)
                         {
                             task[4].Win = true;
                             task[4].Completed = true;
@@ -941,7 +961,7 @@ public class FirstPersonController : MonoBehaviour
                     //Sit Task
                     if (task[q].goal.goalType == GoalType.sit)
                     {
-                        if (canMove == false)
+                        if (canMove == false && !task[8].Completed && q==8)
                         {
                             task[8].Win = true;
                             task[8].Completed = true;
@@ -952,7 +972,7 @@ public class FirstPersonController : MonoBehaviour
                     //Watch Task
                     if (task[q].goal.goalType == GoalType.watch)
                     {
-                        if (NoSignalTV.activeSelf)
+                        if (NoSignalTV.activeSelf && !task[9].Completed && q == 9)
                         {
                             task[9].Win = true;
                             task[9].Completed = true;

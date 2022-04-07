@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Door : Interactable
 {
-    private bool isOpen = false;
+    public bool isOpen = false;
     private bool canBeInteractactedWith = true;
     private Animator anim;
 
