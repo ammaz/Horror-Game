@@ -735,7 +735,7 @@ public class FirstPersonController : MonoBehaviour
             {
                 interact.gameObject.SetActive(true);
             }
-            else if(heldObj.name == "Magic Wand" && SimpleInteractText.text == "Use magic wand")
+            else if (heldObj.name == "Magic Wand" && SimpleInteractText.text == "Use magic wand")
             {
                 interact.gameObject.SetActive(true);
             }
@@ -744,12 +744,12 @@ public class FirstPersonController : MonoBehaviour
                 interact.gameObject.SetActive(false);
             }
         }
-        else if (SimpleInteractText.text=="Couch" || SimpleInteractText.text=="TV" || SimpleInteractText.text == "Switch" || SimpleInteractText.text == "Wash face")
+        else if (SimpleInteractText.text == "Couch" || SimpleInteractText.text == "TV" || SimpleInteractText.text == "Switch" || SimpleInteractText.text == "Wash face")
         {
             interact.gameObject.SetActive(true);
         }
         //Baby Sit
-        else if(Baby.connectedMassScale==5 && SimpleInteractText.text == "Baby Chair")
+        else if (Baby.connectedMassScale == 5 && SimpleInteractText.text == "Baby Chair" && heldObj == null)
         {
             interact.gameObject.SetActive(true);
         }

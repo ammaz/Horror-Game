@@ -38,25 +38,12 @@ public class Sounds : MonoBehaviour
     public static AudioClip SitOnCouch;
     public static AudioClip GettingUpFromCouch;
     */
-    /*
-    //Baby
-    public static AudioClip BabyCry;
-    public static AudioClip BabyHappy;
-    public static AudioClip BabyFeeder;
-    public static AudioClip BabyAngry;
-    public static AudioClip BabyPickUp;
-    */
     //AudioSoruce
     public static AudioSource src;
 
     // Start is called before the first frame update
     void Start()
     {
-        /*src = GetComponent<AudioSource>();
-        Switch = GetComponent<AudioClip>();*/
-        //Audio = FindObjectOfType<Sound>();
-        //Sounds.PlaySound("Fire");
-
         //Switch on/off Sound
         Switch = Resources.Load<AudioClip>("Sounds/Switch");
 

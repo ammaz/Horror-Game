@@ -11,13 +11,16 @@ public class TaskSystem : MonoBehaviour
     public GameObject Baby;
 
     //Spawn Objects
-    public GameObject Toys,Plates,Key,Feeder,Sink,MagicWand,Book;
+    public GameObject Toys,Plates,Key,Feeder,Sink,MagicWand,Book,Souls;
 
     //Baby Animator
     public BabyAnim BabyAnimate;
 
     //Baby Teleported
     private bool BabyTPCheck;
+
+    //BabyRoom Door
+    public Door BabyDoor;
 
     // Start is called before the first frame update
     void Start()
@@ -186,7 +189,8 @@ public class TaskSystem : MonoBehaviour
                             GameObject.Find("Baby Room").name = "Locked";
 
                             //Audio Play (Knocking on door horror sound)
-
+                            BabyDoor.PlaySound("HorrorDoorKnock");
+                            
                             //Spawning Key
                             Key.SetActive(true);
                             //ObjectSpawn Sound
@@ -287,21 +291,29 @@ public class TaskSystem : MonoBehaviour
                                 player.Alert.gameObject.SetActive(true);
 
                                 //Destroying the book
-                                Destroy(player.heldObj,0.3f);
+                                Destroy(player.heldObj,0.1f);
+
+                                //Spawn Souls
+                                Souls.SetActive(true);
+                            }
+                            if (player.heldObj.name == "Soul")
+                            {
+                                //Object Destroy Particle Effects
+                                //Object Destroy Sound
+                                //Destroying Souls
+                                Destroy(player.heldObj, 0.1f);
                             }
                         }
-                        /*
                         else
                         {
                             //Find and collect 7 souls in the house -> player.task[11]
-                            if (GameObject.FindGameObjectsWithTag("Soul").Length == 7 && !player.task[11].Completed && q==11)
+                            if (FindLengthOfObject("Soul", 0) == 0 && !player.task[11].Completed && q==11 && player.task[10].Completed)
                             {
                                 player.task[11].Win = true;
                                 player.task[11].Completed = true;
                                 player.Alert.gameObject.SetActive(true);
                             }
                         }
-                        */
                     }
 
                     //Give player.tasks
@@ -332,6 +344,9 @@ public class TaskSystem : MonoBehaviour
                             player.task[9].Completed = true;
                             player.GiveButtonPressed = false;
                             player.Alert.gameObject.SetActive(true);
+
+                            //Spawn Book
+                            Book.SetActive(true);
                         }
 
                     }
@@ -393,10 +408,10 @@ public class TaskSystem : MonoBehaviour
                     }
 
                     //Wash Face player.task
-                    if(player.task[q].goal.goalType == GoalType.Wash)
+                    if(player.task[q].goal.goalType == GoalType.wash)
                     {
                         //Go downstairs to washroom and wash your face -> player.task[7]
-                        if (player.SimpleInteractText.text == "Wash face" && !player.task[7].Completed)
+                        if (player.SimpleInteractText.text == "Wash face" && !player.task[7].Completed && player.GiveButtonPressed == true)
                         {
                             player.task[7].Win = true;
                             player.task[7].Completed = true;
@@ -410,6 +425,15 @@ public class TaskSystem : MonoBehaviour
                             MagicWand.SetActive(true);
                             //ObjectSpawn Sound
                             Sounds.PlaySound("ObjectSpawn");
+
+                            //Baby Unpick
+                            player.Baby.connectedMassScale = 0;
+                            //Baby Sit Animation
+                            BabyAnimate.BabyCry();
+                            //BabyTPSit
+                            player.BabyTP.BabyTP(-3.25f, 1.298f, -7.021f);
+                            //BabyHappy Sound
+                            BabySound.PlaySound("BabyCry");
                         }
                     }
 
@@ -421,11 +445,11 @@ public class TaskSystem : MonoBehaviour
                             //Baby Unpick
                             player.Baby.connectedMassScale = 0;
                             //Baby Sit Animation
-                            BabyAnimate.BabySit();
+                            BabyAnimate.BabyCry();
                             //BabyTPSit
-                            player.BabyTP.BabyTPSit();
+                            player.BabyTP.BabyTP(-3.25f, 1.298f, -7.021f);
                             //BabyHappy Sound
-                            BabySound.PlaySound("BabyHappy");
+                            BabySound.PlaySound("BabyCry");
                             //BabyTPCheck turning to true
                             BabyTPCheck = true;
                         }

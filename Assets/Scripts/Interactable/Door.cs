@@ -15,6 +15,7 @@ public class Door : Interactable
     private AudioClip doorOpen;
     private AudioClip doorClose;
     private AudioClip horrorDoorClose;
+    private AudioClip horrorDoorKnock;
 
     private void Start()
     {
@@ -25,6 +26,7 @@ public class Door : Interactable
         doorOpen = Resources.Load<AudioClip>("DoorOpen");
         doorClose = Resources.Load<AudioClip>("DoorClose");
         horrorDoorClose = Resources.Load<AudioClip>("DoorCloseHorror");
+        horrorDoorKnock = Resources.Load<AudioClip>("HorrorDoorKnock");
     }
 
     public override void OnFocus()
@@ -110,7 +112,7 @@ public class Door : Interactable
         canBeInteractactedWith = true;
     }
 
-    private void PlaySound(string clipName)
+    public void PlaySound(string clipName)
     {
         switch (clipName)
         {
@@ -128,6 +130,12 @@ public class Door : Interactable
         {
             case "HorrorDoorClose":
                 Audio.PlayOneShot(horrorDoorClose);
+                break;
+        }
+        switch (clipName)
+        {
+            case "HorrorDoorKnock":
+                Audio.PlayOneShot(horrorDoorKnock);
                 break;
         }
     }
