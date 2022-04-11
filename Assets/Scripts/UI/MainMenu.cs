@@ -100,7 +100,7 @@ public class MainMenu : MonoBehaviour
             levelInfo.text = "Please select a level";
         }
 
-        else if ( levelIndex == 4 || levelIndex == 5)
+        else if (levelIndex == 5)
         {
             levelInfo.text = "\n\nLevel Coming Soon";
         }

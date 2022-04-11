@@ -8,7 +8,7 @@ public class TaskSystem : MonoBehaviour
 {
     //Player Tasks
     public FirstPersonController player;
-    public GameObject Baby;
+    public GameObject Baby1;
 
     //Spawn Objects
     public GameObject Toys,Plates,Key,Feeder,Sink,MagicWand,Book,Souls;
@@ -18,20 +18,33 @@ public class TaskSystem : MonoBehaviour
 
     //Baby Teleported
     private bool BabyTPCheck;
+    //Baby Hide&Seek
+    private bool BabyHideAndSeek;
 
     //BabyRoom Door
     public Door BabyDoor;
+
+    //Time
+    public TimerController Timer;
+    public GameObject TimeText;
 
     // Start is called before the first frame update
     void Start()
     {
         BabyTPCheck = false;
+        BabyHideAndSeek = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         CheckPlayerProgress();
+
+        //BabyHide&Seek
+        if (BabyHideAndSeek)
+        {
+            player.BabyTP.BabyHideAndSeek();
+        }
     }
 
     private void CheckPlayerProgress()
@@ -159,7 +172,7 @@ public class TaskSystem : MonoBehaviour
                             //Animation Play (Baby Cry)
                             //Teleporting Baby 
                             player.Baby.connectedMassScale = 0;
-                            Baby.transform.position= new Vector3(6.789f, 2f, 2.339f);
+                            Baby1.transform.position= new Vector3(6.789f, 2f, 2.339f);
                             
                         }
                     }
@@ -452,6 +465,104 @@ public class TaskSystem : MonoBehaviour
                             BabySound.PlaySound("BabyCry");
                             //BabyTPCheck turning to true
                             BabyTPCheck = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        else if (SceneManager.GetActiveScene().name == "Level 4")
+        {
+            //Destroying the toys
+            if (player.heldObj != null && player.heldObj.CompareTag("Toys"))
+            {
+                Destroy(player.heldObj, 0.1f);
+            }
+
+            //Total player.tasks
+            for (int q = 0; q < player.task.Length; q++)
+            {
+                //Checking if task is active and in progress(given to player in task book) and is it completed or nor
+                if (player.task[q].isActive && player.task[q].inProgress && player.task[q].Completed == false)
+                {
+                    //Pickup player.tasks
+                    if (player.task[q].goal.goalType == GoalType.pick)
+                    {
+                        if (player.heldObj != null)
+                        {
+                            //Change baby diaper -> player.task[1]
+                            if (player.heldObj.name == "Diaper" && !player.task[1].Completed)
+                            {
+                                player.task[1].Win = true;
+                                player.task[1].Completed = true;
+                                player.Alert.gameObject.SetActive(true);
+                            }
+                        }
+                        else
+                        {
+                            //Collect all baby toys before time runs out and Dont move while baby is watching you -> player.task[3]
+                            if (GameObject.FindGameObjectsWithTag("Toys").Length == 0 && !player.task[3].Completed && player.task[2].Completed)
+                            {
+                                player.task[3].Win = true;
+                                player.task[3].Completed = true;
+                                player.Alert.gameObject.SetActive(true);
+                                TimeText.SetActive(false);
+                                //Deactivating Timer
+                                Timer.GetComponent<TimerController>().enabled = false;
+
+                            }
+                        }
+                    }
+
+                    //HideAndSeek player.tasks
+                    if(player.task[q].goal.goalType == GoalType.HideAndSeek)
+                    {
+                        if (Baby.BabyNumHideSeek == 4 && BabyHideAndSeek)
+                        {
+                            BabyHideAndSeek = false;
+                        }
+
+                        if(player.Baby.connectedMassScale==5 && BabyHideAndSeek == false && !player.task[2].Completed && player.task[1].Completed)
+                        {
+                            player.task[2].Win = true;
+                            player.task[2].Completed = true;
+                            player.Alert.gameObject.SetActive(true);
+
+                            //Spawning Toys
+                            Toys.SetActive(true);
+                            //Activating Timer
+                            Timer.GetComponent<TimerController>().enabled = true;
+                            //Activating Time Text
+                            TimeText.SetActive(true);
+                        }
+                    }
+
+                    //Goto player.tasks
+                    if (player.task[q].goal.goalType == GoalType.GoTo)
+                    {
+                        //Take baby to washroom -> player.task[0]
+                        if (player.Baby.connectedMassScale == 5 && gotoPoints.pointName == "washroom")
+                        {
+                            player.task[0].Win = true;
+                            player.task[0].Completed = true;
+                            gotoPoints.pointName = null;
+                            player.Alert.gameObject.SetActive(true);
+                        }
+                    }
+
+                    //Teleporting Baby to Dinning Room
+                    if (player.task[1].Completed && player.heldObj != null && BabyHideAndSeek == false)
+                    {
+                        if (player.heldObj.name == "Diaper")
+                        {
+                            //Baby Unpick
+                            player.Baby.connectedMassScale = 0;
+                            //Destroying Diaper
+                            Destroy(player.heldObj,0.1f);
+                            //BabyHappy Animation
+                            BabyAnimate.BabyHappy();
+                            //BabyHide&Seek
+                            BabyHideAndSeek = true;
                         }
                     }
                 }

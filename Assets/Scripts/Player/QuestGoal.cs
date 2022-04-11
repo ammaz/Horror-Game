@@ -55,5 +55,6 @@ public enum GoalType
     watch,
     Light,
     GoTo,
-    Door
+    Door,
+    HideAndSeek
 }
