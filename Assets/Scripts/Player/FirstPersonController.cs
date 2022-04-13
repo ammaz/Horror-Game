@@ -188,7 +188,7 @@ public class FirstPersonController : MonoBehaviour
 
     //Variables for current input values(W,A,S,D) and MoveDirection(X,Y) 
     private Vector3 moveDirection;
-    private Vector2 currentInput;
+    public Vector2 currentInput;
     public FloatingJoystick joystick;
 
     /*To keep check of current rotation, it will be used to clamp
@@ -318,7 +318,7 @@ public class FirstPersonController : MonoBehaviour
 
         //Setting Move Direction
         moveDirection.y = moveDirectionY;
-	}
+    }
 
     //For Camera rotation Inputs
     private void HandleLook()

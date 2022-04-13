@@ -22,7 +22,8 @@ public class BabySound : MonoBehaviour
         BabyCry = Resources.Load<AudioClip>("Sounds/BabyCry");
         BabyHappy = Resources.Load<AudioClip>("Sounds/BabyHappy");
         BabyFeeder = Resources.Load<AudioClip>("Sounds/BabyFeeder");
-        /*BabyAngry;*/
+        /*BabyAngry;
+         BabySinging*/
         BabyPickUp = Resources.Load<AudioClip>("Sounds/BabyPickUp");
         ChangeBabyDiaper = Resources.Load<AudioClip>("Sounds/ChangeBabyDiaper");
 

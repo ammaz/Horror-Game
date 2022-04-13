@@ -20,6 +20,8 @@ public class TaskSystem : MonoBehaviour
     private bool BabyTPCheck;
     //Baby Hide&Seek
     private bool BabyHideAndSeek;
+    //BabyLook
+    private bool BabyLook;
 
     //BabyRoom Door
     public Door BabyDoor;
@@ -28,11 +30,17 @@ public class TaskSystem : MonoBehaviour
     public TimerController Timer;
     public GameObject TimeText;
 
+    //Level 4 Last Mission Condition Run Check
+    private bool lvl4ConditionRan, lvl4ConditionRan2;
+
     // Start is called before the first frame update
     void Start()
     {
         BabyTPCheck = false;
         BabyHideAndSeek = false;
+        BabyLook = false;
+        lvl4ConditionRan = false;
+        lvl4ConditionRan2 = true;
     }
 
     // Update is called once per frame
@@ -45,6 +53,11 @@ public class TaskSystem : MonoBehaviour
         {
             player.BabyTP.BabyHideAndSeek();
         }
+
+        if (BabyLook && !player.BabyTP.isCoroutineReady)
+        {
+            StartCoroutine(player.BabyTP.BabyLookAtPlayer());
+        }    
     }
 
     private void CheckPlayerProgress()
@@ -509,8 +522,46 @@ public class TaskSystem : MonoBehaviour
                                 TimeText.SetActive(false);
                                 //Deactivating Timer
                                 Timer.GetComponent<TimerController>().enabled = false;
-
+                                //Disabling BabyLook
+                                BabyLook = false;
+                                //Unpining Baby Weight
+                                player.BabyTP.UnpinBabyWeight();
                             }
+                            
+                            else if (Timer.timeValue == 0 && !player.task[3].Completed && player.task[2].Completed && GameObject.FindGameObjectsWithTag("Toys").Length != 0)
+                            {
+                                player.task[3].Lose = true;
+                                player.task[3].Completed = true;
+                                player.Alert.gameObject.SetActive(true);
+                                TimeText.SetActive(false);
+                                //Deactivating Timer
+                                Timer.GetComponent<TimerController>().enabled = false;
+                                //Disabling BabyLook
+                                BabyLook = false;
+                                //Unpining Baby Weight
+                                player.BabyTP.UnpinBabyWeight();
+                            }
+
+                            //For Level 4 Last Mission
+                            if (lvl4ConditionRan2)
+                            {
+                                StartCoroutine(WaitingForFewSeconds());
+                            }
+
+                            if (player.BabyTP.BabyisLookingPlayer == true && player.currentInput != new Vector2(0, 0) && lvl4ConditionRan2)
+                            {
+                                player.task[3].Lose = true;
+                                player.task[3].Completed = true;
+                                player.Alert.gameObject.SetActive(true);
+                                TimeText.SetActive(false);
+                                //Deactivating Timer
+                                Timer.GetComponent<TimerController>().enabled = false;
+                                //Disabling BabyLook
+                                BabyLook = false;
+                                //Unpining Baby Weight
+                                player.BabyTP.UnpinBabyWeight();
+                            }
+
                         }
                     }
 
@@ -530,10 +581,18 @@ public class TaskSystem : MonoBehaviour
 
                             //Spawning Toys
                             Toys.SetActive(true);
+
+                            //Activating Level 4 Final Mission
+                            gotoPoints.pointName = "";
+
                             //Activating Timer
                             Timer.GetComponent<TimerController>().enabled = true;
                             //Activating Time Text
                             TimeText.SetActive(true);
+                            //Droping the baby
+                            player.Baby.connectedMassScale = 0;
+                            //Teleporting Baby To BabyRoom
+                            player.BabyTP.TeleportBabyWithPinWeight();
                         }
                     }
 
@@ -565,6 +624,14 @@ public class TaskSystem : MonoBehaviour
                             BabyHideAndSeek = true;
                         }
                     }
+
+                    //Activating Level 4 Final Mission (Collect all baby toys before time runs out and Dont move while baby is watching you)
+                    if (gotoPoints.pointName == "Insidebabyroom" && !lvl4ConditionRan)
+                    {
+                        //Enabling BabyLook
+                        BabyLook = true;
+                        lvl4ConditionRan = true;
+                    }
                 }
             }
         }
@@ -581,6 +648,13 @@ public class TaskSystem : MonoBehaviour
         }
 
         return Sum;
+    }
+
+    IEnumerator WaitingForFewSeconds()
+    {
+        lvl4ConditionRan2 = false;
+        yield return new WaitForSeconds(5);
+        lvl4ConditionRan2 = true;
     }
     
 }
