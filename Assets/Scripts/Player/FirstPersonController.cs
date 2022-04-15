@@ -648,6 +648,7 @@ public class FirstPersonController : MonoBehaviour
             }
             if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, babyLayer))
             {
+                BabyTP.BabyUnSit();
                 Baby.connectedMassScale = 5;
                 //BabyPickUp Sound
                 BabySound.PlaySound("BabyPickUp");

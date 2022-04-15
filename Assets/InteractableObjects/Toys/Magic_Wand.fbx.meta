@@ -23,22 +23,22 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Body_Body_co_BaseColor
-    second: {fileID: 2800000, guid: e86306b9ce653f9449056e035352d4c4, type: 3}
+    second: {fileID: 2800000, guid: dc4c91e466f9bbf45bf396f7177db920, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Body_Body_co_Normal
-    second: {fileID: 2800000, guid: c6266ec163fcb7840814175d387f9952, type: 3}
+    second: {fileID: 2800000, guid: 97af510a4c0625b4bb7aa1efe1dbf220, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Ring_Ring_co_BaseColor
-    second: {fileID: 2800000, guid: beaddfc9745203042b4d205adb82a905, type: 3}
+    second: {fileID: 2800000, guid: 2c539919635d14141be0f8ed29787de8, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Ring_Ring_co_Normal
-    second: {fileID: 2800000, guid: 05ce114c89bf9f348938b0297df1db94, type: 3}
+    second: {fileID: 2800000, guid: d3752f011cb40dc43a8814e498437e9e, type: 3}
   materials:
     materialImportMode: 1
     materialName: 0

@@ -5149,6 +5149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1101443123}
+  playerCharacter: {fileID: 1101443120}
   BabyHeadController: {fileID: 26118974}
   puppetMaster: {fileID: 1019117867}
   isCoroutineReady: 0
@@ -6925,6 +6926,7 @@ MonoBehaviour:
   Book: {fileID: 6088654936108185191}
   Souls: {fileID: 1254081950}
   BabyAnimate: {fileID: 1558664023}
+  mirror: {fileID: 0}
   BabyDoor: {fileID: 0}
   Timer: {fileID: 362409254}
   TimeText: {fileID: 1172095946}

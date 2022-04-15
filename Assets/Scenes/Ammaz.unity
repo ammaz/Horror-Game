@@ -787,9 +787,12 @@ MonoBehaviour:
   sprintSpeed: 6
   crouchSpeed: 1.5
   sloopSpeed: 8
+  lookSpeedX: 2
+  lookSpeedY: 2
   upperLookLimit: 80
   lowerLookLimit: 80
   mouseSensitivity: 20
+  isTouchAllowed: 0
   sprintKey: 304
   JumpKey: 32
   crouchKey: 306
@@ -807,6 +810,10 @@ MonoBehaviour:
   sprintBobAmount: 0.1
   crouchBobSpeed: 8
   crouchBobAmount: 0.025
+  moveForce: 250
+  pickUpDistance: 4
+  holdParent: {fileID: 0}
+  heldObj: {fileID: 0}
   baseStepSpeed: 0.5
   crouchStepMultipler: 1.5
   sprintStepMultipler: 0.6
@@ -824,8 +831,29 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 0
+  babyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  pick: {fileID: 0}
+  drop: {fileID: 0}
+  interact: {fileID: 0}
+  crouch: {fileID: 0}
+  uncrouch: {fileID: 0}
+  jump: {fileID: 0}
+  SimpleTV: {fileID: 0}
+  NoSignalTV: {fileID: 0}
+  Switch: {fileID: 0}
+  BabyRoomLight: {fileID: 0}
+  BabyAnimate: {fileID: 0}
+  BabyTP: {fileID: 0}
+  Garbage: {fileID: 0}
+  Baby: {fileID: 0}
+  currentInput: {x: 0, y: 0}
   joystick: {fileID: 6963080647061210363}
   SimpleInteractText: {fileID: 1381654416}
+  task: []
+  GiveButtonPressed: 0
+  Alert: {fileID: 0}
 --- !u!143 &659833858
 CharacterController:
   m_ObjectHideFlags: 0
