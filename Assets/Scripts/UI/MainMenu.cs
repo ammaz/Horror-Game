@@ -100,11 +100,6 @@ public class MainMenu : MonoBehaviour
             levelInfo.text = "Please select a level";
         }
 
-        else if (levelIndex == 5)
-        {
-            levelInfo.text = "\n\nLevel Coming Soon";
-        }
-
         else
         {
             levelScreen.SetActive(false);

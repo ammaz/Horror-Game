@@ -27,26 +27,29 @@ public class Baby : MonoBehaviour
 
     public void BabyTPSit()
     {
-        //gameObject.transform.position = new Vector3(-7.042f, 0.849f, -7.13f);
-        //gameObject.transform.position = new Vector3(-6.8882f, 1.09f, -7.096f);
+        //Baby Sit Animation
+        playerCharacter.BabyAnimate.BabySit();
+
+        //BabyHappy Sound
+        BabySound.PlaySound("BabyHappy");
+
+        playerCharacter.Baby.connectedMassScale = 0;
         puppetMaster.pinWeight = 1;
         BabyParent.position = new Vector3(-6.8373f, 0.8f, -7.096f);
         puppetMaster.GetComponent<PuppetMaster>().enabled = false;
         puppetMaster.GetComponent<PuppetMaster>().enabled = true;
         BabyParent.Rotate(new Vector3(0, 180, 0));
-        //BabyParent.rotation.y.Equals(90f);
     }
 
     public void BabyUnSit()
     { 
         if(BabyParent.rotation.y != -90 && puppetMaster.pinWeight != 0)
         {
-            //BabyParent.Rotate(new Vector3(0, -270, 0));
-            BabyParent.rotation.y.Equals(-90f);
             puppetMaster.pinWeight = 0;
+            BabyParent.Rotate(new Vector3(0, 180, 0));
         }
     }
-
+    /*
     public void BabySit()
     {
         puppetMaster.pinWeight = 1;
@@ -55,7 +58,7 @@ public class Baby : MonoBehaviour
         puppetMaster.GetComponent<PuppetMaster>().enabled = true;
         BabyParent.Rotate(new Vector3(0, 220, 0));
     }
-
+    */
     public void BabyTP(float x,float y,float z)
     {
         gameObject.transform.position = new Vector3(x, y, z);

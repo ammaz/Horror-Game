@@ -11,7 +11,7 @@ public class TaskSystem : MonoBehaviour
     public GameObject Baby1;
 
     //Spawn Objects
-    public GameObject Toys,Plates,Key,Feeder,Sink,MagicWand,Book,Souls;
+    public GameObject Toys,Plates,Key,Feeder,Sink,MagicWand,Book,Souls,holySoul;
 
     //Baby Animator
     public BabyAnim BabyAnimate;
@@ -591,21 +591,47 @@ public class TaskSystem : MonoBehaviour
                     if (player.task[q].goal.goalType == GoalType.pick)
                     {
                         //Find and collect 7 souls in soul basket -> player.task[0]
-                        if (SoulBasket.countSouls >= 7 && !player.task[0].Completed)
+                        if (SoulBasket.countSouls >= 5 && !player.task[0].Completed)
                         {
                             TaskStatus(0, true);
 
-                            //Spawing Plates
-                            //SoulIdol.SetActive(true);
-                            //ObjectSpawn Sound
-                            Sounds.PlaySound("ObjectSpawn");
+                            //Activating Magic Wand
+                            MagicWand.SetActive(true);
                         }
+                        if (player.heldObj != null)
+                        {
+                            //Find the magic wand -> Task[1]
+                            if (player.heldObj.name == "Magic Wand" && !player.task[1].Completed)
+                            {
+                                TaskStatus(1, true);
+
+                                //Teleporting Baby to Baby Chair
+                                player.BabyTP.BabyTPSit();
+                            }
+                        }     
                     }
 
                     //Give player.tasks
                     if (player.task[q].goal.goalType == GoalType.give && player.SimpleInteractText.text != null && player.GiveButtonPressed == true && player.heldObj != null)
                     {
+                        //Turn souls into holly souls -> player.task[2]
+                        if (player.heldObj.name == "Magic Wand" && player.SimpleInteractText.text == "Turn into holy soul" && !player.task[2].Completed)
+                        {
+                            TaskStatus(2, true);
+                            player.GiveButtonPressed = false;
 
+                            //Deactivating Souls
+                            Souls.SetActive(false);
+                            //Activating holy soul
+                            holySoul.SetActive(true);
+                        }
+
+                        //Use magic wand on baby to make him normal -> player.task[3]
+                        if (player.heldObj.name == "Magic Wand" && player.SimpleInteractText.text == "Use magic wand" && !player.task[3].Completed)
+                        {
+                            TaskStatus(3, true);
+                            player.GiveButtonPressed = false;
+                        }
                     }
                 }
             }

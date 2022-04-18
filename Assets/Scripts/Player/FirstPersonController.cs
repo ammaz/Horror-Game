@@ -473,6 +473,11 @@ public class FirstPersonController : MonoBehaviour
                 {
                     SimpleInteractText.text = "Wash Plate";
                 }
+
+                if(heldObj.name == "Magic Wand" && SimpleInteractText.text == "Soul Basket")
+                {
+                    SimpleInteractText.text = "Turn into holy soul";
+                }
             }
         }
         else if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, babyLayer))
@@ -557,6 +562,10 @@ public class FirstPersonController : MonoBehaviour
                 //Destroying Magic Wand
                 Destroy(heldObj, 0.3f);
             }
+            else if (heldObj.name == "Magic Wand" && SimpleInteractText.text == "Turn into holy soul")
+            {
+                GiveButtonPressed = true;
+            }
             else
             {
                 GiveButtonPressed = false;
@@ -581,14 +590,8 @@ public class FirstPersonController : MonoBehaviour
         //Baby Sit
         if(Baby.connectedMassScale == 5 && SimpleInteractText.text == "Baby Chair")
         {
-            //Baby Unpick
-            Baby.connectedMassScale = 0;
-            //Baby Sit Animation
-            BabyAnimate.BabySit();
             //BabyTPSit
             BabyTP.BabyTPSit();
-            //BabyHappy Sound
-            BabySound.PlaySound("BabyHappy");
         }
 
         //Turning on/off Switch
@@ -736,7 +739,7 @@ public class FirstPersonController : MonoBehaviour
             {
                 interact.gameObject.SetActive(true);
             }
-            else if (heldObj.name == "Magic Wand" && SimpleInteractText.text == "Use magic wand")
+            else if (heldObj.name == "Magic Wand" && (SimpleInteractText.text == "Use magic wand" || SimpleInteractText.text == "Turn into holy soul"))
             {
                 interact.gameObject.SetActive(true);
             }
