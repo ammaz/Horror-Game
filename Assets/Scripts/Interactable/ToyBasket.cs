@@ -23,33 +23,8 @@ public class ToyBasket : MonoBehaviour
         {
             if (other.GetComponent<Rigidbody>().useGravity == true)
             {
-                //Destroy(other.gameObject,0.1f);
                 countToys++;
             }
         }
     }
-    /*
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Toys"))
-        {
-            if (other.GetComponent<Rigidbody>().useGravity == true)
-            {
-                //Destroy(other.gameObject, 0.1f);
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Toys"))
-        {
-            if (other.GetComponent<Rigidbody>().useGravity == true)
-            {
-                //Destroy(other.gameObject, 0.1f);
-                //countToys++;
-            }
-        }
-    }
-    */
 }

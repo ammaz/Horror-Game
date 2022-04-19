@@ -8,11 +8,16 @@ public class HeadController : MonoBehaviour
     public float speed = 5f;
     private float valueY;
 
+    public FieldOfView FOV;
+
+    public FirstPersonController isBabyPicked;
+
     private void Update()
     {
-        valueY = Mathf.Clamp(target.position.y,0f,2f);
+        valueY = Mathf.Clamp(target.position.y,0f,1.5f);
 
-        transform.LookAt(new Vector3(target.position.x, valueY, target.position.z));
+        if(FOV.canSeePlayer && isBabyPicked.Baby.connectedMassScale==0)
+            transform.LookAt(new Vector3(target.position.x, valueY, target.position.z));
 
         /*rotationX = Mathf.Clamp(rotationX, minRotationX, maxRotationX);
         rotationY += Input.GetAxis("Horizontal" * Time.deltaTime;

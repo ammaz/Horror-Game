@@ -746,7 +746,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &26118974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,13 +754,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 26118969}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff2f447286270544b9fc51058213aef7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1101443123}
-  speed: 100
+  speed: 50
+  FOV: {fileID: 235586215}
+  isBabyPicked: {fileID: 1101443120}
 --- !u!82 &26118975
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3746,7 +3748,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &187016787
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -4481,7 +4483,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &214259051
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -4975,6 +4977,7 @@ GameObject:
   - component: {fileID: 235586211}
   - component: {fileID: 235586213}
   - component: {fileID: 235586214}
+  - component: {fileID: 235586215}
   m_Layer: 12
   m_Name: mixamorig:Hips
   m_TagString: Untagged
@@ -5014,7 +5017,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &235586211
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -5148,13 +5151,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de5bbb3f4ad28ae4980aef742164be0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
-  playerCharacter: {fileID: 0}
-  BabyHeadController: {fileID: 0}
-  puppetMaster: {fileID: 0}
+  Player: {fileID: 1101443123}
+  playerCharacter: {fileID: 1101443120}
+  BabyHeadController: {fileID: 26118974}
+  puppetMaster: {fileID: 1019117867}
   isCoroutineReady: 0
-  BabyParent: {fileID: 0}
+  BabyParent: {fileID: 1571886577}
   BabyisLookingPlayer: 0
+--- !u!114 &235586215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235586208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f68048e21b6125418965bb543673dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 3
+  angle: 110
+  playerRef: {fileID: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 1
+  canSeePlayer: 0
 --- !u!1 &243363728
 GameObject:
   m_ObjectHideFlags: 0
@@ -5385,7 +5410,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &245933202
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -7791,7 +7816,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &432132571
 GameObject:
   m_ObjectHideFlags: 0
@@ -8153,7 +8178,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1001 &457884028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10145,7 +10170,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &623108496
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -11052,90 +11077,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671227432}
   m_CullTransparentMesh: 0
---- !u!1001 &672606335
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 546898275286407606, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 546898275286407607, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5118972084576839075, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_Name
-      value: Baby Chair
-      objectReference: {fileID: 0}
-    - target: {fileID: 5118972084576839075, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5494933956122361625, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 33
-      objectReference: {fileID: 0}
-    - target: {fileID: 5494933956122361625, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -7.347
-      objectReference: {fileID: 0}
-    - target: {fileID: 5494933956122361625, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.294
-      objectReference: {fileID: 0}
-    - target: {fileID: 5494933956122361625, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -7.119
-      objectReference: {fileID: 0}
-    - target: {fileID: 5494933956122361625, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5494933956122361625, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5494933956122361625, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5494933956122361625, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5494933956122361625, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90.00001
-      objectReference: {fileID: 0}
-    - target: {fileID: 5494933956122361625, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 5494933956122361625, guid: 8d01592eda449ad438505c93087ecb30,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -180
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8d01592eda449ad438505c93087ecb30, type: 3}
 --- !u!1 &682258938 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3869718578062425747, guid: faf5ad493b3e5c246b68a3dbd981be09,
@@ -14562,7 +14503,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &993171503
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -18985,7 +18926,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &1144872332
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -19794,7 +19735,7 @@ Transform:
   m_LocalScale: {x: 0.1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 34
+  m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1231188912
 MonoBehaviour:
@@ -24875,7 +24816,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &1553175893
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -26923,7 +26864,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &1659962256
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -28764,7 +28705,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &1798874898
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -30335,7 +30276,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &1947404634
 GameObject:
   m_ObjectHideFlags: 0
@@ -30485,7 +30426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deed7bfde8df6a44bbc148c61b6a2632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestBabyPickPoint: {fileID: 1952014103}
 --- !u!1 &1971241485
 GameObject:
   m_ObjectHideFlags: 0
@@ -31565,7 +31505,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1001 &2057272289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33043,7 +32983,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 36
+  m_RootOrder: 35
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!23 &630923979692374166
 MeshRenderer:
@@ -34010,7 +33950,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 37
+  m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &1029253548049038008
 Transform:
@@ -36715,7 +36655,7 @@ Transform:
   m_Children:
   - {fileID: 5996736993597502591}
   m_Father: {fileID: 0}
-  m_RootOrder: 35
+  m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: -1}
 --- !u!1 &2934121800053257999
 GameObject:
@@ -38226,7 +38166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &3986112783510084988
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41815,7 +41755,7 @@ GameObject:
   - component: {fileID: 7784175356193446324}
   - component: {fileID: 6416749508457458126}
   m_Layer: 8
-  m_Name: Baby Chair
+  m_Name: Baby Chair.
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

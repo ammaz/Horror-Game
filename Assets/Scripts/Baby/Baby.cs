@@ -49,16 +49,7 @@ public class Baby : MonoBehaviour
             BabyParent.Rotate(new Vector3(0, 180, 0));
         }
     }
-    /*
-    public void BabySit()
-    {
-        puppetMaster.pinWeight = 1;
-        BabyParent.position = new Vector3(-6.8882f, 1.09f, -7.096f);
-        puppetMaster.GetComponent<PuppetMaster>().enabled = false;
-        puppetMaster.GetComponent<PuppetMaster>().enabled = true;
-        BabyParent.Rotate(new Vector3(0, 220, 0));
-    }
-    */
+
     public void BabyTP(float x,float y,float z)
     {
         gameObject.transform.position = new Vector3(x, y, z);

@@ -19,8 +19,6 @@ public class GameManager : MonoBehaviour
     public FirstPersonController Sensitivity;
     public Slider sensitivitySlider;
 
-    //private bool isPaused = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -58,20 +56,6 @@ public class GameManager : MonoBehaviour
     {
         Sensitivity.mouseSensitivity = sensitivitySlider.value;
     }
-
-    /*public void pauseGame()
-    {
-        if (isPaused)
-        {
-            Time.timeScale = 1;
-            isPaused = false;
-        }
-        else
-        {
-            Time.timeScale = 0;
-            isPaused=true;
-        }
-    }*/
 
     public void Home()
     {

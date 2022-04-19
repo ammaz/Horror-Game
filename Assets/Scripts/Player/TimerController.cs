@@ -12,7 +12,7 @@ public class TimerController : MonoBehaviour
     //private GameManager GM;
     void Start()
     {
-        //GM = FindObjectOfType<GameManager>();
+        
     }
     void Update()
     {
@@ -23,7 +23,6 @@ public class TimerController : MonoBehaviour
         else
         {
             timeValue = 0;
-            //GM.Victory();
         }
 
         DisplayTime(timeValue);
