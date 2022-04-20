@@ -599,6 +599,7 @@ GameObject:
   - component: {fileID: 26118972}
   - component: {fileID: 26118971}
   - component: {fileID: 26118974}
+  - component: {fileID: 26118977}
   - component: {fileID: 26118976}
   - component: {fileID: 26118975}
   m_Layer: 12
@@ -754,13 +755,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 26118969}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff2f447286270544b9fc51058213aef7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1101443123}
-  speed: 100
+  speed: 50
   FOV: {fileID: 235586215}
   isBabyPicked: {fileID: 1101443120}
 --- !u!82 &26118975
@@ -871,6 +872,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843dc89bf198b9c4f812b5962a159f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &26118977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26118969}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0da6f8ddea9453c40bf174f4ec3fd5fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1101443123}
+  speed: 50
 --- !u!1 &26426805
 GameObject:
   m_ObjectHideFlags: 0
@@ -5153,7 +5168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1101443123}
   playerCharacter: {fileID: 1101443120}
-  BabyHeadController: {fileID: 26118974}
+  SquidHeadController: {fileID: 26118977}
   puppetMaster: {fileID: 1019117867}
   isCoroutineReady: 0
   BabyParent: {fileID: 1571886577}
@@ -6956,6 +6971,8 @@ MonoBehaviour:
   BabyDoor: {fileID: 0}
   Timer: {fileID: 362409254}
   TimeText: {fileID: 1172095946}
+  BabyHeadController: {fileID: 26118974}
+  BabySquidController: {fileID: 26118977}
 --- !u!114 &362409254
 MonoBehaviour:
   m_ObjectHideFlags: 0

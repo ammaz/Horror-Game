@@ -9,7 +9,7 @@ public class Baby : MonoBehaviour
     public FirstPersonController playerCharacter;
 
     public static int BabyNumHideSeek;
-    public HeadController BabyHeadController;
+    public SquidHead SquidHeadController;
     public PuppetMaster puppetMaster;
 
     public bool isCoroutineReady;
@@ -76,13 +76,13 @@ public class Baby : MonoBehaviour
         //BabySound.PlaySound("BabySinging");
 
         //Enabling Headlook
-        BabyHeadController.GetComponent<HeadController>().enabled = true;
+        SquidHeadController.GetComponent<SquidHead>().enabled = true;
 
         yield return new WaitForSeconds(Random.Range(5, 10));
 
         BabyisLookingPlayer = false;
         //Disabling Headlook
-        BabyHeadController.GetComponent<HeadController>().enabled = false;
+        SquidHeadController.GetComponent<SquidHead>().enabled = false;
         //BabyHorror Sound
         //BabySound.PlaySound("BabyAngry");
 

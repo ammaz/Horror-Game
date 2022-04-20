@@ -33,6 +33,11 @@ public class TaskSystem : MonoBehaviour
     public TimerController Timer;
     public GameObject TimeText;
 
+    //Headcontroller Baby
+    public HeadController BabyHeadController;
+    //SquidController Baby
+    public SquidHead BabySquidController;
+
     //Level 4 Last Mission Condition Run Check
     private bool lvl4ConditionRan, PlayerMoving;
 
@@ -477,6 +482,11 @@ public class TaskSystem : MonoBehaviour
                                 BabyLook = false;
                                 //Unpining Baby Weight
                                 player.BabyTP.UnpinBabyWeight();
+
+                                //Activating BabyHeadcontroller
+                                BabyHeadController.GetComponent<HeadController>().enabled = true;
+                                //Deactivating SquidController
+                                BabySquidController.GetComponent<SquidHead>().enabled = false;
                             }
                             
                             //Checking if time has ran out and if the player failed to collect all the toys
@@ -490,6 +500,11 @@ public class TaskSystem : MonoBehaviour
                                 BabyLook = false;
                                 //Unpining Baby Weight
                                 player.BabyTP.UnpinBabyWeight();
+
+                                //Activating BabyHeadcontroller
+                                BabyHeadController.GetComponent<HeadController>().enabled = true;
+                                //Deactivating SquidController
+                                BabySquidController.GetComponent<SquidHead>().enabled = false;
                             }
 
                             else if (!player.task[3].Completed && player.BabyTP.BabyisLookingPlayer == true && player.task[2].Completed)
@@ -506,13 +521,18 @@ public class TaskSystem : MonoBehaviour
                                     BabyLook = false;
                                     //Unpining Baby Weight
                                     player.BabyTP.UnpinBabyWeight();
+
+                                    //Activating BabyHeadcontroller
+                                    BabyHeadController.GetComponent<HeadController>().enabled = true;
+                                    //Deactivating SquidController
+                                    BabySquidController.GetComponent<SquidHead>().enabled = false;
                                 }
                             }
 
                         }
                     }
 
-                    //HideAndSeek player.tasks
+                    //HideAndSeek -> player.tasks[2]
                     if(player.task[q].goal.goalType == GoalType.HideAndSeek)
                     {
                         if (Baby.BabyNumHideSeek == 4 && BabyHideAndSeek)
@@ -538,6 +558,11 @@ public class TaskSystem : MonoBehaviour
                             player.Baby.connectedMassScale = 0;
                             //Teleporting Baby To BabyRoom
                             player.BabyTP.TeleportBabyWithPinWeight();
+
+                            //Deactivating BabyHeadcontroller
+                            BabyHeadController.GetComponent<HeadController>().enabled = false;
+                            //Enabling SquidController
+                            BabySquidController.GetComponent<SquidHead>().enabled = true;
                         }
                     }
 
