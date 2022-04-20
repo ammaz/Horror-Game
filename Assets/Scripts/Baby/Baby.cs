@@ -66,7 +66,7 @@ public class Baby : MonoBehaviour
         }
     }
 
-    public IEnumerator BabyLookAtPlayer()
+    public IEnumerator BabySquidLookAtPlayer()
     {
         isCoroutineReady = true;
 

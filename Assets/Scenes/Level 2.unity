@@ -5054,7 +5054,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1101443123}
   playerCharacter: {fileID: 1101443120}
-  BabyHeadController: {fileID: 26118974}
+  SquidHeadController: {fileID: 0}
   puppetMaster: {fileID: 1019117867}
   isCoroutineReady: 0
   BabyParent: {fileID: 1571886577}
@@ -6964,6 +6964,8 @@ MonoBehaviour:
   BabyDoor: {fileID: 0}
   Timer: {fileID: 0}
   TimeText: {fileID: 0}
+  BabyHeadController: {fileID: 0}
+  BabySquidController: {fileID: 0}
 --- !u!1001 &364546986
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8423,7 +8425,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1101443120}
+      - m_Target: {fileID: 1101443126}
         m_MethodName: DropObject
         m_Mode: 1
         m_Arguments:
@@ -9568,7 +9570,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1101443120}
+      - m_Target: {fileID: 1101443126}
         m_MethodName: PickObject
         m_Mode: 1
         m_Arguments:
@@ -17709,6 +17711,9 @@ GameObject:
   - component: {fileID: 1101443123}
   - component: {fileID: 1101443122}
   - component: {fileID: 1101443120}
+  - component: {fileID: 1101443127}
+  - component: {fileID: 1101443126}
+  - component: {fileID: 1101443125}
   - component: {fileID: 1101443121}
   - component: {fileID: 1101443124}
   m_Layer: 11
@@ -17741,6 +17746,7 @@ MonoBehaviour:
   sprintSpeed: 1.5
   crouchSpeed: 0.5
   sloopSpeed: 8
+  canMove: 1
   lookSpeedX: 2
   lookSpeedY: 2
   upperLookLimit: 80
@@ -17786,6 +17792,7 @@ MonoBehaviour:
   babyLayer:
     serializedVersion: 2
     m_Bits: 4096
+  currentInteractable: {fileID: 0}
   pick: {fileID: 569632650}
   drop: {fileID: 464254306}
   interact: {fileID: 1436317603}
@@ -17800,6 +17807,7 @@ MonoBehaviour:
   BabyTP: {fileID: 235586214}
   Garbage: {fileID: 846398177}
   Baby: {fileID: 2132046467}
+  playerCamera: {fileID: 0}
   currentInput: {x: 0, y: 0}
   joystick: {fileID: 1733129016}
   SimpleInteractText: {fileID: 412139581}
@@ -18175,6 +18183,42 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1101443125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101443119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56b8932067d11c4183190fe91739b56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1101443126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101443119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47c27d717d360e14e860d0c536ad38cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1101443127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101443119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0131ce31b9d712d48bff2497bcbc8f10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1109879682
 GameObject:
   m_ObjectHideFlags: 0
@@ -22527,7 +22571,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1101443120}
+      - m_Target: {fileID: 1101443127}
         m_MethodName: HandleInteractionInput
         m_Mode: 1
         m_Arguments:

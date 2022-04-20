@@ -64,14 +64,122 @@ public class TaskSystem : MonoBehaviour
 
         if (BabyLook && !player.BabyTP.isCoroutineReady)
         {
-            StartCoroutine(player.BabyTP.BabyLookAtPlayer());
+            StartCoroutine(player.BabyTP.BabySquidLookAtPlayer());
         }
 
     }
 
     private void CheckPlayerProgress()
     {
-        if (SceneManager.GetActiveScene().name == "Level 2")
+        //Checking for Level
+        if (SceneManager.GetActiveScene().name == "Level 1")
+        {
+            //Total Tasks
+            for (int q = 0; q < player.task.Length; q++)
+            {
+                //Checking if task is active and in progress(given to player in task book) and is it completed or nor
+                if (player.task[q].isActive && player.task[q].inProgress && player.task[q].Completed == false)
+                {
+                    //Pickup Tasks
+                    if (player.task[q].goal.goalType == GoalType.pick)
+                    {
+                        if (player.heldObj != null)
+                        {
+                            //Take the feeder from fridge -> Task[1]
+                            if (player.heldObj.name == "Feeder" && !player.task[0].Completed)
+                            {
+                                TaskStatus(0, true);
+                            }
+
+                            //Pickup plates from the table -> Task[7]
+                            if (player.heldObj.name == "Plate" && q == 6 && !player.task[6].Completed)
+                            {
+                                TaskStatus(6, true);
+                            }
+                        }
+                        else
+                        {
+                            //Clean the TV Lounge -> Task[6]
+                            if (GameObject.FindGameObjectsWithTag("Garbage").Length == 0 && player.task[4].Completed && !player.task[5].Completed)
+                            {
+                                TaskStatus(5, true);
+                            }
+                        }
+                    }
+
+                    //Give Tasks
+                    if (player.task[q].goal.goalType == GoalType.give && player.SimpleInteractText.text != null && player.GiveButtonPressed == true && player.heldObj != null)
+                    {
+                        //Feed the baby -> Task[2]
+                        if (player.heldObj.name == "Feeder" && player.SimpleInteractText.text == "Feed the baby")
+                        {
+                            TaskStatus(1, true);
+                            player.GiveButtonPressed = false;
+                        }
+
+                        //Change baby diaper -> Task[4]
+                        if (player.heldObj.name == "Diaper" && player.SimpleInteractText.text == "Change baby diaper")
+                        {
+                            TaskStatus(3, true);
+                            player.GiveButtonPressed = false;
+                        }
+
+                        //Wash Dish -> Task[8]
+                        if (player.heldObj.name == "Plate" && player.SimpleInteractText.text == "Wash Plate" && q == 7 && !player.task[7].Completed)
+                        {
+                            TaskStatus(7, true);
+                            player.GiveButtonPressed = false;
+                        }
+                    }
+
+                    //Goto Tasks
+                    if (player.task[q].goal.goalType == GoalType.GoTo)
+                    {
+                        //Take baby to washroom -> Task[3]
+                        if (player.Baby.connectedMassScale == 5 && gotoPoints.pointName == "washroom" && !player.task[2].Completed)
+                        {
+                            TaskStatus(2, true);
+                            gotoPoints.pointName = null;
+                        }
+
+                        //Take baby to bedroom -> Task[5] 6,8,9,10
+                        if (player.Baby.connectedMassScale == 5 && gotoPoints.pointName == "bedroom" && q == 4 && !player.task[4].Completed)
+                        {
+                            TaskStatus(4, true);
+                            gotoPoints.pointName = null;
+                        }
+                    }
+
+                    //Sit Task
+                    if (player.task[q].goal.goalType == GoalType.sit)
+                    {
+                        if (player.canMove == false && !player.task[8].Completed && q == 8)
+                        {
+                            TaskStatus(8, true);
+                        }
+                    }
+
+                    //Watch Task
+                    if (player.task[q].goal.goalType == GoalType.watch)
+                    {
+                        if (player.NoSignalTV.activeSelf && !player.task[9].Completed && q == 9)
+                        {
+                            TaskStatus(9, true);
+                        }
+                    }
+
+                    //Spawning Garbage objects
+                    if (player.task[4].Completed == true && player.Garbage.activeSelf == false)
+                    {
+                        player.Garbage.SetActive(true);
+                        //ObjectSpawn Sound
+                        Sounds.PlaySound("ObjectSpawn");
+                    }
+                }
+            }
+        }
+
+        else if (SceneManager.GetActiveScene().name == "Level 2")
         {
             //Total player.tasks
             for (int q = 0; q < player.task.Length; q++)

@@ -40,7 +40,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private bool canCrouch = true;
     [SerializeField] private bool canUseHeadbob = true;
     [SerializeField] private bool WillSlideOnSlopes = true;
-    [SerializeField] private bool canInteract = true;
+    [SerializeField] public bool canInteract = true;
     [SerializeField] private bool useFootsteps = true;
 
     [Header("Movement Parameters")]
@@ -48,7 +48,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float sprintSpeed = 1.5f;
     [SerializeField] private float crouchSpeed = 0.5f;
     [SerializeField] private float sloopSpeed = 8f;
-    private bool canMove = true;
+    public bool canMove = true;
 
     [Header("Look Parameters")]
     //For PC
@@ -108,7 +108,7 @@ public class FirstPersonController : MonoBehaviour
     [Header("Object Movable Parameters")]
     [SerializeField] public float moveForce = 250;
     [SerializeField] public float pickUpDistance = 4;
-    [SerializeField] private Transform holdParent;
+    [SerializeField] public Transform holdParent;
     public GameObject heldObj;
 
     [Header("FootStep Parameters")]
@@ -124,19 +124,19 @@ public class FirstPersonController : MonoBehaviour
     private float GetCurrentOffset => isCrouching ? baseStepSpeed * crouchStepMultipler : IsSprinting ? baseStepSpeed * sprintStepMultipler : baseStepSpeed;
 
     [Header("Interaction Parameters")]
-    [SerializeField] private Vector3 interactionRayPoint = default;
-    [SerializeField] private float interactionDistance = default;
-    [SerializeField] private LayerMask interactionLayer = default;
-    [SerializeField] private LayerMask babyLayer = default;
-    private Interactable currentInteractable;
+    [SerializeField] public Vector3 interactionRayPoint = default;
+    [SerializeField] public float interactionDistance = default;
+    [SerializeField] public LayerMask interactionLayer = default;
+    [SerializeField] public LayerMask babyLayer = default;
+    public Interactable currentInteractable;
 
     [Header("Interaction Buttons")]
-    [SerializeField] private Button pick;
-    [SerializeField] private Button drop;
-    [SerializeField] private Button interact;
-    [SerializeField] private Button crouch;
-    [SerializeField] private Button uncrouch;
-    [SerializeField] private Button jump;
+    [SerializeField] public Button pick;
+    [SerializeField] public Button drop;
+    [SerializeField] public Button interact;
+    [SerializeField] public Button crouch;
+    [SerializeField] public Button uncrouch;
+    [SerializeField] public Button jump;
 
     [Header("Video Parameters")]
     public GameObject SimpleTV;
@@ -182,7 +182,7 @@ public class FirstPersonController : MonoBehaviour
     public FixedJoint Baby;
 
     //Player Camera Object
-    private Camera playerCamera;
+    public Camera playerCamera;
     //Player Controller
     private CharacterController characterController;
 
@@ -243,6 +243,11 @@ public class FirstPersonController : MonoBehaviour
 
         //Throwing Baby on ground
         Baby.connectedMassScale = 0;
+
+        //Player Can Move
+        canMove = true;
+
+        canInteract = true;
     }
 
     void Update()
@@ -271,29 +276,10 @@ public class FirstPersonController : MonoBehaviour
             if (canUseHeadbob)
                 HandleHeadbob();
 
-			if (canInteract)
-			{
-                HandleInteractionCheck();
-                //HandleInteractionInput();
-                InteractionCheckText();
-            }
-
             if (useFootsteps)
                 Handle_Footsteps();
 
-            //For moving Object while they are picked
-            if (heldObj != null)
-            {
-                MoveObject();
-            }
-
-            //For Buttons
-            HandleButtons();
-
             ApplyFinalMovements();
-
-            //Check player progress
-            CheckPlayerProgress();
         }	
     }
 
@@ -426,368 +412,7 @@ public class FirstPersonController : MonoBehaviour
                 defaultYPos + Mathf.Sin(timer)*(isCrouching ? crouchBobAmount : IsSprinting ? sprintBobAmount : walkBobAmount),playerCamera.transform.localPosition.z);
 		}
 	}
-
-    /// <summary>
-    /// Interaction
-    /// </summary>
-
-    //I have kept this for doors only
-    //Constantly raycast and look for interactable objects
-    private void HandleInteractionCheck()
-	{
-        if(Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance))
-		{
-            //Change number 8 to Interactable Layer (Subject to change)
-            if(hit.collider.gameObject.layer == 8 && (currentInteractable == null || hit.collider.gameObject.GetInstanceID() != currentInteractable.GetInstanceID()))
-			{
-                hit.collider.TryGetComponent(out currentInteractable);
-
-                if (currentInteractable)
-				{
-                    currentInteractable.OnFocus();
-                    //Changing name of InteractionText
-                    //InteractText.SetInteractText("" + currentInteractable.name);
-                    //SimpleInteractText.text = "" + currentInteractable.name;
-                }
-            }
-		}
-        else if (currentInteractable)
-		{
-            currentInteractable.OnLoseFocus();
-            currentInteractable = null;
-            //Removing name of InteractionText
-            //InteractText.RemoveInteractText();
-            //SimpleInteractText.text = "";
-        }
-    }
-
-    //For changing the text
-    private void InteractionCheckText()
-    {
-        if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance, interactionLayer))
-        {
-            SimpleInteractText.text = "" + hit.transform.gameObject.name;
-            if (heldObj != null)
-            {
-                if(heldObj.name=="Plate" && SimpleInteractText.text == "Sink")
-                {
-                    SimpleInteractText.text = "Wash Plate";
-                }
-
-                if(heldObj.name == "Magic Wand" && SimpleInteractText.text == "Soul Basket")
-                {
-                    SimpleInteractText.text = "Turn into holy soul";
-                }
-            }
-        }
-        else if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, babyLayer))
-        {
-            if (heldObj != null)
-            {
-                if (heldObj.name == "Feeder")
-                {
-                    SimpleInteractText.text = "Feed the baby";
-                }
-                else if (heldObj.name == "Diaper")
-                {
-                    SimpleInteractText.text = "Change baby diaper";
-                }
-                else if(heldObj.name == "Magic Wand")
-                {
-                    SimpleInteractText.text = "Use magic wand";
-                }
-            }
-            else
-            {
-                SimpleInteractText.text = "Baby";
-            }  
-        }
-        else
-        {
-            SimpleInteractText.text = "";
-        }
-    }
-
-    //When we hit interact key the action will be performed
-    //For Door Opening
-    public void HandleInteractionInput()
-	{
-        //Interaction key, I will add button and touch controls in this (Subject to change)
-        if(currentInteractable != null && Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance, interactionLayer))
-		{
-            currentInteractable.OnInteract();
-        }
-
-        if (heldObj != null)
-        {
-            if (((heldObj.name == "Feeder") || (heldObj.name == "Diaper")) && ((SimpleInteractText.text == "Feed the baby") || (SimpleInteractText.text == "Change baby diaper")))
-            {
-                GiveButtonPressed = true;
-
-                if (heldObj.name == "Diaper")
-                {
-                    //ChangeBabyDiaper Sound
-                    BabySound.PlaySound("ChangeBabyDiaper");
-                }
-                else
-                {
-                    //BabyFeeder Sound
-                    BabySound.PlaySound("BabyFeeder");
-                }
-
-                //Destroying Feeder or Diaper
-                Destroy(heldObj,0.3f);    
-            }
-            else if (heldObj.name == "Plate" && SimpleInteractText.text == "Wash Plate")
-            {
-                GiveButtonPressed = true;
-                //Destroying Plate
-                Destroy(heldObj, 0.3f);
-            }
-            else if (heldObj.name == "Shirt" && SimpleInteractText.text == "Washing Machine")
-            {
-                GiveButtonPressed = true;
-                //Destroying Shirt
-                Destroy(heldObj, 0.3f);
-            }
-            else if (heldObj.name == "Key" && SimpleInteractText.text == "Locked")
-            {
-                GiveButtonPressed = true;
-                //Destroying Key
-                Destroy(heldObj, 0.3f);
-            }
-            else if (heldObj.name == "Magic Wand" && SimpleInteractText.text == "Use magic wand")
-            {
-                GiveButtonPressed = true;
-                //Destroying Magic Wand
-                Destroy(heldObj, 0.3f);
-            }
-            else if (heldObj.name == "Magic Wand" && SimpleInteractText.text == "Turn into holy soul")
-            {
-                GiveButtonPressed = true;
-            }
-            else
-            {
-                GiveButtonPressed = false;
-            }
-        }
-
-        //Washing face
-        if (SimpleInteractText.text == "Wash face")
-        {
-            GiveButtonPressed = true;
-        }
-
-        //Turning on/off TV
-        if (SimpleInteractText.text=="TV")
-        {
-            if(SimpleTV.activeSelf==true)
-                SimpleTV.SetActive(false);
-            else
-                SimpleTV.SetActive(true);
-        }
-
-        //Baby Sit
-        if(Baby.connectedMassScale == 5 && SimpleInteractText.text == "Baby Chair")
-        {
-            //BabyTPSit
-            BabyTP.BabyTPSit();
-        }
-
-        //Turning on/off Switch
-        if (SimpleInteractText.text == "Switch")
-        {
-            //On
-            if (Switch.GetBool("Off"))
-            {
-                Switch.SetBool("On",true);
-                Switch.SetBool("Off", false);
-                BabyRoomLight.SetActive(true);
-                Sounds.PlaySound("Switch");
-            }
-            //Off
-            else
-            {
-                Switch.SetBool("Off",true);
-                Switch.SetBool("On", false);
-                BabyRoomLight.SetActive(false);
-                Sounds.PlaySound("Switch");
-            }
-        }
-
-        //Sitting on couch
-        if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, interactionLayer))
-        {
-            if (SimpleInteractText.text == "Couch")
-            {
-                if (canMove == true)
-                {
-                    StartCoroutine(SitonCouch(hit.transform.gameObject));
-                    NoSignalTV.SetActive(true);
-                }
-                else if (canMove == false)
-                {
-                    canMove = true;
-                    crouch.gameObject.SetActive(true);
-                    uncrouch.gameObject.SetActive(false);
-                    jump.gameObject.SetActive(true);
-                    StartCoroutine(CrouchStand());
-                    NoSignalTV.SetActive(false);
-                }
-            }
-        }
-    }
-
-    //Pick/Drop Mechanics
-    public void PickObject()
-    {
-        if (heldObj == null && Baby.connectedMassScale==0)
-        {
-            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, pickUpDistance) && ((hit.collider.gameObject.tag == "Toy") || (hit.collider.gameObject.tag == "Garbage") || (hit.collider.gameObject.tag == "Toys")))
-            {
-                PickUpObject(hit.transform.gameObject);
-                //ObjectPick Sound
-                Sounds.PlaySound("ObjectPick");
-            }
-            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, babyLayer))
-            {
-                BabyTP.BabyUnSit();
-                Baby.connectedMassScale = 5;
-                //BabyPickUp Sound
-                BabySound.PlaySound("BabyPickUp");
-                //BabyPickUp Animation
-                BabyAnimate.BabyPickUp();
-            }
-        }
-    }
-
-    //Pick/Drop Mechanics
-    void MoveObject()
-    {
-        if (Vector3.Distance(heldObj.transform.position, holdParent.position) > 0.1f)
-        {
-            Vector3 moveDirection = (holdParent.position - heldObj.transform.position);
-            heldObj.GetComponent<Rigidbody>().AddForce(moveDirection * moveForce);
-        }
-    }
-
-    //Pick/Drop Mechanics
-    void PickUpObject(GameObject pickObj)
-    {
-        if (pickObj.GetComponent<Rigidbody>())
-        {
-            Rigidbody objRig = pickObj.GetComponent<Rigidbody>();
-            objRig.useGravity = false;
-            //Object will float in air(Change to get good effect)
-            objRig.drag = 10;
-
-            objRig.transform.parent = holdParent;
-            heldObj = pickObj;
-        }
-    }
-
-    //Pick/Drop Mechanics
-    public void DropObject()
-    {
-        //Here I will disable Baby's Rigidbody and enable Animations
-        if (Baby.connectedMassScale == 5)
-        {
-            Baby.connectedMassScale = 0;
-            //BabyCry Sound
-            BabySound.PlaySound("BabyCry");
-            //BabyCry Animation
-            BabyAnimate.BabyCry();
-        }
-        else
-        {
-            Rigidbody heldRig = heldObj.GetComponent<Rigidbody>();
-            heldRig.useGravity = true;
-            heldRig.drag = 1;
-
-            heldObj.transform.parent = null;
-            heldObj = null;
-
-            //ObjectDrop Sound
-            Sounds.PlaySound("ObjectDrop");
-        }
-
-    }
-
-    //Handling Interact Buttons
-    private void HandleButtons()
-    {
-        //For Interact Button
-        if (currentInteractable != null && Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out RaycastHit hit, interactionDistance, interactionLayer))
-        {
-            interact.gameObject.SetActive(true);
-        }
-        else if (heldObj != null)
-        {
-            if (((heldObj.name == "Feeder") || (heldObj.name == "Diaper")) && ((SimpleInteractText.text == "Feed the baby") || (SimpleInteractText.text == "Change baby diaper")))
-            {
-                interact.gameObject.SetActive(true);
-            }
-            else if (heldObj.name == "Plate" && SimpleInteractText.text == "Wash Plate")
-            {
-                interact.gameObject.SetActive(true);
-            }
-            else if (heldObj.name == "Shirt" && SimpleInteractText.text == "Washing Machine")
-            {
-                interact.gameObject.SetActive(true);
-            }
-            else if (heldObj.name == "Key" && SimpleInteractText.text == "Locked")
-            {
-                interact.gameObject.SetActive(true);
-            }
-            else if (heldObj.name == "Magic Wand" && (SimpleInteractText.text == "Use magic wand" || SimpleInteractText.text == "Turn into holy soul"))
-            {
-                interact.gameObject.SetActive(true);
-            }
-            else
-            {
-                interact.gameObject.SetActive(false);
-            }
-        }
-        else if (SimpleInteractText.text == "Couch" || SimpleInteractText.text == "TV" || SimpleInteractText.text == "Switch" || SimpleInteractText.text == "Wash face")
-        {
-            interact.gameObject.SetActive(true);
-        }
-        //Baby Sit
-        else if (Baby.connectedMassScale == 5 && SimpleInteractText.text == "Baby Chair" && heldObj == null)
-        {
-            interact.gameObject.SetActive(true);
-        }
-        else
-        {
-            interact.gameObject.SetActive(false);
-        }
-
-
-        //For Pick Button
-        if (heldObj == null && Baby.connectedMassScale == 0)
-        {
-            if (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, pickUpDistance) && ((hit.collider.gameObject.tag == "Toy") || (hit.collider.gameObject.tag == "Garbage") || (hit.collider.gameObject.tag == "Toys")) || (Physics.Raycast(playerCamera.ViewportPointToRay(interactionRayPoint), out hit, interactionDistance, babyLayer)))
-            {
-                pick.gameObject.SetActive(true);
-            }
-            else
-            {
-                pick.gameObject.SetActive(false);
-            }
-        }
-
-        //For Drop Button
-        if (heldObj != null || Baby.connectedMassScale==5)
-        {
-            drop.gameObject.SetActive(true);
-            pick.gameObject.SetActive(false);
-        }
-        else 
-        {
-            drop.gameObject.SetActive(false);
-        }
-    }
-
+ 
     private void Handle_Footsteps()
 	{
         //Checking if character is grounded or not
@@ -864,140 +489,7 @@ public class FirstPersonController : MonoBehaviour
         }
     }*/
 
-    //Player Progress Level System
-    private void CheckPlayerProgress()
-    {
-        //Checking for Level
-        if (SceneManager.GetActiveScene().name == "Level 1")
-        {
-            //Total Tasks
-            for (int q = 0; q < task.Length; q++)
-            {
-                //Checking if task is active and in progress(given to player in task book) and is it completed or nor
-                if (task[q].isActive && task[q].inProgress && task[q].Completed == false)
-                {
-                    //Pickup Tasks
-                    if (task[q].goal.goalType == GoalType.pick)
-                    {
-                        if (heldObj != null)
-                        {
-                            //Take the feeder from fridge -> Task[1]
-                            if (heldObj.name == "Feeder" && !task[0].Completed)
-                            {
-                                task[0].Win = true;
-                                task[0].Completed = true;
-                                Alert.gameObject.SetActive(true);
-                            }
-
-                            //Pickup plates from the table -> Task[7]
-                            if (heldObj.name == "Plate" && q==6 && !task[6].Completed)
-                            {
-                                task[6].Win = true;
-                                task[6].Completed = true;
-                                Alert.gameObject.SetActive(true);
-                            }
-                        }
-                        else
-                        {
-                            //Clean the TV Lounge -> Task[6]
-                            if (GameObject.FindGameObjectsWithTag("Garbage").Length == 0 && task[4].Completed && !task[5].Completed)
-                            {
-                                task[5].Win = true;
-                                task[5].Completed = true;
-                                Alert.gameObject.SetActive(true);
-                            }
-                        }   
-                    }
-
-                    //Give Tasks
-                    if (task[q].goal.goalType == GoalType.give && SimpleInteractText.text != null && GiveButtonPressed == true && heldObj != null)
-                    {
-                        //Feed the baby -> Task[2]
-                        if (heldObj.name == "Feeder" && SimpleInteractText.text == "Feed the baby")
-                        {
-                            task[1].Win = true;
-                            task[1].Completed = true;
-                            GiveButtonPressed = false;
-                            Alert.gameObject.SetActive(true);
-                        }
-
-                        //Change baby diaper -> Task[4]
-                        if (heldObj.name == "Diaper" && SimpleInteractText.text == "Change baby diaper")
-                        {
-                            task[3].Win = true;
-                            task[3].Completed = true;
-                            GiveButtonPressed = false;
-                            Alert.gameObject.SetActive(true);
-                        }
-
-                        //Wash Dish -> Task[8]
-                        if (heldObj.name == "Plate" && SimpleInteractText.text == "Wash Plate" && q==7 && !task[7].Completed)
-                        {
-                            task[7].Win = true;
-                            task[7].Completed = true;
-                            Alert.gameObject.SetActive(true);
-                            GiveButtonPressed = false;      
-                        }
-                    }
-                    
-                    //Goto Tasks
-                    if (task[q].goal.goalType == GoalType.GoTo)
-                    {
-                        //Take baby to washroom -> Task[3]
-                        if (Baby.connectedMassScale==5 && gotoPoints.pointName=="washroom" && !task[2].Completed)
-                        {
-                            task[2].Win = true;
-                            task[2].Completed = true;
-                            gotoPoints.pointName = null;
-                            Alert.gameObject.SetActive(true);
-                        }
-
-                        //Take baby to bedroom -> Task[5] 6,8,9,10
-                        if (Baby.connectedMassScale == 5 && gotoPoints.pointName == "bedroom" && q==4 && !task[4].Completed)
-                        {
-                            task[4].Win = true;
-                            task[4].Completed = true;
-                            gotoPoints.pointName = null;
-                            Alert.gameObject.SetActive(true); 
-                        }
-                    }
-
-                    //Sit Task
-                    if (task[q].goal.goalType == GoalType.sit)
-                    {
-                        if (canMove == false && !task[8].Completed && q==8)
-                        {
-                            task[8].Win = true;
-                            task[8].Completed = true;
-                            Alert.gameObject.SetActive(true);
-                        }
-                    }
-
-                    //Watch Task
-                    if (task[q].goal.goalType == GoalType.watch)
-                    {
-                        if (NoSignalTV.activeSelf && !task[9].Completed && q == 9)
-                        {
-                            task[9].Win = true;
-                            task[9].Completed = true;
-                            Alert.gameObject.SetActive(true);
-                        }
-                    }
-
-                    //Spawning Garbage objects
-                    if(task[4].Completed==true && Garbage.activeSelf==false)
-                    {
-                        Garbage.SetActive(true);
-                        //ObjectSpawn Sound
-                        Sounds.PlaySound("ObjectSpawn");
-                    }
-                }
-            }
-        }
-        
-    }
-
-    IEnumerator SitonCouch(GameObject couch)
+    public IEnumerator SitonCouch(GameObject couch)
     {
         if (couch.gameObject.CompareTag("Couch"))
         {
@@ -1030,7 +522,7 @@ public class FirstPersonController : MonoBehaviour
     #endregion
 
     #region Coroutine Functions
-    private IEnumerator CrouchStand()
+    public IEnumerator CrouchStand()
 	{
         //Check to disable player from clipping throgh object while he will release crouching state(It will check if anything is above his head he will not stand up) (Change 1f value for distance)
         if (isCrouching && Physics.Raycast(playerCamera.transform.position, Vector3.up, 1f))
