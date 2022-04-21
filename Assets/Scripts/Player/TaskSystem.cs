@@ -115,6 +115,9 @@ public class TaskSystem : MonoBehaviour
                         {
                             TaskStatus(1, true);
                             player.GiveButtonPressed = false;
+
+                            //Activating BabySmoke
+                            player.BabyTP.BabySmoke(true);
                         }
 
                         //Change baby diaper -> Task[4]
@@ -122,6 +125,9 @@ public class TaskSystem : MonoBehaviour
                         {
                             TaskStatus(3, true);
                             player.GiveButtonPressed = false;
+
+                            //Deactivating BabySmoke
+                            player.BabyTP.BabySmoke(false);
                         }
 
                         //Wash Dish -> Task[8]
@@ -247,6 +253,9 @@ public class TaskSystem : MonoBehaviour
                         {
                             TaskStatus( 10, true);
                             player.GiveButtonPressed = false;
+
+                            //Activating BabySmoke
+                            player.BabyTP.BabySmoke(true);
                         }
                         
                         //Change baby diaper -> player.task[12]
@@ -254,6 +263,9 @@ public class TaskSystem : MonoBehaviour
                         {
                             TaskStatus( 12, true);
                             player.GiveButtonPressed = false;
+
+                            //Deactivating BabySmoke
+                            player.BabyTP.BabySmoke(false);
                         }
                         
                         //Wash baby shirt in washing machine -> player.task[2]
@@ -427,6 +439,9 @@ public class TaskSystem : MonoBehaviour
                         {
                             TaskStatus( 1, true);
                             player.GiveButtonPressed = false;
+
+                            //Activating BabySmoke
+                            player.BabyTP.BabySmoke(true);
                         }
                         
                         //Change baby diaper -> player.task[3]
@@ -434,6 +449,9 @@ public class TaskSystem : MonoBehaviour
                         {
                             TaskStatus( 3, true);
                             player.GiveButtonPressed = false;
+
+                            //Deactivating BabySmoke
+                            player.BabyTP.BabySmoke(false);
                         }
 
                         //Use magic wand on baby to make him normal -> player.task[9]
@@ -574,6 +592,9 @@ public class TaskSystem : MonoBehaviour
                             if (player.heldObj.name == "Diaper" && !player.task[1].Completed)
                             {
                                 TaskStatus( 1, true);
+
+                                //Deactivating BabySmoke
+                                player.BabyTP.BabySmoke(false);
                             }
                         }
                         else

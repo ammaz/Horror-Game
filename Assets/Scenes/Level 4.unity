@@ -5014,6 +5014,7 @@ Transform:
   - {fileID: 1798874896}
   - {fileID: 214259049}
   - {fileID: 623108494}
+  - {fileID: 349696908}
   m_Father: {fileID: 1019117866}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5173,6 +5174,7 @@ MonoBehaviour:
   isCoroutineReady: 0
   BabyParent: {fileID: 1571886577}
   BabyisLookingPlayer: 0
+  smokeParticle: {fileID: 349696909}
 --- !u!114 &235586215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6676,6 +6678,92 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &349696907
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 235586209}
+    m_Modifications:
+    - target: {fileID: 3021298139026444369, guid: 728557cdecd469049889007ffda53040,
+        type: 3}
+      propertyPath: m_Name
+      value: Smoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021298139026444369, guid: 728557cdecd469049889007ffda53040,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021298139026708903, guid: 728557cdecd469049889007ffda53040,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021298139026708903, guid: 728557cdecd469049889007ffda53040,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021298139026708903, guid: 728557cdecd469049889007ffda53040,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021298139026708903, guid: 728557cdecd469049889007ffda53040,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021298139026708903, guid: 728557cdecd469049889007ffda53040,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7078042
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021298139026708903, guid: 728557cdecd469049889007ffda53040,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.015719479
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021298139026708903, guid: 728557cdecd469049889007ffda53040,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7062273
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021298139026708903, guid: 728557cdecd469049889007ffda53040,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.003042657
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021298139026708903, guid: 728557cdecd469049889007ffda53040,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021298139026708903, guid: 728557cdecd469049889007ffda53040,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021298139026708903, guid: 728557cdecd469049889007ffda53040,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 728557cdecd469049889007ffda53040, type: 3}
+--- !u!4 &349696908 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3021298139026708903, guid: 728557cdecd469049889007ffda53040,
+    type: 3}
+  m_PrefabInstance: {fileID: 349696907}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &349696909 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3021298139026444369, guid: 728557cdecd469049889007ffda53040,
+    type: 3}
+  m_PrefabInstance: {fileID: 349696907}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &361264117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41284,7 +41372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 1
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 3
+  outlineWidth: 5
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []

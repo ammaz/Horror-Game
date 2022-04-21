@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RootMotion.Dynamics;
+using UnityEngine.SceneManagement;
 
 public class Baby : MonoBehaviour
 {
@@ -18,11 +19,15 @@ public class Baby : MonoBehaviour
 
     public bool BabyisLookingPlayer;
 
+    public GameObject smokeParticle;
+
     void Start()
     {
         BabyNumHideSeek = 0;
         isCoroutineReady = false;
         BabyisLookingPlayer = false;
+
+        BabyTPWithOutPuppet();
     }
 
     public void BabyTPSit()
@@ -32,21 +37,31 @@ public class Baby : MonoBehaviour
 
         //BabyHappy Sound
         BabySound.PlaySound("BabyHappy");
-
+        
         playerCharacter.Baby.connectedMassScale = 0;
+        BabyParent.position = new Vector3(-3.036f, 0.808f, -7.11f);
         puppetMaster.pinWeight = 1;
-        BabyParent.position = new Vector3(-6.8373f, 0.8f, -7.096f);
+
+        //BabyParent.position = new Vector3(-6.8373f, 0.8f, -7.096f);
+        
         puppetMaster.GetComponent<PuppetMaster>().enabled = false;
         puppetMaster.GetComponent<PuppetMaster>().enabled = true;
-        BabyParent.Rotate(new Vector3(0, 180, 0));
+        //BabyParent.Rotate(new Vector3(0, 180, 0));
     }
 
     public void BabyUnSit()
-    { 
+    {
+        /*
         if(BabyParent.rotation.y != -90 && puppetMaster.pinWeight != 0)
         {
             puppetMaster.pinWeight = 0;
-            BabyParent.Rotate(new Vector3(0, 180, 0));
+            //BabyParent.Rotate(new Vector3(0, 180, 0));
+        }
+        */
+        if (puppetMaster.pinWeight != 0)
+        {
+            puppetMaster.pinWeight = 0;
+            //BabyParent.Rotate(new Vector3(0, 180, 0));
         }
     }
 
@@ -112,5 +127,25 @@ public class Baby : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    public void BabySmoke(bool Check)
+    {
+        if (Check)
+        {
+            smokeParticle.SetActive(true);
+        }
+        else
+        {
+            smokeParticle.SetActive(false);
+        }
+    }
+
+    public void BabyTPWithOutPuppet()
+    {
+        puppetMaster.pinWeight = 1;
+        BabyParent.position = new Vector3(-1.476f, 0.957f, 0.006f);
+        puppetMaster.GetComponent<PuppetMaster>().enabled = false;
+        puppetMaster.GetComponent<PuppetMaster>().enabled = true;
     }
 }

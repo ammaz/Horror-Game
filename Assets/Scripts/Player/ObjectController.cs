@@ -37,11 +37,13 @@ public class ObjectController : MonoBehaviour
             if (Physics.Raycast(playerObjectController.playerCamera.ViewportPointToRay(playerObjectController.interactionRayPoint), out hit, playerObjectController.interactionDistance, playerObjectController.babyLayer))
             {
                 playerObjectController.BabyTP.BabyUnSit();
-                playerObjectController.Baby.connectedMassScale = 5;
+                
                 //BabyPickUp Sound
                 BabySound.PlaySound("BabyPickUp");
                 //BabyPickUp Animation
                 playerObjectController.BabyAnimate.BabyPickUp();
+                playerObjectController.Baby.connectedMassScale = 5;
+                
             }
         }
     }
