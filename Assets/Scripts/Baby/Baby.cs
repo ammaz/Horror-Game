@@ -21,13 +21,15 @@ public class Baby : MonoBehaviour
 
     public GameObject smokeParticle;
 
+    public Outline BabyOutline;
+
     void Start()
     {
         BabyNumHideSeek = 0;
         isCoroutineReady = false;
         BabyisLookingPlayer = false;
 
-        BabyTPWithOutPuppet();
+        BabyTPWithOutPuppet(-1.476f, 0.957f, 0.006f);
     }
 
     public void BabyTPSit()
@@ -93,6 +95,9 @@ public class Baby : MonoBehaviour
         //Enabling Headlook
         SquidHeadController.GetComponent<SquidHead>().enabled = true;
 
+        //Baby Outline To Red
+        BabyOutline.OutlineColor = Color.red;
+
         yield return new WaitForSeconds(Random.Range(5, 10));
 
         BabyisLookingPlayer = false;
@@ -100,6 +105,9 @@ public class Baby : MonoBehaviour
         SquidHeadController.GetComponent<SquidHead>().enabled = false;
         //BabyHorror Sound
         //BabySound.PlaySound("BabyAngry");
+
+        //Baby Outline To Green
+        BabyOutline.OutlineColor = Color.green;
 
         yield return new WaitForSeconds(Random.Range(5, 10));
 
@@ -141,10 +149,11 @@ public class Baby : MonoBehaviour
         }
     }
 
-    public void BabyTPWithOutPuppet()
+    public void BabyTPWithOutPuppet(float x, float y, float z)
     {
+        playerCharacter.Baby.connectedMassScale = 0;
         puppetMaster.pinWeight = 1;
-        BabyParent.position = new Vector3(-1.476f, 0.957f, 0.006f);
+        BabyParent.position = new Vector3(x,y,z);
         puppetMaster.GetComponent<PuppetMaster>().enabled = false;
         puppetMaster.GetComponent<PuppetMaster>().enabled = true;
     }

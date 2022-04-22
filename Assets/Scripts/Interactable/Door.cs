@@ -23,9 +23,9 @@ public class Door : Interactable
         Audio = GetComponent<AudioSource>();
 
         //Passing AudioClips
-        doorOpen = Resources.Load<AudioClip>("DoorOpen");
-        doorClose = Resources.Load<AudioClip>("DoorClose");
-        horrorDoorClose = Resources.Load<AudioClip>("DoorCloseHorror");
+        doorOpen = Resources.Load<AudioClip>("Sounds/DoorOpen");
+        doorClose = Resources.Load<AudioClip>("Sounds/DoorClose");
+        horrorDoorClose = Resources.Load<AudioClip>("Sounds/DoorCloseHorror");
         horrorDoorKnock = Resources.Load<AudioClip>("HorrorDoorKnock");
     }
 

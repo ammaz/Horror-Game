@@ -124,11 +124,17 @@ public class InteractableController : MonoBehaviour
                 {
                     //ChangeBabyDiaper Sound
                     BabySound.PlaySound("ChangeBabyDiaper");
+
+                    //Baby Happy Animation
+                    playerInteractableController.BabyAnimate.BabyHappy();
                 }
                 else
                 {
                     //BabyFeeder Sound
                     BabySound.PlaySound("BabyFeeder");
+
+                    //Baby Happy Animation
+                    playerInteractableController.BabyAnimate.BabyHappy();
                 }
 
                 //Destroying Feeder or Diaper
@@ -157,6 +163,8 @@ public class InteractableController : MonoBehaviour
                 playerInteractableController.GiveButtonPressed = true;
                 //Destroying Magic Wand
                 Destroy(playerInteractableController.heldObj, 0.3f);
+                //Baby Happy Animation
+                playerInteractableController.BabyAnimate.BabyHappy();
             }
             else if (playerInteractableController.heldObj.name == "Magic Wand" && playerInteractableController.SimpleInteractText.text == "Turn into holy soul")
             {

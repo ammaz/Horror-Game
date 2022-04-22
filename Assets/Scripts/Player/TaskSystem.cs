@@ -240,6 +240,13 @@ public class TaskSystem : MonoBehaviour
                                 gotoPoints.pointName = null;
                                 player.GiveButtonPressed = false;
 
+                                //BabyCry Animation
+                                BabyAnimate.BabyCry();
+                                //BabyCry Sound
+                                BabySound.PlaySound("BabyCry");
+                                //Baby Teleport
+                                player.BabyTP.BabyTPWithOutPuppet(5.318f, 3.127f, -5.863f);
+
                                 StartCoroutine(GameObject.Find("Baby Room").GetComponent<Door>().AutoClose());
                             }
                         }
@@ -288,14 +295,11 @@ public class TaskSystem : MonoBehaviour
 
                             //Enabling Baby Room Door
                             GameObject.Find("Locked").GetComponent<Animator>().enabled = true;
+                            GameObject.Find("Locked").GetComponent<AudioSource>().enabled = true;
                             GameObject.Find("Locked").name = "Baby Room";
 
-                            //Audio Play (Baby cry sound)
-                            //Animation Play (Baby Cry)
                             //Teleporting Baby 
-                            player.Baby.connectedMassScale = 0;
-                            Baby1.transform.position= new Vector3(6.789f, 2f, 2.339f);
-                            
+                            player.BabyTP.BabyTPSit(); 
                         }
                     }
 
@@ -317,18 +321,19 @@ public class TaskSystem : MonoBehaviour
 
                             //Disabling Baby Room Door
                             GameObject.Find("Baby Room").GetComponent<Animator>().enabled = false;
+                            GameObject.Find("Baby Room").GetComponent<AudioSource>().enabled = false;
                             GameObject.Find("Baby Room").name = "Locked";
 
-                            //Audio Play (Knocking on door horror sound)
-                            BabyDoor.PlaySound("HorrorDoorKnock");
-                            
                             //Spawning Key
                             Key.SetActive(true);
                             //ObjectSpawn Sound
                             Sounds.PlaySound("ObjectSpawn");
+
+                            //Audio Play (Knocking on door horror sound)
+                            Sounds.PlaySound("HorrorDoorKnock");
                         }
 
-                        //Run downstairs to find the baby -> player.task[5]
+                        //Run downstairs to find the baby -> player.task[8]
                         if (gotoPoints.pointName=="downstair" && player.task[7].Completed && !player.task[8].Completed)
                         {
                             TaskStatus( 8, true);
@@ -410,8 +415,13 @@ public class TaskSystem : MonoBehaviour
                                 //Destroying the book
                                 Destroy(player.heldObj,0.1f);
 
+                                //Revealing Last Task
+                                player.task[11].description = "Find and collect 7 souls in the house";
+
                                 //Spawn Souls
                                 Souls.SetActive(true);
+
+                                //Soul Spawn Sound (To Be Implemented)
                             }
                             if (player.heldObj.name == "Soul")
                             {
@@ -529,22 +539,33 @@ public class TaskSystem : MonoBehaviour
                             //Changing Mirror to HorrorMirror
                             mirror.MirrorChangeToHorror();
 
+                            //ObjectSpawn Sound
+                            Sounds.PlaySound("ObjectFly");
+
                             //Changing Washroom sink name
                             Sink.name = "Sink";
 
                             //Spawing Magic Wand
                             MagicWand.SetActive(true);
+                            /*
                             //ObjectSpawn Sound
                             Sounds.PlaySound("ObjectSpawn");
-
+                            */
+                            /*
                             //Baby Unpick
                             player.Baby.connectedMassScale = 0;
-                            //Baby Sit Animation
-                            BabyAnimate.BabyCry();
+
                             //BabyTPSit
                             player.BabyTP.BabyTP(-3.25f, 1.298f, -7.021f);
-                            //BabyHappy Sound
-                            BabySound.PlaySound("BabyCry");
+                            */
+
+                            //BabyTP
+                            player.BabyTP.BabyTPWithOutPuppet(6.012f, 0f, -5.947f);
+
+                            //Baby Horror Animation
+                            player.BabyAnimate.BabyHorror();
+
+                            //Baby Horror Loop Sound (Left To Implement)
                         }
                     }
 
@@ -553,14 +574,9 @@ public class TaskSystem : MonoBehaviour
                     {
                         if(player.heldObj.name == "Diaper")
                         {
-                            //Baby Unpick
-                            player.Baby.connectedMassScale = 0;
-                            //Baby Sit Animation
-                            BabyAnimate.BabyCry();
-                            //BabyTPSit
-                            player.BabyTP.BabyTP(-3.25f, 1.298f, -7.021f);
-                            //BabyHappy Sound
-                            BabySound.PlaySound("BabyCry");
+                            //Teleporting Baby 
+                            player.BabyTP.BabyTPSit();
+
                             //BabyTPCheck turning to true
                             BabyTPCheck = true;
                         }
@@ -692,6 +708,8 @@ public class TaskSystem : MonoBehaviour
                             BabyHeadController.GetComponent<HeadController>().enabled = false;
                             //Enabling SquidController
                             BabySquidController.GetComponent<SquidHead>().enabled = true;
+                            //Enabling Baby Outline
+                            player.BabyTP.BabyOutline.GetComponent<Outline>().enabled = true;
                         }
                     }
 

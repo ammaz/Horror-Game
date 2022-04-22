@@ -17,6 +17,9 @@ public class Sounds : MonoBehaviour
 
     //Object Spawn Sound
     public static AudioClip ObjectSpawn;
+
+    //Object Fly Sound
+    public static AudioClip ObjectFly;
     /*
     //Object Drop Sounds
     public static AudioClip FeederDrop;
@@ -38,6 +41,9 @@ public class Sounds : MonoBehaviour
     public static AudioClip SitOnCouch;
     public static AudioClip GettingUpFromCouch;
     */
+
+    //Door Sound
+    public static AudioClip HorrorDoorKnock;
     //AudioSoruce
     public static AudioSource src;
 
@@ -69,6 +75,8 @@ public class Sounds : MonoBehaviour
         //Object Spawn Sound
         ObjectSpawn = Resources.Load<AudioClip>("Sounds/ObjectSpawn");
 
+        //Object Fly Sound
+        ObjectFly = Resources.Load<AudioClip>("Sounds/Objectfly");
 
         //Wash Sounds
         //ChangeBabyDiaper = Resources.Load<AudioClip>("Sounds/ChangeBabyDiaper");
@@ -82,6 +90,9 @@ public class Sounds : MonoBehaviour
         SitOnCouch;
         GettingUpFromCouch;
         */
+
+        //Door Sound
+        HorrorDoorKnock = Resources.Load<AudioClip>("Sounds/HorrorDoorKnock");
         //AudioSource
         src = GetComponent<AudioSource>();
     }
@@ -114,6 +125,20 @@ public class Sounds : MonoBehaviour
             case "ObjectSpawn":
                 src.Stop();
                 src.PlayOneShot(ObjectSpawn);
+                break;
+        }
+        switch (clipName)
+        {
+            case "HorrorDoorKnock":
+                src.Stop();
+                src.PlayOneShot(HorrorDoorKnock);
+                break;
+        }
+        switch (clipName)
+        {
+            case "ObjectFly":
+                src.Stop();
+                src.PlayOneShot(ObjectFly);
                 break;
         }
     }
