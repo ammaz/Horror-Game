@@ -137,7 +137,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    IEnumerator LoadAsynchronously(int sceneIndex)
+    public IEnumerator LoadAsynchronously(int sceneIndex)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
 
