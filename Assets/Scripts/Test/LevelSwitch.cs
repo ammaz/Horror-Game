@@ -16,23 +16,32 @@ public class LevelSwitch : MonoBehaviour
     public Slider slider;
     public Text progressText;
 
+    //For Ads
+    //public AdCaller adCall;
+    //private bool adIsRunning;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        //adIsRunning = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         StartCoroutine(isLevelCompleted());
+/*        if (!adIsRunning && (completedTaskCount == LevelSwitchPlayer.task.Length))
+        {
+            adCall.showAd();
+            adIsRunning = true;
+        }*/
     }
 
     public IEnumerator isLevelCompleted()
     {
         completedTaskCount = 0;
 
-        for(int a = 0; a < LevelSwitchPlayer.task.Length; a++)
+        for (int a = 0; a < LevelSwitchPlayer.task.Length; a++)
         {
             if (LevelSwitchPlayer.task[a].Completed)
             {
