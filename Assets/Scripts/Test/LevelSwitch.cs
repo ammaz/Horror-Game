@@ -43,9 +43,10 @@ public class LevelSwitch : MonoBehaviour
     public IEnumerator isLevelCompleted()
     {
         yield return new WaitForSeconds(4f);
-        adCall.showAd();
-        yield return new WaitForSeconds(0.5f);
         LevelCompleted.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        adCall.showAd();
+        yield return new WaitForSeconds(2f);
         LevelCompleted.SetActive(false);
         loadingScreen.SetActive(true);
         if (!(SceneManager.GetActiveScene().name=="Level 5"))
