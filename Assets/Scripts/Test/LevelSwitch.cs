@@ -17,46 +17,45 @@ public class LevelSwitch : MonoBehaviour
     public Text progressText;
 
     //For Ads
-    //public AdCaller adCall;
-    //private bool adIsRunning;
+    public AdCaller adCall;
+
+    //Level loading
+    private bool isloading;
 
     // Start is called before the first frame update
     void Start()
     {
-        //adIsRunning = false;
+        isloading = false;
+        //Hiding Banner
+        AdmobIntilization._instance.HideBanner();
     }
 
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(isLevelCompleted());
-/*        if (!adIsRunning && (completedTaskCount == LevelSwitchPlayer.task.Length))
+        if (areAllTaskCompleted() && !isloading)
         {
-            adCall.showAd();
-            adIsRunning = true;
-        }*/
+            isloading = true;
+            StartCoroutine(isLevelCompleted());
+        } 
     }
 
     public IEnumerator isLevelCompleted()
     {
-        completedTaskCount = 0;
-
-        for (int a = 0; a < LevelSwitchPlayer.task.Length; a++)
+        yield return new WaitForSeconds(4f);
+        adCall.showAd();
+        yield return new WaitForSeconds(0.5f);
+        LevelCompleted.SetActive(true);
+        LevelCompleted.SetActive(false);
+        loadingScreen.SetActive(true);
+        if (!(SceneManager.GetActiveScene().name=="Level 5"))
         {
-            if (LevelSwitchPlayer.task[a].Completed)
-            {
-                completedTaskCount++;
-            }
-        }
-
-        if (completedTaskCount == LevelSwitchPlayer.task.Length)
-        {
-            yield return new WaitForSeconds(2f);
-            LevelCompleted.SetActive(true);
-            yield return new WaitForSeconds(2f);
-            LevelCompleted.SetActive(false);
-            loadingScreen.SetActive(true);
             StartCoroutine(LoadAsynchronously(SceneManager.GetActiveScene().buildIndex + 1));
+        }
+        else
+        {
+            //If we are in level 5 go back to main menu once game is completed
+            StartCoroutine(LoadAsynchronously(0));
         }
     }
 
@@ -72,6 +71,29 @@ public class LevelSwitch : MonoBehaviour
             progressText.text = (int)progress * 100 + "%";
 
             yield return null;
+        }
+    }
+
+    public bool areAllTaskCompleted()
+    {
+        completedTaskCount = 0;
+
+        for (int a = 0; a < LevelSwitchPlayer.task.Length; a++)
+        {
+            if (LevelSwitchPlayer.task[a].Completed)
+            {
+                completedTaskCount++;
+            }
+        }
+
+        if (completedTaskCount == LevelSwitchPlayer.task.Length)
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
         }
     }
 }

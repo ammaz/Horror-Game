@@ -157,7 +157,7 @@ public class AdmobIntilization : MonoBehaviour {
 
 		// Load the banner with the request.
 		bannerView.LoadAd(request);
-		bannerView.Show ();
+		//bannerView.Show ();
 	}
 	public void DestoryBanner(){
 		bannerView.Destroy ();

@@ -27,10 +27,14 @@ public class MainMenu : MonoBehaviour
     public GameObject loadingScreen;
     public GameObject levelScreen;
 
+    //For Ads
+    public GameObject ads;
+
     // Start is called before the first frame update
     void Start()
     {
         levelIndex = 0;
+        AdmobIntilization._instance.ShowBanner();
     }
 
     // Update is called once per frame
@@ -104,6 +108,7 @@ public class MainMenu : MonoBehaviour
         {
             levelScreen.SetActive(false);
             loadingScreen.SetActive(true);
+            AdmobIntilization._instance.HideBanner();
             StartCoroutine(LoadAsynchronously(levelIndex));      
         }
     }
